@@ -146,6 +146,71 @@ section.image.image-center {
   margin-top: 30px;
 }
 
+.padding020 {
+  padding: 0px 20px;
+}
+
 .text-center {
   text-align: center;
+}
+
+.white {
+  color: white;
+}
+
+.btn-wsp {
+  background-color: #559236;
+  color: #FFF;
+  border-radius: 50px;
+  width: 60px;
+  height: 60px;
+  font-size: 50px;
+  text-align: center;
+  box-shadow: 0 1px 5px #212529;
+  position: fixed;
+  z-index: 1;
+  bottom: 30px;
+  right: 40px;
+}
+
+.btn-wsp:hover {
+  background-color: #45742e;
+  transition: .8s ease-in-out;
+  opacity: 0.9;
+}
+
+.shepherds {
+  display: flex;
+}
+
+figure.photo-shepherds img {
+  border-radius: 50%; 
+  width: 240px;
+  height: 38.4vh;
+}
+
+.section-shepherds {
+  background: #252525;
+  padding: 5%;
+}
+
+h2.name-shepherds {
+  color: white;
+  font-size: 30px;
+  margin: 20px 0px 10px;
+}
+
+h4.info {
+  color: #559236;
+  font-size: 20px;
+  font-style: italic;
+  margin: 10px 0;
+}
+
+p.description {
+  color: white;
+}
+
+.shepherds-description {
+  padding-top: 15px;
 }
