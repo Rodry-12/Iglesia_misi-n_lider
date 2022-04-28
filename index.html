@@ -6,11 +6,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Iglesi Misión Líder París</title>
+
   <link rel="icon" type="image/png" href="./src/images/MISIÓN LÍDER .png">
 
   <!-- Link css -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glider-js@1.7.3/glider.min.css">
   <link rel="stylesheet" href="./src/font-awesome-4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="./src/css/index.css">
+  <link rel="stylesheet" href="./src/css/carusel.css">
 </head>
 
 <body id="home">
@@ -34,7 +37,7 @@
       <ul class="nav-menu-right">
         <a href="#"><i class="fa fa-facebook white" aria-hidden="true"></i></a>
         <a href="#"><i class="fa fa-instagram white" aria-hidden="true"></i></a>
-        <button>Contacto</button>
+        <a class="btn-principal" href="#">Contacto</a>
       </ul>
     </div>
 
@@ -43,18 +46,33 @@
       href="https://api.whatsapp.com/send?phone=+573204139770&text=Hola, gracias por comunicar con Iglesia Misión Líder París, ¿ en que podemos ayudarte ?"
       target="_blank" rel="noopener noreferrer" class="btn-wsp"><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
   </header>
-  <section class="image" style="background-image: url('./src/images/iglesia.jpg');">
-    <div>
-      <div class="church-content">
-        <div>
-          <h1> IGLESIA FUENTE DE VIDA </h1>
-          <h2>BIENVENIDO A CASA</h2>
-          <div class="mision-vision">
-            <button>MISIÓN</button>
-            <button>VISIÓN</button>
+
+  <section class="ministerios">
+    <div class="carousel">
+      <div class="carousel-cotenido">
+        <button aria-label="Anterior" class="carousel-anterior">
+          <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        </button>
+  
+        <div class="carousel-lista">
+          <div class="carousel-elemento">
+            <img src="./src/images/bienvenidos.png" alt="comunidad">
+          </div>
+          <div class="carousel-elemento">
+            <img src="./src/images/Bienvenidos2.png" alt="comunidad">
+          </div>
+          <div class="carousel-elemento">
+            <img src="./src/images/Bienvenidos3.png" alt="comunidad">
           </div>
         </div>
+  
+        <button aria-label="Siguiente" class="carousel-siguiente">
+          <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </button>
       </div>
+
+      <div role="tablist" class="carousel-indicador"></div>
+  
     </div>
   </section>
 
@@ -98,9 +116,11 @@
     </div>
   </section>
 
-  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+  <script src="https://cdn.jsdelivr.net/npm/glider-js@1.7.3/glider.min.js"></script>
   <script type="text/javascript" src="./src/jquery/jquery-3.6.0.min.js"></script>
+
   <script type="text/javascript" src="./src/js/index.js"></script>
 </body>
 
