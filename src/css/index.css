@@ -1,3 +1,15 @@
+/* Verde claro: #DDF8AD
+Verde medio: Verde claro: #DDF8AD
+Verde medio: #559236
+Verde oscuro: #0B490D
+Beige: #F0F0F0
+Blanco: #FFFFFF
+Negro: #061706
+Verde oscuro: #0B490D
+Beige: #F0F0F0
+Blanco: #FFFFFF
+Negro: #061706 */
+
 body {
   margin: 0;
   width: 100%;
@@ -114,13 +126,13 @@ div.logo a.iglesia {
 }
 
 .image {
-    position: relative;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-    min-height: 150vh;
-    width: 100%;
+  position: relative;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  min-height: 150vh;
+  width: 100%;
 }
 
 .church-content {
@@ -137,25 +149,37 @@ div.logo a.iglesia {
 }
 
 section.image.image-center {
-  align-items: center;
   display: flex;
   justify-content: center;
   min-height: 120vh;
   width: 100%;
 }
 
-.image > .community {
-  align-items: center;
-  background-color: red;
-  display: flex;
-  justify-content: center;
-  height: 300px;
+.image>.community {
+  height: 200px;
+  margin-top: 80px;
   position: absolute;
   width: 800px;
 }
 
-.mision-vision {
-  margin-top: 30px;
+.mission {
+  float: left;
+  background: #CC6600;
+  width: 400px;
+  height: 500px;
+  margin-right: 10px;
+}
+
+.view {
+  float: left;
+  background: #000FFF;
+  width: 400px;
+  height: 500px;
+  margin-left: 10px;
+}
+
+.image>.community p {
+  padding-top: 20px;
 }
 
 .padding020 {
@@ -196,7 +220,7 @@ section.image.image-center {
 }
 
 figure.photo-shepherds img {
-  border-radius: 50%; 
+  border-radius: 50%;
   width: 240px;
   height: 38.4vh;
 }
@@ -232,4 +256,8 @@ p.description {
   color: #f0f0f0;
   padding: 10px 20px;
   border-radius: 20px;
+}
+
+.titlegreen {
+  color: #559236;
 }
