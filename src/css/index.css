@@ -148,42 +148,34 @@ div.logo a.iglesia {
   align-items: center;
 }
 
-section.image.image-center {
+.image-center {
+  align-content: center;
   display: flex;
   justify-content: center;
-  min-height: 120vh;
+  flex-wrap: wrap;
+  min-height: 80vh;
   width: 100%;
-}
-
-.image>.community {
-  height: 200px;
-  margin-top: 80px;
-  position: absolute;
-  width: 800px;
 }
 
 .mission {
   float: left;
-  background: #CC6600;
   width: 400px;
-  height: 500px;
-  margin-right: 10px;
+  margin-right: 20px;
 }
 
 .view {
   float: left;
-  background: #000FFF;
   width: 400px;
-  height: 500px;
-  margin-left: 10px;
-}
-
-.image>.community p {
-  padding-top: 20px;
+  margin-left: 20px;
 }
 
 .padding020 {
-  padding: 0px 20px;
+  margin: 0px;
+  padding: 20px 100px;
+}
+
+.padding010 {
+  padding: 10px;
 }
 
 .text-center {
