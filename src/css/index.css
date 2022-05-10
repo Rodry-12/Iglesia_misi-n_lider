@@ -169,6 +169,29 @@ div.logo a.iglesia {
   margin-left: 20px;
 }
 
+.list-valores {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 20px 100px 60px;
+}
+
+.valor-item {
+  border: 3px solid #559236;
+  border-radius: 20px;
+  color: #559236;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-align: center;
+  width: 90px;
+}
+
+.valor-item:hover {
+  background-color: #559236;
+  color: #FFFFFF;
+  transform: scale(1.2);
+  transition: all 0.2s;
+}
+
 .padding020 {
   margin: 0px;
   padding: 20px 100px;
