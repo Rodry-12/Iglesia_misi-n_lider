@@ -1,3 +1,16 @@
+/* Verde claro: #DDF8AD
+Verde medio: Verde claro: #DDF8AD
+Verde medio: #559236
+Verde oscuro: #0B490D
+Beige: #F0F0F0
+Blanco: #FFFFFF
+Negro: #061706
+Verde oscuro: #0B490D
+Beige: #F0F0F0
+Blanco: #FFFFFF
+Negro: #061706 */
+
+
 :root {
   /*Colores*/
   --black: #000000;
@@ -167,9 +180,19 @@ ul.nav-menu-right i:hover {
   transition: all 0.5s ease-out;
 }
 
+.image {
+  position: relative;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  min-height: 150vh;
+  width: 100%;
+}
 /* Home de la pagina*/
 
 /* Carousel */
+
 .carousel {
   margin-top: 105px;
   width: 100%;
@@ -234,11 +257,12 @@ ul.nav-menu-right i:hover {
   opacity: 1;
 }
 
-section.image.image-center {
-  align-items: center;
+.image-center {
+  align-content: center;
   display: flex;
   justify-content: center;
-  min-height: 120vh;
+  flex-wrap: wrap;
+  min-height: 80vh;
   width: 100%;
   display: none;
 }
@@ -253,14 +277,39 @@ section.image.image-center {
   width: 100%;
 }
 
-.image > .community {
-  align-items: center;
-  background-color: red;
+.mission {
+  float: left;
+  width: 400px;
+  margin-right: 20px;
+}
+
+.view {
+  float: left;
+  width: 400px;
+  margin-left: 20px;
+}
+
+.list-valores {
   display: flex;
-  justify-content: center;
-  height: 300px;
-  position: absolute;
-  width: 800px;
+  justify-content: space-evenly;
+  padding: 20px 100px 60px;
+}
+
+.valor-item {
+  border: 2px solid #559236;
+  border-radius: 20px;
+  color: #559236;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-align: center;
+  width: 90px;
+}
+
+.valor-item:hover {
+  background-color: #559236;
+  color: #FFFFFF;
+  transform: scale(1.2);
+  transition: all 0.2s;
 }
 
 .church-content {
@@ -282,7 +331,12 @@ section.image.image-center {
 }
 
 .padding020 {
-  padding: 0px 20px;
+  margin: 0px;
+  padding: 20px 100px;
+}
+
+.padding010 {
+  padding: 10px;
 }
 
 .text-center {
@@ -355,4 +409,8 @@ p.description {
   color: var(--soft-white);
   padding: 10px 20px;
   border-radius: 20px;
+}
+
+.titlegreen {
+  color: #559236;
 }
