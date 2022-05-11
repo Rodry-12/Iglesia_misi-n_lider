@@ -70,6 +70,26 @@ header.header {
   font-weight: bold;
 }
 
+/* Boton de WhatsApp*/
+.btn-wsp {
+  background-color: var(--whatsApp);
+  color: var(--white);
+  border-radius: 50px;
+  width: 64px;
+  height: 64px;
+  font-size: 50px;
+  text-align: center;
+  box-shadow: 0 1px 5px #212529;
+  position: fixed;
+  z-index: 1;
+  bottom: 30px;
+  right: 40px;
+}
+
+.btn-wsp:hover {
+  background-color: var(--hover-whatsApp);
+  transition: 0.5s ease-in-out;
+}
 /* .header .scroll {
   height: 60px;
   padding: 30px 0px 15px 0px;
@@ -168,6 +188,13 @@ div.logo a.iglesia {
   padding: 10px 15px;
 }
 
+.btn-principal {
+  background-color: var(--dark-green);
+  color: var(--soft-white);
+  padding: 10px 20px;
+  border-radius: 20px;
+}
+
 ul.nav-menu-right i:hover {
   color: var(--dark-green);
   transition: 0.5s ease-in-out;
@@ -257,114 +284,90 @@ ul.nav-menu-right i:hover {
   opacity: 1;
 }
 
+/*Marco Filosofico*/
+
 .image-center {
+  margin-top: 50px;
+  height: auto;
+  width: 100%;
   align-content: center;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  min-height: 80vh;
-  width: 100%;
-  display: none;
 }
 
-.image {
-  position: relative;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: relative;
-  min-height: 150vh;
-  width: 100%;
-}
-
-.mission {
-  float: left;
-  width: 400px;
-  margin-right: 20px;
-}
-
-.view {
-  float: left;
-  width: 400px;
-  margin-left: 20px;
-}
-
-.list-valores {
-  display: flex;
-  justify-content: space-evenly;
-  padding: 20px 100px 60px;
-}
-
-.valor-item {
-  border: 2px solid #559236;
-  border-radius: 20px;
-  color: #559236;
-  padding: 10px 20px;
-  cursor: pointer;
+.title,
+.titlegreen {
+  font-size: 4rem;
   text-align: center;
-  width: 90px;
 }
 
-.valor-item:hover {
-  background-color: #559236;
-  color: #FFFFFF;
-  transform: scale(1.2);
-  transition: all 0.2s;
-}
-
-.church-content {
-  background-color: var(--gray);
-  height: 600px;
-  left: 100px;
-  display: flex;
-  position: absolute;
+.text-center {
+  max-width: 900px;
   text-align: center;
-  top: 200px;
-  width: 550px;
-  justify-content: space-evenly;
-  align-items: center;
+  font-size: 1.2rem;
+}
+
+
+.text-center p {
+  min-width: 320px;
+  max-width: 400px;
+  text-align: justify;
+  padding: 0 10px;
 }
 
 
 .mision-vision {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 900px;
   margin-top: 30px;
 }
 
-.padding020 {
-  margin: 0px;
-  padding: 20px 100px;
+
+.list-valores {
+  width: 90%;
+  max-width: 1200px;
+  margin: 10px auto;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
 }
 
-.padding010 {
-  padding: 10px;
+
+.titlegreen {
+  color: var(--dark-green);
 }
 
-.text-center {
+.valor-item {
+  display: grid;
+  padding: 10px 20px;
+  margin: 10px 0;
+  width: 20%;
+  min-width: 100px;
+  max-width: 130px;
+  align-items: center;
+  color: var(--dark-green);
+  font-size: 1.2rem;
+  border: 2px solid var(--dark-green);
+  border-radius: 20px;
+  cursor: pointer;
   text-align: center;
 }
 
-.white {
-  color: white;
-}
-
-.btn-wsp {
-  background-color: var(--whatsApp);
+.valor-item:hover {
+  background-color: var(--dark-green);
   color: var(--white);
-  border-radius: 50px;
-  width: 64px;
-  height: 64px;
-  font-size: 50px;
-  text-align: center;
-  box-shadow: 0 1px 5px #212529;
-  position: fixed;
-  z-index: 1;
-  bottom: 30px;
-  right: 40px;
+  transform: scale(1.2);
+  transition: all 0.2s;
 }
 
-.btn-wsp:hover {
-  background-color: var(--hover-whatsApp);
-  transition: 0.5s ease-in-out;
+/*Shepherds Section*/
+
+.section-shepherds {
+  background: var(--dark-gray);
+  padding: 5%;
 }
 
 .shepherds {
@@ -377,10 +380,8 @@ figure.photo-shepherds img {
   height: 38.4vh;
 }
 
-.section-shepherds {
-  background: var(--dark-gray);
-  padding: 5%;
-  display: none;
+.shepherds-description {
+  padding-top: 15px;
 }
 
 h2.name-shepherds {
@@ -400,17 +401,6 @@ p.description {
   color: var(--white);
 }
 
-.shepherds-description {
-  padding-top: 15px;
-}
 
-.btn-principal {
-  background-color: var(--dark-green);
-  color: var(--soft-white);
-  padding: 10px 20px;
-  border-radius: 20px;
-}
 
-.titlegreen {
-  color: #559236;
-}
+
