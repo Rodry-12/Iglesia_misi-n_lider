@@ -55,7 +55,15 @@ $(function () {
 
 
     $(window).scroll(function () {
-        var header = $(".nav-main");
-        header.toggleClass("scroll", window.scrollY > 80);
+        var navMain = $(".nav-main");
+        navMain.toggleClass("scroll", window.scrollY > 80);
+    });
+
+    // Menu desplegable
+    var menu = document.getElementById('menu-btn');
+    var navBar = document.querySelector('.nav-bar');
+
+    menu.addEventListener("click", () => {
+        navBar.classList.toggle("show");
     });
 });
