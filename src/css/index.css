@@ -10,14 +10,36 @@ Beige: #F0F0F0
 Blanco: #FFFFFF
 Negro: #061706 */
 
-body {
+
+:root {
+  /*Colores*/
+  --black: #000000;
+  --white: #fff;
+  --soft-black: #333;
+  --soft-white: #f0f0f0;
+  --dark-green: #559236;
+  --soft-green: #ddf8ad;
+  --dark-gray: #252525;
+  --gray: #808080;
+  --whatsApp: #4dc046;
+  --hover-whatsApp: #318d2c;
+}
+
+* {
+  box-sizing: border-box;
   margin: 0;
-  width: 100%;
+  padding: 0;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: "DM Sans", sans-serif;
+}
+
+body {
   min-height: 100vh;
-  color: #333;
-  background-color: #f0f0f0;
-  font: sans-serif;
-  font-size: 16px;
+  color: var(--soft-black);
+  background-color: var(--soft-white);
   overflow-x: hidden;
   scroll-behavior: smooth;
 }
@@ -32,7 +54,7 @@ a {
 }
 
 .nav-menu a {
-  color: #f0f0f0;
+  color: var(--soft-white);
 }
 
 button {
@@ -48,19 +70,55 @@ header.header {
   font-weight: bold;
 }
 
-.header .scroll {
+/* .header .scroll {
   height: 60px;
   padding: 30px 0px 15px 0px;
   transition: all 1s ease-out;
 }
 
 .nav-main.scroll {
-  background-color: rgb(0, 0, 0);
+  background-color: var(--black);
   box-shadow: 0 1px 5px 0 rgb(0 0 0);
   position: fixed;
+} */
+
+
+.nav-main {
+  position: fixed;
+  display: flex;
+  font-size: 1.7rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  z-index: 1;
+  transition: all 1s ease-out;
 }
 
+div.logo {
+  width: 100%;
+  height: fit-content;
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--black);
+}
 
+#menu-btn {
+  padding-right: 10px;
+  font-size: 4rem;
+  color: var(--white);
+  cursor: pointer;
+
+}
+
+.icon {
+  cursor: pointer;
+  height: auto;
+  width: 100px;
+  transition: all 1s ease-out;
+}
 
 .scroll .icon {
   cursor: pointer;
@@ -70,57 +128,54 @@ header.header {
   transition: all 1s ease-out;
 }
 
-.nav-main {
-  align-items: center;
-  position: fixed;
-  display: flex;
-  font-size: 17px;
-  justify-content: center;
-  height: 80px;
-  padding: 25px 0px;
-  transition: all 1s ease-out;
-  width: 100%;
-  z-index: 1;
+div.logo a.iglesia {
+  color: var(--soft-white);
+  font-size: 1.9rem;
 }
 
-.icon {
-  cursor: pointer;
-  margin-right: 15px;
-  height: auto;
-  width: 100px;
-  transition: all 1s ease-out;
+
+.nav-bar {
+  background-color: var(--dark-gray);
+  width: 100%;
+  z-index: -5;
+  transform: translate(0, -1000px);
+  transition: .5s ease all;
+}
+
+.nav-bar.show {
+  transform: translate(0, 0);
+}
+
+.nav-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nav-menu li {
+  padding: 15px 0;
+}
+
+.nav-menu-right {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+.nav-menu-right a {
+  padding: 10px 15px;
 }
 
 ul.nav-menu-right i:hover {
-  color: #559236;
-  transition: .5s ease-in-out;
+  color: var(--dark-green);
+  transition: 0.5s ease-in-out;
 }
 
-.nav-main ul {
-  display: flex;
-  align-items: center;
-}
-
-div.logo {
-  margin-right: 300px;
-  text-align: center;
-  display: flex;
-}
-
-div.logo a.iglesia {
-  color: #f0f0f0;
-  margin-top: 8%;
-  margin-bottom: 30px;
-  font-size: 25px;
-}
-
-.nav-main a,
-.nav-main ul li {
-  margin: 0px 8px;
-}
 
 .nav-main ul.nav-menu li a:hover {
-  box-shadow: inset 0 -2px 0 #ddf8ad;
+  box-shadow: inset 0 -2px 0 var(--soft-green);
   opacity: 0.8;
   transition: all 0.5s ease-out;
 }
@@ -134,18 +189,72 @@ div.logo a.iglesia {
   min-height: 150vh;
   width: 100%;
 }
+/* Home de la pagina*/
 
-.church-content {
-  background-color: gray;
-  height: 600px;
-  left: 100px;
-  display: flex;
+/* Carousel */
+
+.carousel {
+  margin-top: 105px;
+  width: 100%;
+  height: fit-content;
+  background-size: cover;
+  background-position: center;
+  transition: all 0.1s ease-in-out;
+}
+
+.carousel-cotenido {
+  height: 100%;
+}
+
+.carousel-lista{
+  height: 100%;
+  overflow: hidden;
+}
+
+.carousel-elemento {
+  width: 100%;
+}
+
+.carousel-elemento img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-anterior,
+.carousel-siguiente {
   position: absolute;
+  display: block;
+  width: 30px;
+  height: 30px;
+  border: none;
+  top: calc(50% - 35px);
+  cursor: pointer;
+  font-size: 2.8rem;
+  line-height: 30px;
   text-align: center;
-  top: 200px;
-  width: 550px;
-  justify-content: space-evenly;
-  align-items: center;
+  background: none;
+  color: var(--soft-green);
+  opacity: 50%;
+  z-index: 1;
+  display: none;
+}
+
+.carousel-anterior:hover,
+.carousel-siguiente:hover {
+  opacity: 100%;
+}
+
+.carousel-siguiente {
+  right: 30px;
+}
+
+.carousel-anterior {
+  left: 30px;
+}
+
+.carousel-indicador .glider-dots.active {
+  opacity: 1;
 }
 
 .image-center {
@@ -154,6 +263,17 @@ div.logo a.iglesia {
   justify-content: center;
   flex-wrap: wrap;
   min-height: 80vh;
+  width: 100%;
+  display: none;
+}
+
+.image {
+  position: relative;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  min-height: 150vh;
   width: 100%;
 }
 
@@ -192,6 +312,24 @@ div.logo a.iglesia {
   transition: all 0.2s;
 }
 
+.church-content {
+  background-color: var(--gray);
+  height: 600px;
+  left: 100px;
+  display: flex;
+  position: absolute;
+  text-align: center;
+  top: 200px;
+  width: 550px;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+
+.mision-vision {
+  margin-top: 30px;
+}
+
 .padding020 {
   margin: 0px;
   padding: 20px 100px;
@@ -210,11 +348,11 @@ div.logo a.iglesia {
 }
 
 .btn-wsp {
-  background-color: #559236;
-  color: #FFF;
+  background-color: var(--whatsApp);
+  color: var(--white);
   border-radius: 50px;
-  width: 60px;
-  height: 60px;
+  width: 64px;
+  height: 64px;
   font-size: 50px;
   text-align: center;
   box-shadow: 0 1px 5px #212529;
@@ -225,9 +363,8 @@ div.logo a.iglesia {
 }
 
 .btn-wsp:hover {
-  background-color: #45742e;
-  transition: .8s ease-in-out;
-  opacity: 0.9;
+  background-color: var(--hover-whatsApp);
+  transition: 0.5s ease-in-out;
 }
 
 .shepherds {
@@ -241,25 +378,26 @@ figure.photo-shepherds img {
 }
 
 .section-shepherds {
-  background: #252525;
+  background: var(--dark-gray);
   padding: 5%;
+  display: none;
 }
 
 h2.name-shepherds {
-  color: white;
+  color: var(--white);
   font-size: 30px;
   margin: 20px 0px 10px;
 }
 
 h4.info {
-  color: #559236;
+  color: var(--dark-green);
   font-size: 20px;
   font-style: italic;
   margin: 10px 0;
 }
 
 p.description {
-  color: white;
+  color: var(--white);
 }
 
 .shepherds-description {
@@ -267,8 +405,8 @@ p.description {
 }
 
 .btn-principal {
-  background-color: #559236;
-  color: #f0f0f0;
+  background-color: var(--dark-green);
+  color: var(--soft-white);
   padding: 10px 20px;
   border-radius: 20px;
 }
