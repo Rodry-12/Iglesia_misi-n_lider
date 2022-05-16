@@ -44,10 +44,10 @@ body {
   scroll-behavior: smooth;
 }
 
-h1 {
+/* h1 {
   font-size: 70px;
   margin: 0px 0px 70px;
-}
+} */
 
 a {
   text-decoration: none;
@@ -400,6 +400,80 @@ h4.info {
 p.description {
   color: var(--white);
 }
+
+/* Horarios */
+
+.horarios {
+  background: #ddd;
+  padding: 5%;
+}
+
+.text-center-visitanos {
+  font-size: 40px;
+  text-align: center;
+}
+
+.text-center-servicio {
+  font-size: 50px;
+  text-align: center;
+}
+
+.horarios-list {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 4%;
+}
+
+.card{
+  position: relative;
+  width: 300px;
+  height: 280px;
+  display: grid;
+  place-items: center;
+  border-radius: 20px;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+.card div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  justify-content: center;
+  border-radius: 20px;
+  backface-visibility: hidden;
+  transition: 1.5s cubic-bezier(0.4, 0.2, 0.2, 1);
+  align-content: space-evenly;
+  justify-items: center;
+}
+
+.front img {
+  border-radius: 50%;
+    width: 120px;
+    height: 20.4vh;
+}
+
+.card .front{
+  background: rgba(255, 255, 255, 0.109);
+  transform: perspective(500px) rotateX(0deg);
+  padding: 10px;
+}
+
+.card .back{
+  background: rgba(255, 255, 255, 0.109);
+  transform: perspective(500px) rotateX(180deg);
+  padding: 10px;
+}
+
+.card:hover .front{
+  transform: perspective(500px) rotateX(180deg);
+}
+
+.card:hover .back{
+  transform: perspective(500px) rotateX(360deg);
+}
+
 
 
 
