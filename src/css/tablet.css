@@ -1,3 +1,65 @@
+/* Barra de navegacion */
+
+#menu-btn {
+  display: none;
+}
+
+.nav-main {
+  display: flex;
+  flex-direction: row;
+  background-color: transparent;
+}
+
+div.logo {
+  background-color: transparent;
+}
+
+.nav-bar {
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  transform: translate(0, 0);
+}
+
+.nav-menu{
+  flex-direction: row;
+}
+
+.nav-menu li {
+  padding: 15px 10px;
+}
+
+.nav-menu-right {
+  padding: 0;
+}
+
+.header .scroll {
+  /* height: 60px; */
+  padding: 10px 0;
+  transition: all 1s ease-out;
+}
+
+.nav-main.scroll {
+  background-color: var(--black);
+  box-shadow: 0 1px 5px 0 rgb(0 0 0);
+  position: fixed;
+}
+
+.carousel{
+  margin-top: 0;
+}
+
+.carousel {
+  height: fit-content;
+}
+
+/* .carousel-elemento img {
+  object-fit: cover;
+  width: auto;
+  height: auto;
+} */
+
 .shepherds {
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, auto);
