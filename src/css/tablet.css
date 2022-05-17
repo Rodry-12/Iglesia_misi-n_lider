@@ -1,0 +1,100 @@
+/* Barra de navegacion */
+
+#menu-btn {
+  display: none;
+}
+
+.nav-main {
+  display: flex;
+  flex-direction: row;
+  background-color: transparent;
+}
+
+div.logo {
+  background-color: transparent;
+}
+
+.nav-bar {
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  transform: translate(0, 0);
+}
+
+.nav-menu{
+  flex-direction: row;
+}
+
+.nav-menu li {
+  padding: 15px 10px;
+}
+
+.nav-menu-right {
+  padding: 0;
+}
+
+.header .scroll {
+  /* height: 60px; */
+  padding: 10px 0;
+  transition: all 1s ease-out;
+}
+
+.nav-main.scroll {
+  background-color: var(--black);
+  box-shadow: 0 1px 5px 0 rgb(0 0 0);
+  position: fixed;
+}
+
+.carousel{
+  margin-top: 0;
+}
+
+.carousel {
+  height: fit-content;
+}
+
+/* .carousel-elemento img {
+  object-fit: cover;
+  width: auto;
+  height: auto;
+} */
+
+.shepherds {
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, auto);
+}
+
+.shepherds-photo {
+  grid-row: 1 / 3;
+  height: 80vh;
+}
+
+.name-shepherds,
+.shepherds-description {
+  grid-column: 2 / 3;
+}
+
+.name-shepherds {
+  grid-row: 1 / 2;
+  align-self: end;
+}
+
+.name-shepherds h2 {
+  margin: 0;
+  text-align: left;
+  padding-left: 10px;
+}
+
+.shepherds-description {
+  grid-row: 2 / 3;
+}
+
+.shepherds-description h4 {
+    padding-top: 0;
+}
+
+.ministerios-container {
+  grid-template-columns: 1fr 1fr;
+  padding: 0 auto;
+}
