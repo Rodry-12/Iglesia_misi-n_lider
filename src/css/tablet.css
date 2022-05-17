@@ -31,3 +31,8 @@
 .shepherds-description h4 {
     padding-top: 0;
 }
+
+.ministerios-container {
+  grid-template-columns: 1fr 1fr;
+  padding: 0 auto;
+}
