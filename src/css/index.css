@@ -484,6 +484,45 @@ ul.nav-menu-right i:hover {
   color: var(--white);
 }
 
+.ministerio-card--content span {
+  color: var(--dark-green);
+}
+
+.ministerio-card--content h3 {
+  margin-top: 10px;
+  padding: 0 10px 14px;
+  text-align: center;
+  font-size: 2.4rem;
+}
+
+.ministerio-card--input {
+  display: none;
+}
+
+.ministerio-card--description {
+  max-height: 0;
+  overflow: hidden;
+  transition: .6s ease-in-out;
+}
+
+.ministerio-card--description p {
+  padding: 0 15px 20px;
+  font-size: 1.4rem;
+  font-weight: normal;
+  color: var(--soft-black);
+}
+
+/*Acciones del hover en las tarjetas*/
+
+.ministerio-card:hover  .ministerio-card--description {
+  max-height: 300px;
+}
+
+.ministerio-card:hover  .ministerio-card--image img{
+  filter: brightness(50%);
+}
+
+
 /* Horarios */
 
 .horarios {
@@ -555,43 +594,6 @@ ul.nav-menu-right i:hover {
 
 .card:hover .back{
   transform: perspective(500px) rotateX(360deg);
-}
-.ministerio-card--content span {
-  color: var(--dark-green);
-}
-
-.ministerio-card--content h3 {
-  margin-top: 10px;
-  padding: 0 10px 14px;
-  text-align: center;
-  font-size: 2.4rem;
-}
-
-.ministerio-card--input {
-  display: none;
-}
-
-.ministerio-card--description {
-  max-height: 0;
-  overflow: hidden;
-  transition: .6s ease-in-out;
-}
-
-.ministerio-card--description p {
-  padding: 0 15px 20px;
-  font-size: 1.4rem;
-  font-weight: normal;
-  color: var(--soft-black);
-}
-
-/*Acciones del hover en las tarjetas*/
-
-.ministerio-card:hover  .ministerio-card--description {
-  max-height: 300px;
-}
-
-.ministerio-card:hover  .ministerio-card--image img{
-  filter: brightness(50%);
 }
 
 
