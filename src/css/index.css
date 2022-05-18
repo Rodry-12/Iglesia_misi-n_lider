@@ -296,8 +296,7 @@ ul.nav-menu-right i:hover {
   flex-wrap: wrap;
 }
 
-.title,
-.titlegreen {
+.title {
   font-size: 4rem;
   text-align: center;
 }
@@ -451,7 +450,7 @@ p.description {
 .front img {
   border-radius: 50%;
     width: 120px;
-    height: 20.4vh;
+    height: 120px;
 }
 
 .card .front{
