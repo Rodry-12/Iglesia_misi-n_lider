@@ -628,7 +628,7 @@ ul.nav-menu-right i:hover {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  /* justify-content: center; */
+  justify-content: center;
 }
 
 .evento {
@@ -764,6 +764,46 @@ ul.nav-menu-right i:hover {
   color: var(--dark-green);
 }
 
+/* Formulario de contacto */
+
+.contacto-title {
+  display: grid;
+  width: 100%;
+  min-width: 320px;
+  padding: 30px 0;
+  justify-content: center;
+  text-align: center;
+  background-image: url('../images/contacto-background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* background-attachment: fixed; */
+}
+
+.contacto-title h2 {
+  font-size: 3.2rem;
+  line-height: 3.4rem;
+  color: var(--white);
+}
+
+.contacto-title h2 > span {
+  color: var(--dark-green);
+}
+
+.contacto-title p {
+  min-width: 288px;
+  max-width: 350px;
+  margin-top: 5px;
+  font-style: italic;
+  font-size: 1.4rem;
+  line-height: 1.6rem;
+  color: var(--soft-white);
+}
+
+.form-container {
+  display: grid;
+  justify-content: center;
+}
 /* footer */
 
 footer {

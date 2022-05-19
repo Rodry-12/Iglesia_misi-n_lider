@@ -404,7 +404,7 @@
       </div>
     </section>
 
-    <section id="nosotros">
+    <!-- <section id="nosotros">
       <picture>
         <source media="(min-width:1000px)" srcset="./src/images/about.jpg">
         <img src="./sources/img/small/about.jpg" alt="">
@@ -445,6 +445,112 @@
           para ser bendecidos y ser de bendición a otros.
         </li>
       </ul>
+    </section> -->
+
+    <!-- Formulario de contacto -->
+    <section class="contatato-section"> 
+      <div class="contacto-title">
+        <h2>Habla con <span>nosotros!</span></h2>
+        <p>Si deseas ponerte en contacto con la iglesia Misi&oacuten L&iacuteder, recibir informaci&oacuten o tienes alguna petici&oacuten, no dudes en dejarnos tus datos.</p>
+      </div>
+      <div class="form-container">
+        <form class="contact-form" id="contact-form">
+
+          <!-- Nombre usuario -->
+          <div class="form-group" id="group-user">
+            <label for="user" class="form-label">Nombre</label>
+            <div class="form-group--input">
+              <input 
+                type="text"
+                class="form-input"
+                name="user"
+                id="user"
+                placeholder="Tu nombre" 
+              />
+              <i class="fa fa-times" aria-hidden="true"></i>
+              <p class="form-group--error">
+                El nombre debe ser m&aacuteximo de 40 letras y no puede tener
+                s&iacutembolos
+              </p>
+            </div>
+          </div>
+
+          <!-- Email usuario -->
+          <div class="form-group" id="group-email">
+            <label for="email" class="form-label">Correo</label>
+            <div class="form-group--input">
+              <input 
+                type="text"
+                class="form-input"
+                name="email"
+                id="email"
+                placeholder="Tu correo electr&oacutenico" 
+              />
+              <i class="fa fa-times" aria-hidden="true"></i>
+              <p class="form-group--error">
+                Debes escribir un correo valido
+              </p>
+            </div>
+          </div>
+
+          <!-- Asunto del correo  -->
+          <div class="form-group" id="group-subject">
+            <label for="subject" class="form-label">Asunto</label>
+            <div class="form-group--input">
+              <input 
+                type="text"
+                class="form-input"
+                name="subject"
+                id="subject"
+                placeholder="Asunto o petici&oacuten de oraci&oacute" 
+              />
+              <i class="fa fa-times" aria-hidden="true"></i>
+              <p class="form-group--error">
+                El asunto debe contener de 7 a 40 letras
+              </p>
+            </div>
+          </div>
+
+         <!-- Nombre usuario -->
+          <div class="form-group" id="group-user">
+            <label for="user" class="form-label">Contenido</label>
+            <div class="form-group--input">
+              <textarea 
+                class="form-textarea" 
+                name="content" 
+                id="content" 
+                cols="30" 
+                rows="10"
+                aria-placeholder="m&aacuteximo 300 caracteres"
+              ></textarea>
+              <p class="form-group--error">
+                Debe escribir un contenido con m&aacuteximo 300 caracteres.
+              </p>
+            </div>
+          </div>
+
+          <!-- Validacion del correo -->
+          <div class="form-group" id="group-validation">
+            <div class="form-message" id="form-message">
+              <p class="form-group--error">
+                <span><i class="fa fa-exclamation" aria-hidden="true"></i></span>
+                <b>Error: </b>Asegurate de rellenar todos los campos.
+              </p>
+            </div>
+            <div class="form-group--submit">
+              <button type="submit" class="form-btn" value="send">
+                Enviar
+              </button>
+              <p class="form-group--success" id="form-group--sucess">
+                <span><i class="fa fa-check-circle" aria-hidden="true"></i></span>
+                Correo enviado exitosamente!.
+              </p>
+            </div>
+          </div>
+
+        </form>
+      </div>
+
     </section>
 
     <footer>
