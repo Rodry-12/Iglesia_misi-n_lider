@@ -35,6 +35,7 @@ Negro: #061706 */
 html {
   font-size: 62.5%;
   font-family: "DM Sans", sans-serif;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -299,6 +300,11 @@ ul.nav-menu-right i:hover {
   max-width: 900px;
   text-align: center;
   font-size: 1.2rem;
+  padding: 10px;
+}
+
+.text-center h2 {
+  padding: 5px;
 }
 
 
@@ -306,7 +312,7 @@ ul.nav-menu-right i:hover {
   min-width: 320px;
   max-width: 400px;
   text-align: justify;
-  padding: 0 10px;
+  padding: 5px 10px;
 }
 
 
@@ -532,7 +538,7 @@ ul.nav-menu-right i:hover {
 }
 
 .text-center-visitanos {
-  font-size: 40px;
+  font-size: 3rem;
   text-align: center;
 }
 
@@ -545,6 +551,7 @@ ul.nav-menu-right i:hover {
   display: flex;
   justify-content: center;
   padding: 4%;
+  flex-wrap: wrap;
 }
 
 .card{
@@ -628,7 +635,7 @@ ul.nav-menu-right i:hover {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  /* justify-content: center; */
+  justify-content: center;
 }
 
 .evento {
@@ -781,20 +788,72 @@ footer {
   padding: 10px 0;
   display: flex;
   max-width: 400px;
+  min-width: 200px;
+  width: 100%;
+  justify-content: center;
 }
 
 .footer-start {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
+  padding: 10px;
+  flex-wrap: wrap;
 }
 
 .redes-sociales {
+  padding: 10px 0;
   max-width: 400px;
+  min-width: 200px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
 }
 
 .info {
+  padding: 10px 0;
   max-width: 400px;
+  min-width: 200px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.row {
+  padding: 5px 0px;
+  font-size: 1.2rem;
+  text-align: justify;
+
+}
+.info h2 {
+  font-size: 2rem;
+}
+
+.redes-sociales h2 {
+  font-size: 2rem;
+}
+
+.row a {
+  color: var(--color-body);
+}
+
+.row a:hover {
+  color:  var(--soft-green);
+  opacity: 0.8;
+  transition: all 0.5s ease-out;
+}
+
+.footer-end {
+  border-top: 1px solid #ddd6;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 20px;
+}
+
+.rights p {
+  font-size: 1.3rem;
+  text-align: center;
 }
 
 
