@@ -1,0 +1,103 @@
+.nav-main {
+    position: initial !important;
+    display: flex;
+    font-size: 1.7rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 90px;
+    z-index: 1;
+    transition: all 1s ease-out;
+}
+
+.northwell {
+    font-family: northwell,Sans-serif;
+}
+
+.donar-diezmos {
+    transition: .3s,border .3s,border-radius .3s,box-shadow .3s;
+    padding: 90px 150px 20px;
+}
+
+.pasos {
+    padding: 10px 150px 50px;
+}
+
+.texto-biblia {
+    padding: 20px;
+}
+
+.texto-biblia p {
+    margin-bottom: 24px;
+    font-size: 2rem;
+    text-align: center;
+}
+
+.pasos-donar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+.pasos-donar > .foto-qr {
+    width: 400px;
+    height: 520px;
+    margin: 20px;
+    text-align: center;
+}
+
+.pasos-donar > .como-transferir {
+    width: 400px;
+    height: 520px;
+    margin: 20px;
+}
+
+.pasos-donar h2 {
+    font-size: 2.3rem;
+    text-align: center;
+    color: var(--dark-gray);
+}
+
+.bancolombia {
+    max-width: 80%;
+    height: auto;
+}
+
+.scamer {
+    width: 40px;
+    aspect-ratio: auto 40 / 40;
+}
+
+ol > li {
+    font-size: 1.7rem;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+h2.margin-botom {
+    margin-bottom: 30px;
+}
+
+.gracias {
+    border-top: 2px solid var(--dark-green);
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    display: grid;
+    padding: 50px 0 50px;
+    text-align: center;
+}
+
+.gracias div {
+    width: 82px;
+    aspect-ratio: auto 82 / 82;
+    color: #d33;
+    font-size: 82px;
+}
+
+.gracias h2 {
+    font-size: 70px;
+    font-weight: 500;
+}
