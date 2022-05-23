@@ -11,8 +11,14 @@
     transition: all 1s ease-out;
 }
 
-.northwell {
-    font-family: northwell,Sans-serif;
+.font-cursive {
+    font-family: 'Grape Nuts', cursive;
+    font-size: 5rem;
+    padding: 5px;
+}
+
+.font-bebas {
+    font-family: BEBASNEU,Sans-serif;
 }
 
 .donar-diezmos {
@@ -31,6 +37,8 @@
 .texto-biblia p {
     margin-bottom: 24px;
     font-size: 2rem;
+    line-height: 1.5;
+    letter-spacing: .5px;
     text-align: center;
 }
 
@@ -98,6 +106,6 @@ h2.margin-botom {
 }
 
 .gracias h2 {
-    font-size: 70px;
+    font-size: 7rem;
     font-weight: 500;
 }

@@ -299,7 +299,7 @@ ul.nav-menu-right i:hover {
 .text-center {
   max-width: 900px;
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   padding: 10px;
 }
 
@@ -348,7 +348,7 @@ ul.nav-menu-right i:hover {
   max-width: 130px;
   align-items: center;
   color: var(--dark-green);
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   border: 2px solid var(--dark-green);
   border-radius: 20px;
   cursor: pointer;
@@ -534,12 +534,13 @@ ul.nav-menu-right i:hover {
 
 .horarios {
   background: #ddd;
-  padding: 5%;
+  padding: 2% 5%;
 }
 
 .text-center-visitanos {
   font-size: 3rem;
   text-align: center;
+  font-family: 'Grape Nuts', cursive;
 }
 
 .text-center-servicio {
@@ -566,6 +567,10 @@ ul.nav-menu-right i:hover {
   transform-style: preserve-3d;
 }
 
+.card p {
+  font-size: 1.4rem;
+}
+
 .card div {
   position: absolute;
   width: 100%;
@@ -586,13 +591,13 @@ ul.nav-menu-right i:hover {
 }
 
 .card .front{
-  background: rgba(255, 255, 255, 0.109);
+  background: #25252526;
   transform: perspective(500px) rotateX(0deg);
   padding: 10px;
 }
 
 .card .back{
-  background: rgba(255, 255, 255, 0.109);
+  background: #25252526;
   transform: perspective(500px) rotateX(180deg);
   padding: 10px;
 }
@@ -709,7 +714,7 @@ ul.nav-menu-right i:hover {
 }
 
 .evento--description p{
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   text-align: justify;
 }
 
