@@ -448,8 +448,8 @@
     </section> -->
 
     <!-- Formulario de contacto -->
-    <section class="contatato-section"> 
-      <div class="contacto-title">
+    <section class="contact-section"> 
+      <div class="contact-title">
         <h2>Habla con <span>nosotros!</span></h2>
         <p>Si deseas ponerte en contacto con la iglesia Misi&oacuten L&iacuteder, recibir informaci&oacuten o tienes alguna petici&oacuten, no dudes en dejarnos tus datos.</p>
       </div>
@@ -467,10 +467,9 @@
                 id="user"
                 placeholder="Tu nombre" 
               />
-              <i class="fa fa-times" aria-hidden="true"></i>
+              <i class="form-state-validation fa fa-times" aria-hidden="true"></i>
               <p class="form-group--error">
-                El nombre debe ser m&aacuteximo de 40 letras y no puede tener
-                s&iacutembolos
+                El nombre debe ser m&aacuteximo de 40 letras sin s&iacutembolos.
               </p>
             </div>
           </div>
@@ -484,11 +483,11 @@
                 class="form-input"
                 name="email"
                 id="email"
-                placeholder="Tu correo electr&oacutenico" 
+                placeholder="Tu correo electr&oacute;nico" 
               />
-              <i class="fa fa-times" aria-hidden="true"></i>
+              <i class="form-state-validation fa fa-times" aria-hidden="true"></i>
               <p class="form-group--error">
-                Debes escribir un correo valido
+                Debes escribir un correo valido.
               </p>
             </div>
           </div>
@@ -502,18 +501,18 @@
                 class="form-input"
                 name="subject"
                 id="subject"
-                placeholder="Asunto o petici&oacuten de oraci&oacute" 
+                placeholder="Asunto o petici&oacute;n de oraci&oacute;n" 
               />
-              <i class="fa fa-times" aria-hidden="true"></i>
+              <i class="form-state-validation fa fa-times" aria-hidden="true"></i>
               <p class="form-group--error">
-                El asunto debe contener de 7 a 40 letras
+                El asunto debe contener de 7 a 40 letras.
               </p>
             </div>
           </div>
 
-         <!-- Nombre usuario -->
-          <div class="form-group" id="group-user">
-            <label for="user" class="form-label">Contenido</label>
+         <!-- Contenido Usuario -->
+          <div class="form-group" id="group-content">
+            <label for="content" class="form-label">Contenido</label>
             <div class="form-group--input">
               <textarea 
                 class="form-textarea" 
@@ -521,7 +520,6 @@
                 id="content" 
                 cols="30" 
                 rows="10"
-                aria-placeholder="m&aacuteximo 300 caracteres"
               ></textarea>
               <p class="form-group--error">
                 Debe escribir un contenido con m&aacuteximo 300 caracteres.
@@ -536,15 +534,16 @@
                 <span><i class="fa fa-exclamation" aria-hidden="true"></i></span>
                 <b>Error: </b>Asegurate de rellenar todos los campos.
               </p>
+              <p class="form-group--success" id="form-group--sucess">
+                <span><i class="fa fa-check-circle" aria-hidden="true"></i></span>
+                Correo enviado exitosamente!
+              </p>
             </div>
             <div class="form-group--submit">
               <button type="submit" class="form-btn" value="send">
                 Enviar
               </button>
-              <p class="form-group--success" id="form-group--sucess">
-                <span><i class="fa fa-check-circle" aria-hidden="true"></i></span>
-                Correo enviado exitosamente!.
-              </p>
+
             </div>
           </div>
 

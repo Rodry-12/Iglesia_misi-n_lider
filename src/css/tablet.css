@@ -98,3 +98,13 @@ div.logo {
   grid-template-columns: 1fr 1fr;
   padding: 0 auto;
 }
+
+.contact-form {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+#group-content,
+#group-validation {
+  grid-column: span 3;
+}
