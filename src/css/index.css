@@ -36,6 +36,7 @@ Negro: #061706 */
 html {
   font-size: 62.5%;
   font-family: "DM Sans", sans-serif;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -299,7 +300,12 @@ ul.nav-menu-right i:hover {
 .text-center {
   max-width: 900px;
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
+  padding: 10px;
+}
+
+.text-center h2 {
+  padding: 5px;
 }
 
 
@@ -307,7 +313,7 @@ ul.nav-menu-right i:hover {
   min-width: 320px;
   max-width: 400px;
   text-align: justify;
-  padding: 0 10px;
+  padding: 5px 10px;
 }
 
 
@@ -343,7 +349,7 @@ ul.nav-menu-right i:hover {
   max-width: 130px;
   align-items: center;
   color: var(--dark-green);
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   border: 2px solid var(--dark-green);
   border-radius: 20px;
   cursor: pointer;
@@ -574,12 +580,13 @@ ul.nav-menu-right i:hover {
 
 .horarios {
   background: #ddd;
-  padding: 5%;
+  padding: 2% 5%;
 }
 
 .text-center-visitanos {
-  font-size: 40px;
+  font-size: 3rem;
   text-align: center;
+  font-family: 'Grape Nuts', cursive;
 }
 
 .text-center-servicio {
@@ -591,6 +598,7 @@ ul.nav-menu-right i:hover {
   display: flex;
   justify-content: center;
   padding: 4%;
+  flex-wrap: wrap;
 }
 
 .card{
@@ -603,6 +611,10 @@ ul.nav-menu-right i:hover {
   margin: 15px;
   backface-visibility: hidden;
   transform-style: preserve-3d;
+}
+
+.card p {
+  font-size: 1.4rem;
 }
 
 .card div {
@@ -625,13 +637,13 @@ ul.nav-menu-right i:hover {
 }
 
 .card .front{
-  background: rgba(255, 255, 255, 0.109);
+  background: #25252526;
   transform: perspective(500px) rotateX(0deg);
   padding: 10px;
 }
 
 .card .back{
-  background: rgba(255, 255, 255, 0.109);
+  background: #25252526;
   transform: perspective(500px) rotateX(180deg);
   padding: 10px;
 }
@@ -758,7 +770,7 @@ ul.nav-menu-right i:hover {
 }
 
 .evento--description p{
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   text-align: justify;
 }
 
@@ -1012,20 +1024,72 @@ footer {
   padding: 10px 0;
   display: flex;
   max-width: 400px;
+  min-width: 200px;
+  width: 100%;
+  justify-content: center;
 }
 
 .footer-start {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
+  padding: 10px;
+  flex-wrap: wrap;
 }
 
 .redes-sociales {
+  padding: 10px 0;
   max-width: 400px;
+  min-width: 200px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
 }
 
 .info {
+  padding: 10px 0;
   max-width: 400px;
+  min-width: 200px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.row {
+  padding: 5px 0px;
+  font-size: 1.2rem;
+  text-align: justify;
+
+}
+.info h2 {
+  font-size: 2rem;
+}
+
+.redes-sociales h2 {
+  font-size: 2rem;
+}
+
+.row a {
+  color: var(--color-body);
+}
+
+.row a:hover {
+  color:  var(--soft-green);
+  opacity: 0.8;
+  transition: all 0.5s ease-out;
+}
+
+.footer-end {
+  border-top: 1px solid #ddd6;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 20px;
+}
+
+.rights p {
+  font-size: 1.3rem;
+  text-align: center;
 }
 
 
