@@ -430,8 +430,6 @@ ul.nav-menu-right i:hover {
 
 .ministerios-container {
   position: relative;
-  display: flex;
-  flex-wrap: wrap;
   height: auto;
   padding-bottom: 10px;
 }
