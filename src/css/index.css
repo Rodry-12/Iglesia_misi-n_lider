@@ -25,6 +25,7 @@ Negro: #061706 */
   --whatsApp: #4dc046;
   --hover-whatsApp: #318d2c;
   --color-body: #ddd;
+  --beige: #e4e2e1;
 }
 
 * {
@@ -301,7 +302,7 @@ ul.nav-menu-right i:hover {
   max-width: 900px;
   text-align: center;
   font-size: 1.4rem;
-  padding: 10px;
+  /* padding: 10px; */
 }
 
 .text-center h2 {
@@ -326,42 +327,10 @@ ul.nav-menu-right i:hover {
 }
 
 
-.list-valores {
-  width: 90%;
-  max-width: 1200px;
-  margin: 10px auto;
-  display: flex;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-}
-
-
 .titlegreen {
   color: var(--dark-green);
 }
 
-.valor-item {
-  display: grid;
-  padding: 10px 20px;
-  margin: 10px 0;
-  width: 20%;
-  min-width: 100px;
-  max-width: 130px;
-  align-items: center;
-  color: var(--dark-green);
-  font-size: 1.4rem;
-  border: 2px solid var(--dark-green);
-  border-radius: 20px;
-  cursor: pointer;
-  text-align: center;
-}
-
-.valor-item:hover {
-  background-color: var(--dark-green);
-  color: var(--white);
-  transform: scale(1.2);
-  transition: all 0.2s;
-}
 
 /*Shepherds Section*/
 
@@ -424,6 +393,52 @@ ul.nav-menu-right i:hover {
   color: var(--white);
 }
 
+/*Seccion de valores*/
+.valores {
+  margin-top: 40px;
+}
+
+.valores-title h2 {
+  font-size: 4rem;
+  text-align: center;
+}
+
+.list-valores {
+  width: 90%;
+  max-width: 1200px;
+  margin: 10px auto;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.valor-item {
+  display: grid;
+  padding: 0 10px;
+  margin: 10px 0;
+  width: 200px;
+  min-width: 100px;
+  max-width: 130px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.valor-item i {
+  font-size: 5rem;
+  color: var(--dark-green);
+}
+
+.valor-item h3 {
+  font-size: 2.5rem;
+  font-weight: normal;
+}
+
+.valor-item p {
+  font-size: 1.5rem;
+  color: var(--gray);
+}
+
 /*Seccion de ministerios*/
 
 .ministerios--title h2{
@@ -442,9 +457,8 @@ ul.nav-menu-right i:hover {
 
 .ministerios-prev,
 .ministerios-next{
-  /* position: absolute; */
-  /* top: 50%; */
-  /* transform: translate(0, -50%); */
+  position: absolute;
+  top: 33%;
   background: none;
   border: none;
   font-size: 3rem;
@@ -460,7 +474,11 @@ ul.nav-menu-right i:hover {
 }
 
 .ministerios-prev {
+  left: 4%;
+}
 
+.ministerios-next {
+  right: 4%;
 }
 
 .ministerios-container-list{
@@ -468,6 +486,8 @@ ul.nav-menu-right i:hover {
 }
 
 .ministerios-container-list {
+  width: 80%;
+  margin: 0 auto;
   overflow: hidden;
 }
 
@@ -493,7 +513,7 @@ ul.nav-menu-right i:hover {
 .ministerio-card {
   position: relative;
   width: 100%;
-  min-width: 288px;
+  min-width: 250px;
   height: auto;
   margin: 0 3px;
   box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.137);
@@ -514,6 +534,7 @@ ul.nav-menu-right i:hover {
 }
 
 .ministerio-card--content {
+  width: 100%;
   display: grid;
   position: absolute;
   background-color: var(--soft-white);
@@ -579,25 +600,34 @@ ul.nav-menu-right i:hover {
 /* Horarios */
 
 .horarios {
-  background: #ddd;
-  padding: 2% 5%;
+  /* background: #ddd; */
 }
 
-.text-center-visitanos {
-  font-size: 3rem;
-  text-align: center;
-  font-family: 'Grape Nuts', cursive;
+.horarios-title {
+  margin-top: 40px;
 }
 
-.text-center-servicio {
-  font-size: 50px;
+.horarios-title h2 {
+  font-size: 4rem;
+  line-height: 4.2rem;
   text-align: center;
+}
+
+.horarios-title p{
+  font-size: 2rem;
+  line-height: 2.2rem;
+  text-align: center;
+}
+
+.horarios-title p > span {
+  color: var(--dark-green);
 }
 
 .horarios-list {
   display: flex;
+  height: fit-content;
   justify-content: center;
-  padding: 4%;
+  padding: 10px;
   flex-wrap: wrap;
 }
 
@@ -605,12 +635,19 @@ ul.nav-menu-right i:hover {
   position: relative;
   width: 300px;
   height: 280px;
-  display: grid;
   place-items: center;
-  border-radius: 20px;
   margin: 15px;
   backface-visibility: hidden;
   transform-style: preserve-3d;
+}
+
+.card-title {
+  position: relative;
+  z-index: -100;
+  background-image: url('../images/serviviosTitle-background.png');
+  background-size: cover;
+  background-position: bottom;
+  background-repeat: no-repeat;
 }
 
 .card p {
@@ -623,29 +660,64 @@ ul.nav-menu-right i:hover {
   height: 100%;
   display: grid;
   justify-content: center;
-  border-radius: 20px;
+  border-radius: 5px;
   backface-visibility: hidden;
   transition: 1.5s cubic-bezier(0.4, 0.2, 0.2, 1);
   align-content: space-evenly;
   justify-items: center;
 }
 
+.servicio-miercoles {
+  background-image: url('../images/servicio-miercoles.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.servicio-sabado {
+  height: 300px;
+  background-image: url('../images/servicio-sabado.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.servicio-domingo {
+  background-image: url('../images/servicio-domingo.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 .front img {
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
-    width: 120px;
-    height: 120px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.front h2{
+  margin-top: 18px;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.front p {
+  margin-bottom: 20px;
 }
 
 .card .front{
-  background: #25252526;
   transform: perspective(500px) rotateX(0deg);
-  padding: 10px;
+  padding: 30px 5px;
+  box-shadow: 0 4px 8px rgb(0, 0, 0, 0.16);
 }
 
 .card .back{
-  background: #25252526;
-  transform: perspective(500px) rotateX(180deg);
   padding: 10px;
+  background: var(--beige);
+  transform: perspective(500px) rotateX(180deg);
+  box-shadow: 0 4px 8px rgb(0, 0, 0, 0.16);
 }
 
 .card:hover .front{
@@ -674,15 +746,15 @@ ul.nav-menu-right i:hover {
 }
 
 .eventos-title h2 {
-  font-size: 2.8rem;
-  line-height: 3rem;
+  font-size: 4rem;
+  line-height: 4.2rem;
   margin-bottom: 8px;
   color: var(--dark-green);
 }
 
 .eventos-title p {
-  font-size: 1.4rem;
-  line-height: 1.6rem;
+  font-size: 1.6rem;
+  line-height: 1.8rem;
   color: var(--white);
 }
 
