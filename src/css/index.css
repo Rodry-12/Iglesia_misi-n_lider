@@ -283,27 +283,66 @@ ul.nav-menu-right i:hover {
 
 /*Marco Filosofico*/
 
-.image-center {
+.community-container {
   margin-top: 50px;
   height: auto;
   width: 100%;
-  align-content: center;
   display: flex;
-  justify-content: center;
+  align-content: center;
+  justify-content: space-around;
+  align-items: center;
   flex-wrap: wrap;
 }
 
-.title {
+.community {
+  min-width: 288px;
+  max-width: 1000px;
+  height: fit-content;
+}
+
+.community h2{
   font-size: 4rem;
+  line-height: 4.2rem;
   text-align: center;
 }
 
-.text-center {
-  max-width: 900px;
-  text-align: center;
-  font-size: 1.4rem;
-  /* padding: 10px; */
+.community span {
+  color: var(--dark-green);
 }
+
+.community p {
+  text-align: center;
+  font-size: 2rem;
+  line-height: 2.5rem;
+  letter-spacing: .5px;
+  padding: 10px;
+}
+
+.mision-vision {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  max-width: 850px;
+  margin-top: 20px;
+}
+
+.mision,
+.vision {
+  width: 100%;
+  min-width: 288px;
+  max-width: 400px;
+  text-align: center;
+  padding: 0 10px;
+}
+
+.mision p,
+.vision p {
+  text-align: justify;
+  font-size: 2rem;
+  line-height: 2.5rem;
+  letter-spacing: .5px;
+}
+
 
 .text-center h2 {
   padding: 5px;
@@ -317,19 +356,6 @@ ul.nav-menu-right i:hover {
   padding: 5px 10px;
 }
 
-
-.mision-vision {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  max-width: 900px;
-  margin-top: 30px;
-}
-
-
-.titlegreen {
-  color: var(--dark-green);
-}
 
 
 /*Shepherds Section*/
@@ -675,7 +701,6 @@ ul.nav-menu-right i:hover {
 }
 
 .servicio-sabado {
-  height: 300px;
   background-image: url('../images/servicio-sabado.jpg');
   background-size: cover;
   background-position: center;
