@@ -625,9 +625,9 @@ ul.nav-menu-right i:hover {
 
 /* Horarios */
 
-.horarios {
+/* .horarios {
   /* background: #ddd; */
-}
+*/
 
 .horarios-title {
   margin-top: 40px;
@@ -1058,9 +1058,9 @@ ul.nav-menu-right i:hover {
   color: var(--red);
 }
 
-.form-group--success--active {
+/* .form-group--success--active {
   
-}
+} */
 
 .form-group--error.show,
 .form-group--success.show {
