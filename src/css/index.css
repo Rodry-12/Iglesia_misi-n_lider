@@ -694,21 +694,21 @@ ul.nav-menu-right i:hover {
 }
 
 .servicio-miercoles {
-  background-image: url('../images/servicio-miercoles.jpg');
+  background-image: url('../images/servicio-miercoles-background.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
 .servicio-sabado {
-  background-image: url('../images/servicio-sabado.jpg');
+  background-image: url('../images/servicio-sabado-background.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
 .servicio-domingo {
-  background-image: url('../images/servicio-domingo.jpg');
+  background-image: url('../images/servicio-domingo-background.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -1034,7 +1034,7 @@ ul.nav-menu-right i:hover {
   position: absolute;
   right: 12px;
   top: 14px;
-  z-index: 50;
+  z-index: 0;
   font-size: 1.6rem;
   opacity: 0;
 }
@@ -1046,7 +1046,25 @@ ul.nav-menu-right i:hover {
   font-weight: bold;
   margin: 2px 3px 0px 5px;
   font-weight: lighter;
-  color: var(--dark-gray);
+}
+
+
+.form-group--error--active,
+.form-group--success--active {
+  display: block;
+}
+
+.form-group--error--active {
+  color: var(--red);
+}
+
+.form-group--success--active {
+  
+}
+
+.form-group--error.show,
+.form-group--success.show {
+  display: block;
 }
 
 .form-textarea {
@@ -1066,10 +1084,19 @@ ul.nav-menu-right i:hover {
 .form-message {
   display: none;
   width: fit-content;
-  background-color: #B22222;
   padding: 5px;
-  margin: 5px 0;
+  margin: 2px auto;
   border-radius: 3px;
+}
+
+.form-message--correct-active {
+  background-color: var(--dark-green);
+  display: block;
+}
+
+.form-message--incorrect-active {
+  background-color: var(--red);
+  display: block;
 }
 
 .form-message p{
@@ -1102,6 +1129,35 @@ ul.nav-menu-right i:hover {
 .form-btn:hover {
   border: 1px solid var(--gray);
   box-shadow: 5px 5px 20px rgba(61, 61, 61, 0.555);
+}
+
+
+/*Validacion de campos*/
+
+.form-group--correct .form-state-validation {
+  color: var(--dark-green);
+  opacity: 1;
+}
+
+.form-group--correct .form-input {
+  border: 2px solid var(--dark-green);
+}
+
+.form-group--incorrect .form-state-validation {
+  color: var(--red);
+  opacity: 1;
+}
+
+.form-group--incorrect .form-input {
+  border: 2px solid var(--red);
+}
+
+.form-group--textarea-correct .form-textarea {
+  border: 2px solid var(--dark-green);
+}
+
+.form-group--textarea-incorrect .form-textarea {
+  border: 2px solid var(--red);
 }
 
 /* footer */

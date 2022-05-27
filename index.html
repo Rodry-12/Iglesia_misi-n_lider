@@ -144,7 +144,7 @@
   
           <div class="card">
             <div class="front servicio-miercoles">
-              <img src="./src/images/pastores.jpg" alt="Miércoles">
+              <img src="./src/images/servicio-miercoles.jpg" alt="Miércoles">
               <div class="card-title">
   
               </div>
@@ -160,7 +160,7 @@
   
           <div class="card">
             <div class="front servicio-sabado">
-              <img src="./src/images/pastores.jpg" alt="Sábado">
+              <img src="./src/images/servicio-sabado.jpg" alt="Sábado">
               <div class="card-title">
                 
               </div>
@@ -177,7 +177,7 @@
   
           <div class="card">
             <div class="front servicio-domingo">
-              <img src="./src/images/pastores.jpg" alt="Domingo">
+              <img src="./src/images/servicio-domingo.jpg" alt="Domingo">
               <div class="card-title">
                 
               </div>
@@ -583,7 +583,7 @@
               </p>
             </div>
             <div class="form-group--submit">
-              <button type="submit" class="form-btn" value="send">
+              <button type="submit" class="form-btn" value="send" id="form-btn">
                 Enviar
               </button>
 
@@ -651,5 +651,22 @@
     ></script>
 
     <script type="text/javascript" src="./src/js/index.js"></script>
+
+
+    <!-- Cdn de Emais.js -->
+    <script
+    type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
+    ></script>
+    <!-- Script para inicializar emails.js-->
+    <script type="text/javascript">
+      (function () {
+        // https://dashboard.emailjs.com/admin/integration
+       emailjs.init("UZdTzitkN7lOw9igx");
+      })();
+    </script>
+
+    <!-- Scripts del formulario -->
+    <script src="./src/js/form.js"></script>
   </body>
 </html>
