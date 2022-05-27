@@ -99,6 +99,14 @@ div.logo {
   margin: 0 auto;
 }
 
+.ministerios-prev {
+  left: 7%;
+}
+
+.ministerios-next {
+  right: 7%;
+}
+
 .contact-form {
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;

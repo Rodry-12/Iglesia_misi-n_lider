@@ -23,8 +23,8 @@ $(function () {
         },
         responsive: [
             {
-                // screens greater than >= 775px
-                breakpoint: 620,
+                // screens greater than >= 750px
+                breakpoint: 750,
                 settings: {
                     // Set to `auto` and provide item width to adjust to viewport
                     slidesToShow: 2,
@@ -33,8 +33,8 @@ $(function () {
                 }
             },
             {
-                // screens greater than >= 775px
-                breakpoint: 930,
+                // screens greater than >= 1100px
+                breakpoint: 1100,
                 settings: {
                     // Set to `auto` and provide item width to adjust to viewport
                     slidesToShow: 3,
