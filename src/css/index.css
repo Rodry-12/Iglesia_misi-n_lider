@@ -26,6 +26,7 @@ Negro: #061706 */
   --hover-whatsApp: #318d2c;
   --color-body: #ddd;
   --beige: #e4e2e1;
+  --color-horarios: #b8b5b5;
 }
 
 * {
@@ -99,7 +100,7 @@ header.header {
 
 .nav-main {
   position: fixed;
-  /* display: flex; */
+  top: 0;
   font-size: 1.7rem;
   flex-direction: column;
   justify-content: center;
@@ -415,7 +416,7 @@ ul.nav-menu-right i:hover {
 .shepherds-description h4 {
   color: var(--dark-green);
   padding: 10px 0 0 10px;
-  font-size: 2.5rem;
+  font-size: 2.6rem;
   font-style: italic;
 }
 
@@ -424,8 +425,8 @@ ul.nav-menu-right i:hover {
   min-width: 288px;
   max-width: 450px;
   padding: 0 10px 10px;
-  font-size: 1.3rem;
-  line-height: 1.5rem;
+  font-size: 1.6rem;
+  line-height: 1.8rem;
   font-weight: lighter;
   text-align: left;
   color: var(--white);
@@ -651,6 +652,8 @@ ul.nav-menu-right i:hover {
 
 .horarios {
   padding: 10px 0 40px;
+  box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.137);
+  /* background: radial-gradient(circle, rgba(158,155,153,1) 0%, rgba(221,221,221,1) 100%); */
 }
 
 .horarios-title {
