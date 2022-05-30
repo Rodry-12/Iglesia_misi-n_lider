@@ -440,8 +440,6 @@ ul.nav-menu-right i:hover {
   background-size: cover;
   background-repeat: no-repeat;
 }
-.valores {
-}
 
 .valores-title h2 {
   font-size: 4rem;
@@ -1085,9 +1083,6 @@ ul.nav-menu-right i:hover {
   color: var(--red);
 }
 
-.form-group--success--active {
-  
-}
 
 .form-group--error.show,
 .form-group--success.show {
