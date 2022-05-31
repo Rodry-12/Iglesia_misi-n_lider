@@ -1,6 +1,6 @@
 .nav-main {
-    position: initial !important;
-    display: flex;
+    position: fixed;
+    top: 0;
     font-size: 1.7rem;
     flex-direction: column;
     justify-content: center;
@@ -9,7 +9,108 @@
     height: 90px;
     z-index: 1;
     transition: all 1s ease-out;
-}
+  }
+  
+  div.logo {
+    width: 100%;
+    height: fit-content;
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--black);
+  }
+  
+  #menu-btn {
+    padding-right: 10px;
+    font-size: 4rem;
+    cursor: pointer;
+  }
+
+  .icon {
+    cursor: pointer;
+    height: auto;
+    width: 100px;
+    transition: all 1s ease-out;
+  }
+  
+  .scroll .icon {
+    cursor: pointer;
+    margin-right: 15px;
+    height: auto;
+    width: 80px;
+    transition: all 1s ease-out;
+  }
+  
+  div.logo a.iglesia {
+    color: var(--soft-white);
+    font-size: 1.9rem;
+  }
+  
+  
+  .nav-bar {
+    position: relative;
+    width: 100%;
+    z-index: -100;
+    transform: translate(0, -1000px);
+    transition: .5s ease all;
+  }
+  
+  .nav-bar.show {
+    transform: translate(0, 0);
+  }
+  
+  .nav-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .nav-menu li {
+    padding: 15px 0;
+  }
+  
+  .nav-menu-right {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 10px;
+  }
+  
+  .nav-menu-right a {
+    padding: 10px 15px;
+    color: var(--white);
+  }
+  
+  .btn-principal {
+    background-color: var(--dark-green);
+    color: var(--soft-white);
+    padding: 10px 20px;
+    border-radius: 20px;
+  }
+  
+  ul.nav-menu-right i:hover {
+    color: var(--dark-green);
+    transition: 0.5s ease-in-out;
+  }
+  
+  
+  .nav-main ul.nav-menu li a:hover {
+    box-shadow: inset 0 -2px 0 var(--soft-green);
+    opacity: 0.8;
+    transition: all 0.5s ease-out;
+  }
+  
+  .image {
+    position: relative;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    min-height: 150vh;
+    width: 100%;
+  }
 
 .font-cursive {
     font-family: 'Grape Nuts', cursive;
@@ -21,18 +122,45 @@
     font-family: BEBASNEU,Sans-serif;
 }
 
-.donar-diezmos {
-    transition: .3s,border .3s,border-radius .3s,box-shadow .3s;
-    padding: 90px 150px 20px;
+.titlegreen {
+    color: #559236;
 }
 
-.pasos {
-    padding: 10px 150px 50px;
+.donar-diezmos {
+    transition: .3s,border .3s,border-radius .3s,box-shadow .3s;
+    margin-top: 100px;
+}
+
+.donar-diezmos h2 {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.donar-diezmos h1 {
+    text-align: center;
+    font-size: 3.5rem;
 }
 
 .texto-biblia {
-    padding: 20px;
+    width: 100%;
+    min-width: 288px;
+    max-width: 1200px;
+    padding: 0 15px;
+    margin: 10px auto 0;
 }
+
+
+.pasos-donar h2 {
+    font-size: 2.3rem;
+    text-align: center;
+    color: var(--dark-gray);
+}
+
+.pasos > h2 {
+    font-size: 3.5rem;
+    text-align: center;
+}
+
 
 .texto-biblia p {
     margin-bottom: 24px;
@@ -46,6 +174,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
     padding: 20px 0;
 }
 
@@ -58,15 +187,9 @@
 
 .pasos-donar > .como-transferir {
     width: 400px;
-    height: 520px;
     margin: 20px;
 }
 
-.pasos-donar h2 {
-    font-size: 2.3rem;
-    text-align: center;
-    color: var(--dark-gray);
-}
 
 .bancolombia {
     max-width: 80%;
@@ -78,10 +201,15 @@
     aspect-ratio: auto 40 / 40;
 }
 
+.como-transferir ol {
+    min-width: 250px;
+    margin: 0 20px;
+}
+
 ol > li {
     font-size: 1.7rem;
     font-weight: 400;
-    line-height: 1.5;
+    line-height: 4rem;
 }
 
 h2.margin-botom {
@@ -89,12 +217,11 @@ h2.margin-botom {
 }
 
 .gracias {
-    border-top: 2px solid var(--dark-green);
     display: flex;
     justify-content: center;
     justify-items: center;
     display: grid;
-    padding: 50px 0 50px;
+    padding: 0 0 30px;
     text-align: center;
 }
 

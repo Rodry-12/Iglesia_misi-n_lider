@@ -26,6 +26,7 @@ Negro: #061706 */
   --hover-whatsApp: #318d2c;
   --color-body: #ddd;
   --beige: #e4e2e1;
+  --color-horarios: #b8b5b5;
 }
 
 * {
@@ -99,7 +100,7 @@ header.header {
 
 .nav-main {
   position: fixed;
-  /* display: flex; */
+  top: 0;
   font-size: 1.7rem;
   flex-direction: column;
   justify-content: center;
@@ -283,10 +284,19 @@ ul.nav-menu-right i:hover {
 
 /*Marco Filosofico*/
 
+.community-section {
+  padding: 50px 0 30px;
+  background-image: url('../backgrounds/background1.png');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
 .community-container {
-  margin-top: 50px;
   height: auto;
+  margin: 0 auto;
   width: 100%;
+  max-width: 1200px;
   display: flex;
   align-content: center;
   justify-content: center;
@@ -296,7 +306,7 @@ ul.nav-menu-right i:hover {
 
 .community {
   min-width: 288px;
-  max-width: 1000px;
+  max-width: 800px;
   height: fit-content;
 }
 
@@ -323,7 +333,7 @@ ul.nav-menu-right i:hover {
   flex-wrap: wrap;
   justify-content: space-around;
   max-width: 850px;
-  margin-top: 20px;
+  margin-top: 5px;
 }
 
 .mision,
@@ -335,18 +345,21 @@ ul.nav-menu-right i:hover {
   padding: 0 10px;
 }
 
+.mision h2,
+.vision h2 {
+  font-size: 3.5rem;
+  line-height: 3.7rem;
+}
+
 .mision p,
 .vision p {
-  text-align: justify;
+  text-align: center;
   font-size: 2rem;
   line-height: 2.5rem;
   letter-spacing: .5px;
 }
 
 
-.text-center h2 {
-  padding: 5px;
-}
 
 
 .text-center p {
@@ -403,7 +416,7 @@ ul.nav-menu-right i:hover {
 .shepherds-description h4 {
   color: var(--dark-green);
   padding: 10px 0 0 10px;
-  font-size: 2.5rem;
+  font-size: 2.6rem;
   font-style: italic;
 }
 
@@ -412,16 +425,20 @@ ul.nav-menu-right i:hover {
   min-width: 288px;
   max-width: 450px;
   padding: 0 10px 10px;
-  font-size: 1.3rem;
-  line-height: 1.5rem;
+  font-size: 1.6rem;
+  line-height: 1.8rem;
   font-weight: lighter;
   text-align: left;
   color: var(--white);
 }
 
 /*Seccion de valores*/
-.valores {
-  margin-top: 40px;
+.valores-section {
+  padding: 40px 0;
+  background-image: url('../images/horarios-background.png');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .valores-title h2 {
@@ -432,7 +449,7 @@ ul.nav-menu-right i:hover {
 .list-valores {
   width: 90%;
   max-width: 1200px;
-  margin: 10px auto;
+  margin: 10px auto 0;
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
@@ -466,10 +483,16 @@ ul.nav-menu-right i:hover {
 }
 
 /*Seccion de ministerios*/
+.ministerios--section {
+  padding: 50px 0;
+  background-image: url('../images/horarios-background.png');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
 
 .ministerios--title h2{
-  margin: 30px 0 15px 22px;
-  text-align: left;
+  margin-bottom: 15px;
   font-size: 4rem;
   line-height: 4.3rem;
   text-align: center;
@@ -625,9 +648,17 @@ ul.nav-menu-right i:hover {
 
 /* Horarios */
 
+<<<<<<< HEAD
 /* .horarios {
   /* background: #ddd; */
 */
+=======
+.horarios {
+  padding: 10px 0 40px;
+  box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.137);
+  /* background: radial-gradient(circle, rgba(158,155,153,1) 0%, rgba(221,221,221,1) 100%); */
+}
+>>>>>>> cc648d10f65faa58183b1627675effc207ac5b73
 
 .horarios-title {
   margin-top: 40px;
@@ -637,12 +668,15 @@ ul.nav-menu-right i:hover {
   font-size: 4rem;
   line-height: 4.2rem;
   text-align: center;
+  /* color: var(--soft-white); */
 }
 
 .horarios-title p{
   font-size: 2rem;
   line-height: 2.2rem;
+  font-style: italic;
   text-align: center;
+  /* color: var(--beige); */
 }
 
 .horarios-title p > span {
@@ -694,30 +728,28 @@ ul.nav-menu-right i:hover {
 }
 
 .servicio-miercoles {
-  background-image: url('../images/servicio-miercoles-background.jpg');
+  background-image: url('../images/eventos-background1.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
 .servicio-sabado {
-  background-image: url('../images/servicio-sabado-background.jpg');
+  background-image: url('../images/eventos-background1.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
 .servicio-domingo {
-  background-image: url('../images/servicio-domingo-background.jpg');
+  background-image: url('../images/eventos-background1.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
 .front img {
-  width: 180px;
   height: 180px;
-  border-radius: 50%;
   object-fit: cover;
   object-position: center;
 }
@@ -756,7 +788,6 @@ ul.nav-menu-right i:hover {
 /*Seccion de eventos*/
 .eventos-section {
   height: auto;
-  margin: 50px 0;
   padding-bottom: 50px;
   background-image: url('../images/eventos-background1.jpg');
   background-size: cover;
@@ -871,6 +902,7 @@ ul.nav-menu-right i:hover {
   text-align: justify;
 }
 
+<<<<<<< HEAD
 /* Nosotros */
 
 .titlegreen {
@@ -916,6 +948,8 @@ picture {
   padding: 15px 0;
   text-align: center;
 }
+=======
+>>>>>>> cc648d10f65faa58183b1627675effc207ac5b73
 
 .creemos ul {
   grid-row: 2 / 3;
@@ -929,6 +963,7 @@ picture {
   grid-template-columns: 1fr 1fr;
 }
 
+<<<<<<< HEAD
 .creemos ul li {
   padding: 10px;
 }
@@ -940,24 +975,76 @@ picture {
 /* #nosotros ul {
   grid-row: 2 / 3;
   grid-column: 2 / 3;
+=======
+.titlegreen {
+  color: var(--dark-green);
+}
+
+.creemos {
+  padding: 0 20px;
+  min-width: 288px;
+  max-width: 700px;
+}
+
+#nosotros {
+  display: flex;
+  padding: 20px 10px;
+  padding-top: 90px;
+  flex-wrap: wrap;
+  justify-content: center;
+  background-image: url('../images/horarios-background.png');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.nosotrosimage {
+  align-items: center;
+  display: flex;
+}
+
+
+.nosotrosimage picture img {
+  width: 40vmax;
+  height: 40vmax;
+  max-width: 570px;
+  max-height: 545px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgb(0 0 0 / 30%);
+  /* display: none; */
+}
+
+
+#nosotros h2 {
+  font-size: 5rem;
+  font-family: 'Grape Nuts', cursive;
+  font-weight: bolder;
+  padding: 15px 0;
+  text-align: center;
+}
+
+.creemos ul {
+>>>>>>> cc648d10f65faa58183b1627675effc207ac5b73
   align-self: stretch;
-  font-size: 1.65rem;
+  font-size: 1.6rem;
   font-weight: lighter;
-  padding: 0% 8%;
-  color: var(--azuloscuro);
+  padding: 10px 0% 8%;
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
 
-#nosotros ul li {
-  padding: 5%;
-  width: 100%;
+.creemos ul li {
+  padding: 10px;
 }
+<<<<<<< HEAD
 
 #nosotros ul li i {
   color: var(--dark-green);
 }  */
 
+=======
+>>>>>>> cc648d10f65faa58183b1627675effc207ac5b73
 /* Formulario de contacto */
 
 .contact-section {
@@ -1087,9 +1174,12 @@ picture {
   color: var(--red);
 }
 
+<<<<<<< HEAD
 /* .form-group--success--active {
   
 } */
+=======
+>>>>>>> cc648d10f65faa58183b1627675effc207ac5b73
 
 .form-group--error.show,
 .form-group--success.show {
