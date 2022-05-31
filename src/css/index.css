@@ -648,9 +648,9 @@ ul.nav-menu-right i:hover {
 
 /* Horarios */
 
-/* .horarios {
-  /* background: #ddd; */
-*/
+.horarios {
+  padding-top: 40px;
+}
 
 .horarios-title {
   margin-top: 40px;
