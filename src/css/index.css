@@ -648,17 +648,9 @@ ul.nav-menu-right i:hover {
 
 /* Horarios */
 
-<<<<<<< HEAD
 /* .horarios {
   /* background: #ddd; */
 */
-=======
-.horarios {
-  padding: 10px 0 40px;
-  box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.137);
-  /* background: radial-gradient(circle, rgba(158,155,153,1) 0%, rgba(221,221,221,1) 100%); */
-}
->>>>>>> cc648d10f65faa58183b1627675effc207ac5b73
 
 .horarios-title {
   margin-top: 40px;
@@ -902,7 +894,6 @@ ul.nav-menu-right i:hover {
   text-align: justify;
 }
 
-<<<<<<< HEAD
 /* Nosotros */
 
 .titlegreen {
@@ -948,8 +939,6 @@ picture {
   padding: 15px 0;
   text-align: center;
 }
-=======
->>>>>>> cc648d10f65faa58183b1627675effc207ac5b73
 
 .creemos ul {
   grid-row: 2 / 3;
@@ -963,7 +952,6 @@ picture {
   grid-template-columns: 1fr 1fr;
 }
 
-<<<<<<< HEAD
 .creemos ul li {
   padding: 10px;
 }
@@ -975,57 +963,6 @@ picture {
 /* #nosotros ul {
   grid-row: 2 / 3;
   grid-column: 2 / 3;
-=======
-.titlegreen {
-  color: var(--dark-green);
-}
-
-.creemos {
-  padding: 0 20px;
-  min-width: 288px;
-  max-width: 700px;
-}
-
-#nosotros {
-  display: flex;
-  padding: 20px 10px;
-  padding-top: 90px;
-  flex-wrap: wrap;
-  justify-content: center;
-  background-image: url('../images/horarios-background.png');
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-.nosotrosimage {
-  align-items: center;
-  display: flex;
-}
-
-
-.nosotrosimage picture img {
-  width: 40vmax;
-  height: 40vmax;
-  max-width: 570px;
-  max-height: 545px;
-  object-fit: cover;
-  border-radius: 50%;
-  box-shadow: 0 4px 8px rgb(0 0 0 / 30%);
-  /* display: none; */
-}
-
-
-#nosotros h2 {
-  font-size: 5rem;
-  font-family: 'Grape Nuts', cursive;
-  font-weight: bolder;
-  padding: 15px 0;
-  text-align: center;
-}
-
-.creemos ul {
->>>>>>> cc648d10f65faa58183b1627675effc207ac5b73
   align-self: stretch;
   font-size: 1.6rem;
   font-weight: lighter;
@@ -1037,14 +974,11 @@ picture {
 .creemos ul li {
   padding: 10px;
 }
-<<<<<<< HEAD
 
 #nosotros ul li i {
   color: var(--dark-green);
 }  */
 
-=======
->>>>>>> cc648d10f65faa58183b1627675effc207ac5b73
 /* Formulario de contacto */
 
 .contact-section {
@@ -1173,13 +1107,6 @@ picture {
 .form-group--error--active {
   color: var(--red);
 }
-
-<<<<<<< HEAD
-/* .form-group--success--active {
-  
-} */
-=======
->>>>>>> cc648d10f65faa58183b1627675effc207ac5b73
 
 .form-group--error.show,
 .form-group--success.show {
