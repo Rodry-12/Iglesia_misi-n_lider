@@ -912,11 +912,16 @@ ul.nav-menu-right i:hover {
 }
 
 #nosotros {
+  width: 100%;
   display: flex;
-  padding: 2%;
+  padding: 20px 10px;
+  padding-top: 90px;
   flex-wrap: wrap;
   justify-content: center;
-  width: 100%;
+  background-image: url('../images/horarios-background.png');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 picture {
