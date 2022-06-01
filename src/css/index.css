@@ -926,8 +926,8 @@ ul.nav-menu-right i:hover {
 }
 
 .nosotrosimage picture img {
-  width: 40vmax;
-  height: 40vmax;
+  width: 36vmax;
+  height: 36vmax;
   max-width: 570px;
   max-height: 545px;
   object-fit: cover;
