@@ -342,7 +342,7 @@ ul.nav-menu-right i:hover {
   min-width: 288px;
   max-width: 400px;
   text-align: center;
-  padding: 0 10px;
+  padding: 10px;
 }
 
 .mision h2,
@@ -485,7 +485,7 @@ ul.nav-menu-right i:hover {
 /*Seccion de ministerios*/
 .ministerios--section {
   padding: 50px 0;
-  background-image: url('../images/horarios-background.png');
+  /* background-image: url('../images/horarios-background.png'); */
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -649,7 +649,11 @@ ul.nav-menu-right i:hover {
 /* Horarios */
 
 .horarios {
-  padding-top: 40px;
+  padding-bottom: 40px;
+  background-image: url('../images/horarios-background.png');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .horarios-title {
@@ -913,7 +917,7 @@ ul.nav-menu-right i:hover {
   padding-top: 90px;
   flex-wrap: wrap;
   justify-content: center;
-  background-image: url('../images/horarios-background.png');
+  /* background-image: url('../images/horarios-background.png'); */
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
