@@ -43,7 +43,7 @@ html {
 
 body {
   min-height: 100vh;
-  color: var(--soft-black);
+  color: var(--dark-green);
   background-color: var(--color-body);
   overflow-x: hidden;
   scroll-behavior: smooth;
