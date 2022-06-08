@@ -83,7 +83,7 @@ window.onload = function () {
 
         if(fields.user && fields.email && fields.subject && fields.content ) {
 
-            emailjs.sendForm('service_mbseygw', 'template_qwccze9', form, "UZdTzitkN7lOw9igx")
+            emailjs.sendForm('service_l49xl0j', 'template_qwccze9', form, "UZdTzitkN7lOw9igx")
             .then(function () {
                 console.log('SUCCESS!');
             }, function (error) {
