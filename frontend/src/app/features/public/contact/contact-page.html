@@ -1,0 +1,24 @@
+<h1 class="sr-only">Habla con nosotros</h1>
+<app-contact-section />
+<section class="container page-section" aria-labelledby="contact-channels-heading">
+  <h2 id="contact-channels-heading">Canales de contacto</h2>
+  <p class="lead">
+    Si deseas recibir información o compartir una petición, ponte en contacto con nuestra iglesia.
+  </p>
+  <div class="card-grid">
+    <article class="content-card">
+      <h2>Correo</h2>
+      <a [href]="'mailto:' + church.email">{{ church.email }}</a>
+    </article>
+    <article class="content-card">
+      <h2>Teléfono</h2>
+      <a [href]="'tel:' + church.phone">{{ church.phoneLabel }}</a>
+    </article>
+    <article class="content-card">
+      <h2>WhatsApp</h2>
+      <a [href]="church.whatsapp" target="_blank" rel="noopener noreferrer"
+        >Escríbenos por WhatsApp</a
+      >
+    </article>
+  </div>
+</section>

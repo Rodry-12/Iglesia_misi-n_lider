@@ -1,0 +1,4 @@
+interface:
+  display_name: "Iglesia: desarrollo Angular"
+  short_description: "Angular y migración del sitio con contexto institucional"
+  default_prompt: "Usa $iglesia-angular para implementar el siguiente incremento definido en las especificaciones del proyecto."

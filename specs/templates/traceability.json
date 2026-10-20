@@ -1,0 +1,12 @@
+{
+  "status": "draft",
+  "criteria": [
+    {
+      "id": "AC-001",
+      "implementation": [],
+      "verification": [],
+      "verified": false,
+      "evidence": ""
+    }
+  ]
+}

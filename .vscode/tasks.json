@@ -1,0 +1,38 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Angular: iniciar",
+      "type": "npm",
+      "script": "start",
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "typescript",
+        "pattern": "$tsc",
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "Building|Changes detected",
+          "endsPattern": "Local:.*localhost:4200"
+        }
+      }
+    },
+    {
+      "label": "Angular: pruebas",
+      "type": "npm",
+      "script": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "Angular: build",
+      "type": "npm",
+      "script": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "SDD: comprobar",
+      "type": "npm",
+      "script": "spec:check",
+      "problemMatcher": []
+    }
+  ]
+}

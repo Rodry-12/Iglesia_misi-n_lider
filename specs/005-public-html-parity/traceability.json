@@ -1,0 +1,40 @@
+{
+  "status": "in-progress",
+  "criteria": [
+    {
+      "id": "AC-001",
+      "implementation": ["frontend/src/app/features/public/home/sections/welcome-slider.ts", "frontend/src/app/features/public/home/sections/welcome-slider.html"],
+      "verification": ["frontend/e2e/public-site.spec.ts", "scripts/visual-public-review.mjs"],
+      "verified": false,
+      "evidence": "Tres imágenes renderizadas en Chrome; controles/rotación/limpieza pendientes de prueba completa."
+    },
+    {
+      "id": "AC-002",
+      "implementation": ["frontend/src/app/features/public/home/home-page.html", "frontend/src/app/core/content/public-reference-content.ts"],
+      "verification": ["scripts/visual-public-review.mjs", "frontend/e2e/public-site.spec.ts"],
+      "verified": false,
+      "evidence": "Secciones y recursos comparados en escritorio y móvil; interacción pendiente."
+    },
+    {
+      "id": "AC-003",
+      "implementation": ["frontend/src/styles/_public-site.scss", "frontend/src/app/layout/public/components/site-footer/site-footer.html", "frontend/src/app/layout/public/components/site-header/site-header.html"],
+      "verification": ["scripts/visual-public-review.mjs", "frontend/e2e/public-site.spec.ts"],
+      "verified": false,
+      "evidence": "Capturas sin desbordamiento, errores JavaScript o imágenes rotas; footer responsive verificado. Navegación interactiva pendiente."
+    },
+    {
+      "id": "AC-004",
+      "implementation": ["frontend/src/app/features/public/contact/components/contact-section.ts", "frontend/src/app/features/public/contact/data-access/contact-gateway.ts"],
+      "verification": ["frontend/src/app/features/public/contact/components/contact-section.spec.ts", "frontend/e2e/public-site.spec.ts"],
+      "verified": false,
+      "evidence": "Pruebas preparadas; no ejecutadas. No se enviaron mensajes reales."
+    },
+    {
+      "id": "AC-005",
+      "implementation": ["docs/public-html-parity.md", "frontend/playwright.config.ts"],
+      "verification": ["specs/005-public-html-parity/validation.md", "scripts/visual-public-review.mjs"],
+      "verified": false,
+      "evidence": "Build y checks estáticos correctos. Suite Playwright no autorizada; verificación completa pendiente."
+    }
+  ]
+}

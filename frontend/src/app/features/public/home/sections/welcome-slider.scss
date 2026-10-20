@@ -1,0 +1,55 @@
+:host {
+  display: block;
+}
+.welcome-slider {
+  position: relative;
+}
+.welcome-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 7 / 4;
+  object-fit: cover;
+}
+.slider-controls {
+  position: absolute;
+  bottom: var(--ml-space-2);
+  inset-inline: var(--ml-space-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ml-space-3);
+}
+.slider-indicators {
+  display: flex;
+  gap: var(--ml-space-2);
+  background: var(--ml-public-backdrop);
+  border-radius: var(--ml-radius-control);
+  padding-inline: var(--ml-space-2);
+}
+.slider-indicators button {
+  width: var(--ml-touch-target);
+  min-height: var(--ml-touch-target);
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  display: grid;
+  align-content: center;
+}
+.slider-indicators button::after {
+  content: '';
+  display: block;
+  height: 4px;
+  background: var(--ml-public-white);
+}
+.slider-indicators button.active::after {
+  background: var(--ml-public-green-soft);
+}
+.slider-pause {
+  min-height: var(--ml-touch-target);
+}
+@media (max-width: 600px) {
+  .slider-controls {
+    bottom: 0;
+  }
+}

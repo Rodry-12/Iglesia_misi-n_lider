@@ -1,0 +1,4 @@
+interface:
+  display_name: "Iglesia: especificaciones SDD"
+  short_description: "Especificaciones y evidencia para el sitio de la iglesia"
+  default_prompt: "Usa $iglesia-sdd para especificar la siguiente funcionalidad del sitio y definir cómo verificarla."

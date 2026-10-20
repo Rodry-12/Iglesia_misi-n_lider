@@ -1,0 +1,23 @@
+{
+  "name": "iglesia-mision-lider-workspace",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "assets:check": "node scripts/check-assets.mjs",
+    "design:check": "node scripts/check-design-system.mjs",
+    "test:e2e": "npm --prefix frontend run test:e2e",
+    "review:public": "node scripts/visual-public-review.mjs",
+    "review:behavior": "node scripts/review-public-behavior.mjs",
+    "start": "npm --prefix frontend start",
+    "build": "npm --prefix frontend run build",
+    "test": "npm --prefix frontend test -- --watch=false",
+    "test:watch": "npm --prefix frontend test",
+    "test:sdd": "node --test scripts/spec-workflow.test.mjs",
+    "format": "npm --prefix frontend run format",
+    "format:check": "npm --prefix frontend run format:check",
+    "spec:new": "node scripts/new-spec.mjs",
+    "spec:check": "node scripts/check-specs.mjs",
+    "skills:check": "node scripts/check-skills.mjs",
+    "deps:check": "node scripts/check-ui-dependencies.mjs"
+  }
+}

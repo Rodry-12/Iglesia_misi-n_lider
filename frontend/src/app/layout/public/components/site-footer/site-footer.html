@@ -1,0 +1,61 @@
+<footer>
+  <div class="container-footer-all">
+    <div class="footer-start">
+      <div class="footer-logo">
+        <app-site-brand [showName]="false" />
+      </div>
+
+      <div class="redes-sociales">
+        <div>
+          <h2><span class="titlegreen">Redes</span> Sociales</h2>
+          <div class="row">
+            <a [href]="church.facebook" target="_blank" rel="noopener noreferrer"
+              ><i class="fa fa-facebook-official" aria-hidden="true"></i> Siguenos en Facebook</a
+            >
+          </div>
+          <div class="row">
+            <a [href]="church.instagram" target="_blank" rel="noopener noreferrer"
+              ><i class="fa fa-instagram" aria-hidden="true"></i> Siguenos en Instagram</a
+            >
+          </div>
+          <div class="row">
+            <a [href]="church.youtube" target="_blank" rel="noopener noreferrer"
+              ><i class="fa fa-youtube-play" aria-hidden="true"></i> Siguenos en Youtube</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="info">
+        <div>
+          <h2><span class="titlegreen">Información</span> Contactos</h2>
+          <div class="row">
+            <a [href]="church.maps" target="_blank" rel="noopener noreferrer"
+              ><i class="fa fa-home" aria-hidden="true"></i> Iglesia Misión Líder París</a
+            >
+          </div>
+          <div class="row">
+            <a [href]="'tel:' + church.phone"
+              ><i class="fa fa-mobile" aria-hidden="true"></i> {{ church.phoneLabel }}</a
+            >
+          </div>
+          <div class="row">
+            <a [href]="'mailto:' + church.email"
+              ><i class="fa fa-envelope-o" aria-hidden="true"></i> {{ church.email }}</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-end">
+      <div class="rights">
+        <p>
+          Todos los derechos reservados <i class="fa fa-copyright" aria-hidden="true"></i>
+          {{ year }}
+          Iglesia Misión Líder París
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,47 @@
+{
+  "status": "draft",
+  "criteria": [
+    {
+      "id": "AC-001",
+      "implementation": [],
+      "verification": [],
+      "verified": false,
+      "evidence": ""
+    },
+    {
+      "id": "AC-002",
+      "implementation": [],
+      "verification": [],
+      "verified": false,
+      "evidence": ""
+    },
+    {
+      "id": "AC-003",
+      "implementation": [],
+      "verification": [],
+      "verified": false,
+      "evidence": ""
+    },
+    {
+      "id": "AC-004",
+      "implementation": [],
+      "verification": [],
+      "verified": false,
+      "evidence": ""
+    },
+    {
+      "id": "AC-005",
+      "implementation": [],
+      "verification": [],
+      "verified": false,
+      "evidence": ""
+    },
+    {
+      "id": "AC-006",
+      "implementation": [],
+      "verification": [],
+      "verified": false,
+      "evidence": ""
+    }
+  ]
+}

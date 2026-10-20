@@ -1,0 +1,60 @@
+{
+  "status": "in-progress",
+  "criteria": [
+    {
+      "id": "AC-001",
+      "implementation": [
+        "frontend/src/app/layout/public/public-layout.ts",
+        "frontend/src/app/layout/public/public-layout.html",
+        "frontend/src/app/features/public/public.routes.ts"
+      ],
+      "verification": ["frontend/src/app/app.spec.ts"],
+      "verified": false,
+      "evidence": "Layout unico implementado; prueba de persistencia e identidad preparada, no autorizada su ejecucion."
+    },
+    {
+      "id": "AC-002",
+      "implementation": [
+        "frontend/src/app/core/navigation/public-navigation.ts",
+        "frontend/src/app/layout/public/components/site-header/site-header.html"
+      ],
+      "verification": ["frontend/src/app/app.spec.ts"],
+      "verified": false,
+      "evidence": "Enlace Iniciar sesion y menu institucional implementados; prueba no ejecutada."
+    },
+    {
+      "id": "AC-003",
+      "implementation": [
+        "frontend/src/app/layout/public/components/site-header/site-header.ts"
+      ],
+      "verification": [
+        "frontend/src/app/layout/public/components/site-header/site-header.spec.ts",
+        "frontend/src/app/app.spec.ts"
+      ],
+      "verified": false,
+      "evidence": "Cierre por navegacion y Escape implementados; pruebas no ejecutadas."
+    },
+    {
+      "id": "AC-004",
+      "implementation": [
+        "frontend/src/app/core/content/church-content.model.ts",
+        "frontend/src/app/features/public/home/home-page.html",
+        "frontend/src/app/features/public/donations/donations-page.html"
+      ],
+      "verification": ["frontend/src/app/app.spec.ts"],
+      "verified": false,
+      "evidence": "Contenido conservado y componentes compilados; regresion pendiente de ejecucion."
+    },
+    {
+      "id": "AC-005",
+      "implementation": [
+        "docs/public-site-architecture.md",
+        "frontend/src/styles/_public-site.scss",
+        "frontend/src/app/app.routes.ts"
+      ],
+      "verification": ["specs/004-public-site-architecture/validation.md"],
+      "verified": false,
+      "evidence": "Compilacion de produccion correcta. Suite automatica no autorizada."
+    }
+  ]
+}

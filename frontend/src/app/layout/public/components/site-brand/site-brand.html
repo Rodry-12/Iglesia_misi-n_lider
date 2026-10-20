@@ -1,0 +1,6 @@
+<a class="brand" routerLink="/" [attr.aria-label]="church.name + ' · Inicio'">
+  <img class="icon" [src]="church.logoPath" alt="" width="100" height="75" />
+  @if (showName()) {
+    <span>{{ church.shortName }}</span>
+  }
+</a>

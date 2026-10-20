@@ -1,0 +1,33 @@
+.admin-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+nav {
+  display: none;
+}
+nav.is-open {
+  display: block;
+}
+nav a {
+  display: block;
+  padding: 0.75rem 1rem;
+  border-radius: var(--ml-radius-panel);
+  text-decoration: none;
+}
+nav a.active {
+  background: var(--ml-color-primary-soft);
+  color: var(--ml-color-primary);
+  font-weight: 700;
+}
+@media (min-width: 64rem) {
+  .admin-body {
+    grid-template-columns: 16rem minmax(0, 1fr);
+  }
+  nav {
+    display: block;
+    min-height: calc(100dvh - 5rem);
+  }
+  .admin-menu-button {
+    display: none;
+  }
+}

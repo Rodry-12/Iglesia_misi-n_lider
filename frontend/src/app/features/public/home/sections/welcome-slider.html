@@ -1,0 +1,64 @@
+<section
+  class="welcome-slider carousel"
+  role="region"
+  aria-roledescription="carrusel"
+  aria-label="Bienvenida a Misión Líder París"
+  (mouseenter)="hovered.set(true)"
+  (mouseleave)="hovered.set(false)"
+  (focusin)="focused.set(true)"
+  (focusout)="focusOut($event)"
+  (keydown.arrowleft)="previous()"
+  (keydown.arrowright)="next()"
+>
+  <p-galleria
+    [pt]="{
+      prevButton: { 'aria-label': 'Imagen anterior', role: 'button' },
+      nextButton: { 'aria-label': 'Imagen siguiente', role: 'button' },
+    }"
+    [value]="slides"
+    [activeIndex]="current()"
+    (activeIndexChange)="select($event)"
+    [showThumbnails]="false"
+    [showItemNavigators]="true"
+    [showIndicators]="false"
+    [circular]="true"
+    [autoPlay]="false"
+    [containerStyle]="{ width: '100%' }"
+  >
+    <ng-template #item let-slide
+      ><img
+        class="welcome-image"
+        [src]="slide.src"
+        [alt]="slide.alt"
+        decoding="async"
+        fetchpriority="high"
+        width="1400"
+        height="800"
+    /></ng-template>
+  </p-galleria>
+  <div class="slider-controls">
+    <div class="slider-indicators" aria-label="Seleccionar imagen">
+      @for (slide of slides; track slide.src; let index = $index) {
+        <button
+          type="button"
+          [class.active]="current() === index"
+          [attr.aria-label]="'Mostrar imagen ' + (index + 1)"
+          [attr.aria-current]="current() === index ? 'true' : null"
+          (click)="select(index)"
+        ></button>
+      }
+    </div>
+    @if (!reducedMotion()) {
+      <button
+        pButton
+        type="button"
+        class="slider-pause"
+        size="small"
+        [attr.aria-pressed]="paused()"
+        (click)="paused.set(!paused())"
+      >
+        {{ paused() ? 'Reanudar' : 'Pausar' }}
+      </button>
+    }
+  </div>
+</section>

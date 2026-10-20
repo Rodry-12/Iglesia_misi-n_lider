@@ -1,0 +1,1790 @@
+/* Adaptacion de la referencia: selectores delimitados y rem normalizados 10px -> 16px. */
+.public-site {
+  --black: var(--ml-public-black);
+  --white: var(--ml-public-white);
+  --soft-black: var(--ml-public-ink);
+  --soft-white: var(--ml-public-white-soft);
+  --dark-green: var(--ml-public-green);
+  --soft-green: var(--ml-public-green-soft);
+  --dark-gray: var(--ml-public-dark);
+  --gray: var(--ml-public-muted);
+  --red: var(--ml-public-danger);
+  --whatsApp: var(--ml-public-whatsapp);
+  --hover-whatsApp: var(--ml-public-whatsapp-hover);
+  --color-body: var(--ml-public-canvas);
+  --beige: var(--ml-public-beige);
+  --color-horarios: var(--ml-public-schedule);
+  font-family: var(--ml-font);
+  color: var(--soft-black);
+  background: var(--color-body);
+  line-height: normal;
+  :where(h1, h2, h3, h4, p, figure, ul, ol) {
+    margin: 0;
+    padding: 0;
+  }
+  :where(h1, h2, h3, h4) {
+    font-weight: 700;
+  }
+  a {
+    text-decoration: none;
+  }
+
+  .nav-menu a {
+    color: var(--soft-white);
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  header.header {
+    display: flex;
+    font-weight: bold;
+  }
+  .btn-wsp {
+    background-color: var(--whatsApp);
+    color: var(--white);
+    border-radius: 50px;
+    width: 64px;
+    height: 64px;
+    font-size: 50px;
+    text-align: center;
+    box-shadow: 0 1px 5px var(--ml-public-shadow-ink);
+    position: fixed;
+    z-index: 1;
+    bottom: 30px;
+    right: 40px;
+  }
+
+  .btn-wsp:hover {
+    background-color: var(--hover-whatsApp);
+    transition: 0.5s ease-in-out;
+  }
+
+  .nav-main {
+    position: fixed;
+    top: 0;
+    font-size: 1.0625rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 90px;
+    z-index: 1;
+    transition: all 1s ease-out;
+  }
+
+  div.logo {
+    width: 100%;
+    height: fit-content;
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--black);
+  }
+
+  #menu-btn {
+    padding-right: 10px;
+    font-size: 2.5rem;
+    color: var(--white);
+    cursor: pointer;
+  }
+
+  .icon {
+    cursor: pointer;
+    height: auto;
+    width: 100px;
+    transition: all 1s ease-out;
+  }
+
+  .scroll .icon {
+    cursor: pointer;
+    margin-right: 15px;
+    height: auto;
+    width: 80px;
+    transition: all 1s ease-out;
+  }
+
+  div.logo a.iglesia {
+    color: var(--soft-white);
+    font-size: 1.1875rem;
+  }
+
+  .nav-bar {
+    position: relative;
+    background-color: var(--dark-gray);
+    width: 100%;
+    z-index: -100;
+    transform: translate(0, -1000px);
+    transition: 0.5s ease all;
+  }
+
+  .nav-bar.show {
+    transform: translate(0, 0);
+  }
+
+  .nav-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nav-menu li {
+    padding: 15px 0;
+  }
+
+  .nav-menu-right {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 10px;
+  }
+
+  .nav-menu-right a {
+    padding: 10px 15px;
+    color: var(--white);
+  }
+
+  .btn-principal {
+    background-color: var(--dark-green);
+    color: var(--soft-white);
+    padding: 10px 20px;
+    border-radius: 20px;
+  }
+
+  ul.nav-menu-right i:hover {
+    color: var(--dark-green);
+    transition: 0.5s ease-in-out;
+  }
+
+  .nav-main ul.nav-menu li a:hover {
+    box-shadow: inset 0 -2px 0 var(--soft-green);
+    opacity: 0.8;
+    transition: all 0.5s ease-out;
+  }
+
+  .image {
+    position: relative;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    min-height: 150vh;
+    width: 100%;
+  }
+
+  .carousel {
+    margin-top: 105px;
+    width: 100%;
+    height: fit-content;
+    background-size: cover;
+    background-position: center;
+    transition: all 0.1s ease-in-out;
+  }
+
+  .carousel-cotenido {
+    height: 100%;
+  }
+
+  .carousel-lista {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .carousel-elemento {
+    width: 100%;
+  }
+
+  .carousel-elemento img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  .carousel-anterior,
+  .carousel-siguiente {
+    position: absolute;
+    display: block;
+    width: 30px;
+    height: 30px;
+    border: none;
+    top: calc(50% - 35px);
+    cursor: pointer;
+    font-size: 1.75rem;
+    line-height: 30px;
+    text-align: center;
+    background: none;
+    color: var(--soft-green);
+    opacity: 50%;
+    z-index: 1;
+    display: none;
+  }
+
+  .carousel-anterior:hover,
+  .carousel-siguiente:hover {
+    opacity: 100%;
+  }
+
+  .carousel-siguiente {
+    right: 30px;
+  }
+
+  .carousel-anterior {
+    left: 30px;
+  }
+
+  .carousel-indicador .glider-dots.active {
+    opacity: 1;
+  }
+
+  .community-section {
+    padding: 50px 0 30px;
+    background-image: url('/assets/backgrounds/background1.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  .community-container {
+    height: auto;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .community {
+    min-width: 288px;
+    max-width: 800px;
+    height: fit-content;
+  }
+
+  .community h1 {
+    font-size: 2.5rem;
+    line-height: 2.625rem;
+    text-align: center;
+  }
+
+  .community span {
+    color: var(--dark-green);
+  }
+
+  .community p {
+    text-align: center;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
+    letter-spacing: 0.5px;
+    padding: 10px;
+  }
+
+  .mision-vision {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    max-width: 850px;
+    margin-top: 5px;
+  }
+
+  .mision,
+  .vision {
+    width: 100%;
+    min-width: 288px;
+    max-width: 400px;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .mision h2,
+  .vision h2 {
+    font-size: 2.1875rem;
+    line-height: 2.3125rem;
+  }
+
+  .mision p,
+  .vision p {
+    text-align: center;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
+    letter-spacing: 0.5px;
+  }
+
+  .text-center p {
+    min-width: 320px;
+    max-width: 400px;
+    text-align: justify;
+    padding: 5px 10px;
+  }
+
+  .section-shepherds {
+    background: var(--dark-gray);
+  }
+
+  .shepherds {
+    display: grid;
+    justify-content: center;
+    grid-template-rows: repeat(3, auto);
+  }
+
+  .name-shepherds {
+    grid-row: 1 / 2;
+    grid-column: 1 / 2;
+  }
+
+  .name-shepherds h2 {
+    margin: 20px 0 10px;
+    font-size: 2.1875rem;
+    line-height: 2.375rem;
+    text-align: center;
+    color: var(--white);
+  }
+
+  .shepherds-photo {
+    grid-row: 2 / 3;
+    grid-column: 1 / 2;
+    width: 100%;
+    height: 50vh;
+    max-height: 500px;
+    background-image: url('/assets/images/pastores1.jpg');
+    background-size: cover;
+    background-position: top center;
+    background-repeat: no-repeat;
+  }
+
+  .shepherds-description {
+    grid-row: 3 / 4;
+    grid-column: 1 / 2;
+  }
+
+  .shepherds-description h4 {
+    color: var(--dark-green);
+    padding: 10px 0 0 10px;
+    font-size: 1.625rem;
+    font-style: italic;
+  }
+
+  .shepherds-description p {
+    width: 100%;
+    min-width: 288px;
+    max-width: 450px;
+    padding: 0 10px 10px;
+    font-size: 1rem;
+    line-height: 1.125rem;
+    font-weight: lighter;
+    text-align: left;
+    color: var(--white);
+  }
+  .valores-section {
+    padding: 40px 0;
+    background-image: url('/assets/images/horarios-background.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  .valores-title h2 {
+    font-size: 2.5rem;
+    text-align: center;
+  }
+
+  .list-valores {
+    width: 90%;
+    max-width: 1200px;
+    margin: 10px auto 0;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+  }
+
+  .valor-item {
+    display: grid;
+    padding: 0 10px;
+    margin: 10px 0;
+    width: 200px;
+    min-width: 100px;
+    max-width: 160px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .valor-item i {
+    font-size: 3.125rem;
+    color: var(--dark-green);
+  }
+
+  .valor-item h3 {
+    font-size: 1.5625rem;
+    font-weight: normal;
+  }
+
+  .valor-item p {
+    font-size: 0.9375rem;
+    color: var(--gray);
+  }
+  .ministerios--section {
+    padding: 50px 0;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  .ministerios--title h2 {
+    margin-bottom: 15px;
+    font-size: 2.5rem;
+    line-height: 2.6875rem;
+    text-align: center;
+  }
+
+  .ministerios-container {
+    position: relative;
+    height: auto;
+    padding-bottom: 10px;
+  }
+
+  .ministerios-prev,
+  .ministerios-next {
+    position: absolute;
+    top: 33%;
+    background: none;
+    border: none;
+    font-size: 1.875rem;
+    line-height: 1.375rem;
+    font-weight: bold;
+    color: var(--soft-black);
+    transition: 0.2s all;
+  }
+
+  .ministerios-prev:hover,
+  .ministerios-next:hover {
+    color: var(--dark-green);
+  }
+
+  .ministerios-prev {
+    left: 4%;
+  }
+
+  .ministerios-next {
+    right: 4%;
+  }
+
+  .ministerios-container-list {
+    padding-bottom: 10px;
+  }
+
+  .ministerios-container-list {
+    width: 80%;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+
+  .glider-dot {
+    display: block;
+    width: 30px;
+    height: 4px;
+    background: var(--gray);
+    opacity: 0.5;
+    border-radius: 0;
+  }
+
+  .glider-dot:hover {
+    opacity: 0.2;
+    background: var(--dark-green);
+  }
+
+  .glider-dot.active {
+    opacity: 1;
+    background: var(--dark-green);
+  }
+
+  .ministerio-card {
+    position: relative;
+    width: 100%;
+    min-width: 250px;
+    height: auto;
+    margin: 0 3px;
+    box-shadow: 1px 2px 10px var(--ml-public-shadow-card);
+  }
+
+  .ministerio-card--image {
+    width: 100%;
+    height: 100%;
+  }
+
+  .ministerio-card--image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: brightness(95%);
+    transition: 0.1s all;
+  }
+
+  .ministerio-card--content {
+    width: 100%;
+    display: grid;
+    position: absolute;
+    background-color: var(--soft-white);
+    bottom: 0;
+  }
+
+  .ministerio-card--label {
+    position: absolute;
+    left: 50%;
+    top: -40px;
+    transform: translate(-50%, 0);
+    font-size: 2.5rem;
+    cursor: pointer;
+    color: var(--soft-green);
+    opacity: 0.7;
+    transition: 0.3s;
+  }
+
+  .ministerio-card--label:hover {
+    opacity: 1;
+    color: var(--white);
+  }
+
+  .ministerio-card--content span {
+    color: var(--dark-green);
+  }
+
+  .ministerio-card--content h3 {
+    margin-top: 10px;
+    padding: 0 10px 14px;
+    text-align: center;
+    font-size: 1.5rem;
+  }
+
+  .ministerio-card--input {
+    display: none;
+  }
+
+  .ministerio-card--description {
+    max-height: 0;
+    overflow: hidden;
+    transition: 0.6s ease-in-out;
+  }
+
+  .ministerio-card--description p {
+    padding: 0 15px 20px;
+    font-size: 0.875rem;
+    font-weight: normal;
+    color: var(--soft-black);
+  }
+
+  .ministerio-card:hover .ministerio-card--description {
+    max-height: 300px;
+  }
+
+  .ministerio-card:hover .ministerio-card--image img {
+    filter: brightness(50%);
+  }
+
+  .horarios {
+    padding-bottom: 40px;
+    background-image: url('/assets/images/horarios-background.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  .horarios-title {
+    margin-top: 40px;
+  }
+
+  .horarios-title h2 {
+    font-size: 2.5rem;
+    line-height: 2.625rem;
+    text-align: center;
+  }
+
+  .horarios-title p {
+    font-size: 1.25rem;
+    line-height: 1.375rem;
+    font-style: italic;
+    text-align: center;
+  }
+
+  .horarios-title p > span {
+    color: var(--dark-green);
+  }
+
+  .horarios-list {
+    display: flex;
+    height: fit-content;
+    justify-content: center;
+    padding: 10px;
+    flex-wrap: wrap;
+  }
+
+  .card {
+    position: relative;
+    width: 300px;
+    height: 280px;
+    place-items: center;
+    margin: 15px;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+  }
+
+  .card-title {
+    position: relative;
+    z-index: -100;
+    background-image: url('/assets/images/serviviosTitle-background.png');
+    background-size: cover;
+    background-position: bottom;
+    background-repeat: no-repeat;
+  }
+
+  .card p {
+    font-size: 0.875rem;
+  }
+
+  .card > div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    justify-content: center;
+    border-radius: 5px;
+    backface-visibility: hidden;
+    transition: 1.5s cubic-bezier(0.4, 0.2, 0.2, 1);
+    align-content: space-evenly;
+    justify-items: center;
+  }
+
+  .servicio-miercoles {
+    background-image: url('/assets/images/eventos-background1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .servicio-sabado {
+    background-image: url('/assets/images/eventos-background1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .servicio-domingo {
+    background-image: url('/assets/images/eventos-background1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .front img {
+    height: 180px;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .front h2 {
+    margin-top: 18px;
+    font-size: 1.25rem;
+    text-align: center;
+  }
+
+  .front p {
+    margin-bottom: 20px;
+  }
+
+  .card .front {
+    transform: perspective(500px) rotateX(0deg);
+    padding: 30px 5px;
+    box-shadow: 0 4px 8px var(--ml-public-shadow-service);
+  }
+
+  .card .back {
+    padding: 10px;
+    background: var(--beige);
+    transform: perspective(500px) rotateX(180deg);
+    box-shadow: 0 4px 8px var(--ml-public-shadow-service);
+  }
+
+  .eventos-section {
+    height: auto;
+    padding-bottom: 50px;
+    background-image: url('/assets/images/eventos-background1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+
+  .eventos-title {
+    padding-top: 20px;
+    text-align: center;
+  }
+
+  .eventos-title h2 {
+    font-size: 2.5rem;
+    line-height: 2.625rem;
+    margin-bottom: 8px;
+    color: var(--dark-green);
+  }
+
+  .eventos-title p {
+    font-size: 1rem;
+    line-height: 1.125rem;
+    color: var(--white);
+  }
+
+  .eventos-container {
+    width: 100%;
+    min-width: 320px;
+    max-width: 900px;
+    margin: 0 auto;
+    padding-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .evento {
+    width: 100%;
+    min-width: 288px;
+    max-width: 400px;
+    height: auto;
+    margin: 15px 25px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px var(--ml-public-shadow-service);
+  }
+
+  .evento-top {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: var(--soft-black);
+  }
+
+  .evento--fecha {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    margin-left: 10px;
+    padding: 2px 8px;
+    background-color: var(--dark-gray);
+    border-radius: 5px;
+  }
+
+  .evento--mes p {
+    font-size: 0.9375rem;
+    line-height: 1.0625rem;
+    font-weight: normal;
+    text-align: center;
+    color: var(--white);
+  }
+
+  .evento--dia p {
+    font-size: 3.4375rem;
+    line-height: 3.5625rem;
+    font-weight: bold;
+    color: var(--dark-green);
+  }
+
+  .evento--hora {
+    font-size: 0.875rem;
+    line-height: 1rem;
+    height: fit-content;
+    padding: 3px 5px;
+    margin-top: 1px;
+    margin-right: 10px;
+    color: var(--soft-white);
+    background-color: var(--dark-green);
+    border-radius: 5px;
+  }
+
+  .evento-content {
+    padding: 10px;
+    background-color: var(--color-body);
+  }
+
+  .evento--title {
+    width: 80%;
+    overflow-wrap: break-word;
+  }
+
+  .evento--title h3 {
+    font-size: 1.4375rem;
+    line-height: 1.5625rem;
+  }
+
+  .evento--description p {
+    font-size: 0.8125rem;
+    text-align: justify;
+  }
+
+  .titlegreen {
+    color: var(--dark-green);
+  }
+
+  .creemos {
+    padding: 0 20px;
+    min-width: 288px;
+    max-width: 700px;
+  }
+
+  #nosotros {
+    width: 100%;
+    display: flex;
+    padding: 20px 10px;
+    padding-top: 90px;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  .nosotrosimage {
+    align-items: center;
+    display: flex;
+    min-width: 0;
+    max-width: 100%;
+    width: min(36vmax, 570px);
+  }
+  .nosotrosimage picture {
+    display: block;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .nosotrosimage picture img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    max-width: 570px;
+    max-height: 545px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px var(--ml-public-shadow-photo);
+  }
+
+  #nosotros h2 {
+    font-size: 3.125rem;
+    font-family: var(--ml-font-editorial);
+    font-weight: bolder;
+    padding: 15px 0;
+    text-align: center;
+  }
+
+  .creemos ul {
+    grid-row: 2 / 3;
+    grid-column: 2 / 3;
+    align-self: stretch;
+    font-size: 1rem;
+    font-weight: lighter;
+    padding: 10px 0% 8%;
+    color: var(--azuloscuro);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .creemos ul li {
+    padding: 10px;
+  }
+
+  .contact-section {
+    padding-bottom: 30px;
+  }
+
+  .contact-title {
+    display: grid;
+    width: 100%;
+    min-width: 320px;
+    padding: 30px 0;
+    justify-content: center;
+    text-align: center;
+    background-color: var(--soft-black);
+  }
+
+  .contact-title h2 {
+    font-size: 2rem;
+    line-height: 2.125rem;
+    color: var(--white);
+  }
+
+  .contact-title h2 > span {
+    color: var(--dark-green);
+  }
+
+  .contact-title p {
+    min-width: 288px;
+    max-width: 350px;
+    margin-top: 5px;
+    font-style: italic;
+    font-size: 0.875rem;
+    line-height: 1rem;
+    color: var(--soft-white);
+  }
+
+  .form-container {
+    padding: 0 15px;
+    padding-top: 20px;
+  }
+  .contact-form {
+    display: grid;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto;
+    min-width: 288px;
+    max-width: 900px;
+  }
+
+  .form-group {
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  .form-label {
+    display: block;
+    font-size: 1.25rem;
+    line-height: 1.375rem;
+    padding: 0 0 2px 5px;
+    font-weight: bold;
+    cursor: pointer;
+    color: var(--dark-gray);
+  }
+
+  .form-group--input {
+    position: relative;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 0 40px 0 10px;
+    height: 45px;
+    font-family: var(--ml-font);
+    font-size: 0.9375rem;
+    line-height: 1.0625rem;
+    color: var(--dark-gray);
+    border: 3px solid transparent;
+    border-radius: 3px;
+    background-color: var(--white);
+    transition: 0.3s ease all;
+  }
+
+  .form-input:hover,
+  .form-textarea:hover {
+    box-shadow: 3px 1px 10px var(--ml-public-shadow-input);
+  }
+
+  .form-input:focus,
+  .form-textarea:focus {
+    border: 2px solid var(--gray);
+    outline: none;
+    box-shadow: 3px 0px 30px var(--ml-public-shadow-focus);
+  }
+
+  .form-state-validation {
+    position: absolute;
+    right: 12px;
+    top: 14px;
+    z-index: 0;
+    font-size: 1rem;
+    opacity: 0;
+  }
+
+  .form-group--error,
+  .form-group--success {
+    display: none;
+    font-size: 0.75rem;
+    font-weight: bold;
+    margin: 2px 3px 0px 5px;
+    font-weight: lighter;
+  }
+
+  .form-group--error--active,
+  .form-group--success--active {
+    display: block;
+  }
+
+  .form-group--error--active {
+    color: var(--red);
+  }
+
+  .form-group--error.show,
+  .form-group--success.show {
+    display: block;
+  }
+
+  .form-textarea {
+    width: 100%;
+    padding: 10px;
+    font-family: var(--ml-font);
+    font-size: 0.9375rem;
+    line-height: 1.0625rem;
+    border-radius: 3px;
+    border: 3px solid transparent;
+    background-color: var(--white);
+    resize: none;
+    transition: 0.1s ease all;
+    outline: none;
+  }
+
+  .form-message {
+    display: none;
+    width: fit-content;
+    padding: 5px;
+    margin: 2px auto;
+    border-radius: 3px;
+  }
+
+  .form-message--correct-active {
+    background-color: var(--dark-green);
+    display: block;
+  }
+
+  .form-message--incorrect-active {
+    background-color: var(--red);
+    display: block;
+  }
+
+  .form-message p {
+    font-size: 0.9375rem;
+    line-height: 1.0625rem;
+    color: var(--white);
+  }
+
+  .form-group--submit {
+    display: grid;
+    justify-content: center;
+  }
+
+  .form-btn {
+    min-width: 285px;
+    max-width: 320px;
+    margin: 5px auto;
+    height: 45px;
+    font-size: 1.125rem;
+    line-height: 1.25rem;
+    font-weight: bold;
+    background: var(--dark-gray);
+    color: var(--white);
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: 0.4s ease all;
+  }
+
+  .form-btn:hover {
+    border: 1px solid var(--gray);
+    box-shadow: 5px 5px 20px var(--ml-public-shadow-button);
+  }
+
+  .form-group--correct .form-state-validation {
+    color: var(--dark-green);
+    opacity: 1;
+  }
+
+  .form-group--correct .form-input {
+    border: 2px solid var(--dark-green);
+  }
+
+  .form-group--incorrect .form-state-validation {
+    color: var(--red);
+    opacity: 1;
+  }
+
+  .form-group--incorrect .form-input {
+    border: 2px solid var(--red);
+  }
+
+  .form-group--textarea-correct .form-textarea {
+    border: 2px solid var(--dark-green);
+  }
+
+  .form-group--textarea-incorrect .form-textarea {
+    border: 2px solid var(--red);
+  }
+
+  footer {
+    background-color: var(--black);
+    width: 100%;
+    color: var(--color-body);
+  }
+
+  .container-footer-all {
+    width: 100%;
+    margin: auto;
+  }
+
+  .footer-logo {
+    padding: 10px 0;
+    display: flex;
+    max-width: 400px;
+    min-width: 200px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .footer-start {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    flex-wrap: wrap;
+  }
+
+  .redes-sociales {
+    padding: 10px 0;
+    max-width: 400px;
+    min-width: 200px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .info {
+    padding: 10px 0;
+    max-width: 400px;
+    min-width: 200px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .row {
+    padding: 5px 0px;
+    font-size: 0.75rem;
+    text-align: justify;
+  }
+  .info h2 {
+    font-size: 1.25rem;
+  }
+
+  .redes-sociales h2 {
+    font-size: 1.25rem;
+  }
+
+  .row a {
+    color: var(--color-body);
+  }
+
+  .row a:hover {
+    color: var(--soft-green);
+    opacity: 0.8;
+    transition: all 0.5s ease-out;
+  }
+
+  .footer-end {
+    border-top: 1px solid var(--ml-public-footer-line);
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 20px;
+  }
+
+  .rights p {
+    font-size: 0.8125rem;
+    text-align: center;
+  }
+
+  @media (min-width: 930px) {
+    #menu-btn {
+      display: none;
+    }
+
+    .nav-main {
+      display: flex;
+      flex-direction: row;
+      background-color: transparent;
+    }
+
+    div.logo {
+      background-color: transparent;
+    }
+
+    .nav-bar {
+      background-color: transparent;
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      transform: translate(0, 0);
+    }
+
+    .nav-menu {
+      flex-direction: row;
+    }
+
+    .nav-menu li {
+      padding: 15px 10px;
+    }
+
+    .nav-menu-right {
+      padding: 0;
+    }
+
+    .header .scroll {
+      padding: 10px 0;
+      transition: all 1s ease-out;
+    }
+
+    .nav-main.scroll {
+      background-color: var(--black);
+      box-shadow: 0 1px 5px 0 var(--ml-public-black);
+      position: fixed;
+    }
+
+    .carousel {
+      margin-top: 0;
+    }
+
+    .carousel {
+      height: fit-content;
+    }
+
+    .shepherds {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, auto);
+    }
+
+    .shepherds-photo {
+      grid-row: 1 / 3;
+      height: 80vh;
+    }
+
+    .name-shepherds,
+    .shepherds-description {
+      grid-column: 2 / 3;
+    }
+
+    .name-shepherds {
+      grid-row: 1 / 2;
+      align-self: end;
+    }
+
+    .name-shepherds h2 {
+      margin: 0;
+      text-align: left;
+      padding-left: 10px;
+    }
+
+    .shepherds-description {
+      grid-row: 2 / 3;
+    }
+
+    .shepherds-description h4 {
+      padding-top: 0;
+    }
+
+    .ministerios-container {
+      max-width: 1500px;
+      margin: 0 auto;
+    }
+
+    .ministerios-prev {
+      left: 7%;
+    }
+
+    .ministerios-next {
+      right: 7%;
+    }
+
+    .contact-form {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    #group-content,
+    #group-validation {
+      grid-column: span 3;
+    }
+  }
+  .donation-reference {
+    .font-cursive {
+      font-family: var(--ml-font-editorial);
+      font-size: 3.125rem;
+      padding: 5px;
+    }
+
+    .font-bebas {
+      font-family: var(--ml-font);
+    }
+
+    .titlegreen {
+      color: var(--ml-public-green);
+    }
+
+    .donar-diezmos {
+      transition:
+        0.3s,
+        border 0.3s,
+        border-radius 0.3s,
+        box-shadow 0.3s;
+      margin-top: 100px;
+    }
+
+    .donar-diezmos h2 {
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    .donar-diezmos h1 {
+      text-align: center;
+      font-size: 2.1875rem;
+    }
+
+    .texto-biblia {
+      width: 100%;
+      min-width: 288px;
+      max-width: 1200px;
+      padding: 0 15px;
+      margin: 10px auto 0;
+    }
+
+    .pasos-donar h2 {
+      font-size: 1.4375rem;
+      text-align: center;
+      color: var(--dark-gray);
+    }
+
+    .pasos > h2 {
+      font-size: 2.1875rem;
+      text-align: center;
+    }
+
+    .texto-biblia p {
+      margin-bottom: 24px;
+      font-size: 1.25rem;
+      line-height: 1.5;
+      letter-spacing: 0.5px;
+      text-align: center;
+    }
+
+    .pasos-donar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 0;
+    }
+
+    .pasos-donar > .foto-qr {
+      width: 400px;
+      height: 520px;
+      margin: 20px;
+      text-align: center;
+    }
+
+    .pasos-donar > .como-transferir {
+      width: 400px;
+      margin: 20px;
+    }
+
+    .bancolombia {
+      max-width: 80%;
+      height: auto;
+    }
+
+    .scamer {
+      width: 40px;
+      aspect-ratio: auto 40 / 40;
+    }
+
+    .como-transferir ol {
+      min-width: 250px;
+      margin: 0 20px;
+    }
+
+    ol > li {
+      font-size: 1.0625rem;
+      font-weight: 400;
+      line-height: 2.5rem;
+    }
+
+    h2.margin-botom {
+      margin-bottom: 30px;
+    }
+
+    .gracias {
+      display: flex;
+      justify-content: center;
+      justify-items: center;
+      display: grid;
+      padding: 0 0 30px;
+      text-align: center;
+    }
+
+    .gracias div {
+      width: 82px;
+      aspect-ratio: auto 82 / 82;
+      color: var(--ml-public-heart);
+      font-size: 82px;
+    }
+
+    .gracias h2 {
+      font-size: 4.375rem;
+      font-weight: 500;
+    }
+  }
+}
+
+.public-site {
+  a {
+    color: inherit;
+  }
+  .container {
+    width: min(100% - 2rem, 72rem);
+    margin-inline: auto;
+  }
+  .page-section {
+    padding-block: 2.5rem;
+  }
+  .lead {
+    font-size: 1.25rem;
+    line-height: 1.5;
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+    gap: 1.5rem;
+  }
+  .content-card {
+    padding: 1.5rem;
+    background: var(--ml-public-white);
+    border-radius: 0.4rem;
+  }
+  .button {
+    display: inline-block;
+    background: var(--dark-green);
+    color: var(--ml-public-white);
+    padding: 0.8rem 1.3rem;
+    border-radius: 1rem;
+  }
+  :where(
+    app-home-page,
+    app-contact-section,
+    app-welcome-section,
+    app-beliefs-section,
+    app-values-section,
+    app-pastors-section,
+    app-ministries-section,
+    app-service-schedule-section,
+    app-events-section
+  ) {
+    display: block;
+  }
+  .community-container > app-purpose-section {
+    display: contents;
+  }
+  .brand {
+    color: var(--soft-white);
+    font-size: 1.1875rem;
+  }
+  div.logo {
+    color: var(--soft-white);
+  }
+  .nav-main {
+    display: flex;
+    background-color: var(--ml-public-black);
+    height: auto;
+    min-height: 90px;
+    z-index: var(--ml-z-header);
+  }
+  .nav-bar {
+    display: none;
+    transform: none;
+    z-index: auto;
+  }
+  .nav-bar.show {
+    display: flex;
+    flex-direction: column;
+    background: var(--ml-public-dark);
+  }
+  .nav-menu {
+    margin: 0;
+    padding: 0;
+  }
+  .nav-menu-right {
+    flex-wrap: wrap;
+  }
+  .nav-menu-right .sign-in {
+    border: 1px solid currentColor;
+    border-radius: 20px;
+    padding: 8px 12px;
+    margin-inline: 8px;
+  }
+  #menu-btn {
+    background: transparent;
+    border: 0;
+    line-height: 1;
+    padding: 0 12px;
+  }
+  .scroll .icon {
+    max-width: 80px;
+  }
+  .btn-wsp {
+    z-index: var(--ml-z-floating);
+    display: grid;
+    place-items: center;
+  }
+  main {
+    padding-top: 110px;
+    min-width: 0;
+  }
+  main:has(app-home-page),
+  main:has(app-donations-page) {
+    padding-top: 0;
+  }
+  main:has(app-not-found-page) {
+    background: var(--ml-not-found-background);
+  }
+  .carousel {
+    margin-top: 105px;
+  }
+  .ministerios-container-list {
+    display: flex;
+    position: relative;
+    gap: 6px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .ministerios-container-list::-webkit-scrollbar {
+    display: none;
+  }
+  .ministerio-card {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    margin: 0;
+    min-width: 0;
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+  .ministerio-card--image {
+    height: 100%;
+  }
+  .ministerio-card--content {
+    display: block;
+  }
+  .ministerio-card summary {
+    list-style: none;
+    cursor: pointer;
+  }
+  .ministerio-card summary::-webkit-details-marker {
+    display: none;
+  }
+  .ministerio-card details[open] .ministerio-card--description {
+    max-height: 340px;
+  }
+  .ministerios-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .ministerios-indicators .glider-dot {
+    border: 0;
+    cursor: pointer;
+    min-height: 16px;
+  }
+  .card {
+    margin: 15px;
+  }
+  .card .back {
+    pointer-events: none;
+  }
+  .card .front .card-title {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+  .creemos ul {
+    color: var(--soft-black);
+    font-weight: 400;
+  }
+  .shepherds-description p {
+    font-weight: 400;
+  }
+  .card.is-flipped .front {
+    transform: perspective(500px) rotateX(180deg);
+  }
+  .card.is-flipped .back {
+    transform: perspective(500px) rotateX(360deg);
+    pointer-events: auto;
+  }
+  .service-toggle {
+    position: absolute;
+    bottom: 6px;
+    right: 10px;
+    z-index: 2;
+    padding: 4px 8px;
+    border: 1px solid var(--ml-public-green);
+    border-radius: 4px;
+    background: var(--ml-public-white-soft);
+    color: var(--ml-public-ink);
+    font-size: 0.75rem;
+  }
+  .horarios-list {
+    overflow: visible;
+  }
+  .form-input {
+    font-size: 1rem;
+  }
+  .validation-error {
+    color: var(--ml-public-danger);
+    font-size: 0.8rem;
+    margin-top: 5px;
+  }
+  .contact-status {
+    font-size: 0.9375rem;
+    text-align: center;
+    color: var(--ml-public-success);
+    padding: 0.5rem;
+  }
+  .contact-status.error {
+    color: var(--ml-public-danger);
+  }
+  .form-btn:disabled {
+    opacity: 0.6;
+    cursor: wait;
+  }
+  footer {
+    margin-top: 0;
+  }
+  .footer-start {
+    max-width: 1400px;
+    margin: auto;
+    align-items: center;
+    gap: 0;
+  }
+  .footer-logo,
+  .redes-sociales,
+  .info {
+    flex: 1 1 280px;
+    min-width: 0;
+  }
+  .footer-logo .brand {
+    justify-content: center;
+  }
+  .info .row {
+    overflow-wrap: anywhere;
+    text-align: start;
+  }
+  .donation-reference {
+    padding-top: 1px;
+  }
+  .donation-reference .foto-qr {
+    height: auto;
+    max-width: 100%;
+  }
+  .donation-reference .como-transferir {
+    max-width: 100%;
+  }
+  .donation-reference ol {
+    list-style: decimal;
+  }
+  .donation-reference .gracias {
+    padding-inline: 1rem;
+  }
+  @media (min-width: 750px) {
+    .ministerio-card {
+      flex-basis: calc((100% - 6px) / 2);
+    }
+  }
+  @media (min-width: 1100px) {
+    .ministerio-card {
+      flex-basis: calc((100% - 12px) / 3);
+    }
+  }
+  @media (min-width: 930px) {
+    .nav-main {
+      flex-direction: row;
+      min-height: 90px;
+      background-color: transparent;
+    }
+    div.logo {
+      flex: 1 1 auto;
+      width: auto;
+      padding-inline: 20px;
+    }
+    .nav-bar,
+    .nav-bar.show {
+      display: flex;
+      flex: 0 0 auto;
+      width: auto;
+      flex-direction: row;
+      background: transparent;
+      justify-content: flex-end;
+    }
+    .nav-menu {
+      flex-direction: row;
+      flex-shrink: 0;
+    }
+    .nav-menu-right {
+      flex-wrap: nowrap;
+      padding-bottom: 0;
+    }
+    .nav-menu-right a {
+      padding: 10px;
+    }
+    .carousel {
+      margin-top: 0;
+    }
+    .nav-main.scroll {
+      background: var(--ml-public-black);
+    }
+  }
+  @media (max-width: 600px) {
+    main:has(app-not-found-page) {
+      background: var(--ml-public-white);
+    }
+    .btn-wsp {
+      right: 16px;
+      bottom: 18px;
+      width: 54px;
+      height: 54px;
+      font-size: 40px;
+    }
+    .footer-start {
+      gap: 18px;
+      padding: 24px 20px;
+    }
+    .footer-logo,
+    .redes-sociales,
+    .info {
+      flex-basis: 100%;
+      max-width: 100%;
+    }
+    .info .row {
+      max-width: 100%;
+    }
+    .creemos ul {
+      grid-template-columns: 1fr;
+    }
+    .card {
+      max-width: calc(100vw - 40px);
+      margin: 12px 0;
+    }
+    .donation-reference .gracias h2 {
+      font-size: 2.5rem;
+    }
+    .shepherds-photo {
+      height: 50vh;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ministerios-container-list {
+      scroll-behavior: auto;
+    }
+    .card div {
+      transition: none;
+    }
+  }
+}

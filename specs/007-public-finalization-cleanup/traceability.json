@@ -1,0 +1,82 @@
+{
+  "status": "verified",
+  "criteria": [
+    {
+      "id": "AC-001",
+      "implementation": [
+        "frontend/src/app/layout/public/components/site-header/site-header.ts",
+        "frontend/src/styles/_public-site.scss"
+      ],
+      "verification": [
+        "scripts/review-public-behavior.mjs",
+        "specs/007-public-finalization-cleanup/validation.md"
+      ],
+      "verified": true,
+      "evidence": "Chrome en 320/390/768/930/1440: desktop transparente en 0/80, negro en 81 y transparente al volver a 0; logo 100/80/100. Móvil e interiores negros, sin errores."
+    },
+    {
+      "id": "AC-002",
+      "implementation": [
+        "frontend/src/app/features/public/not-found/not-found-page.html",
+        "frontend/src/app/features/public/not-found/not-found-page.scss"
+      ],
+      "verification": [
+        "scripts/visual-public-review.mjs",
+        "scripts/review-public-behavior.mjs",
+        "specs/007-public-finalization-cleanup/validation.md"
+      ],
+      "verified": true,
+      "evidence": "404 revisado en cinco anchos y comparado mediante capturas con original archivado a 390/1440. Tarjeta exterior 408 px, colores y franja móvil de referencia; español, layout público y regreso a / deliberados. Sin overflow/errores."
+    },
+    {
+      "id": "AC-003",
+      "implementation": [
+        "frontend/src/app/app.config.ts",
+        "frontend/src/styles/_public-site.scss",
+        "frontend/src/app/layout/public/components/site-footer/site-footer.html",
+        "frontend/src/app/features/public/contact/components/contact-section.ts",
+        "frontend/src/app/features/public/contact/data-access/contact-gateway.ts"
+      ],
+      "verification": [
+        "scripts/review-public-behavior.mjs",
+        "specs/007-public-finalization-cleanup/validation.md"
+      ],
+      "verified": true,
+      "evidence": "Overflow 0 en cinco anchos, ancla y≈142 bajo header 90/104, tarjeta cerrada frente visible/back aria-hidden=true, foco contact-user. Timeout interceptado de 15 s habilita campos y conserva datos; no correo real. Footer conectado a CHURCH_CONTENT."
+    },
+    {
+      "id": "AC-004",
+      "implementation": [
+        "scripts/check-assets.mjs",
+        "docs/reference/legacy-manifest.json",
+        "docs/reference/assets-migration.json",
+        "backend/.gitkeep",
+        "frontend/package.json"
+      ],
+      "verification": [
+        "specs/007-public-finalization-cleanup/validation.md",
+        "scripts/check-assets.mjs"
+      ],
+      "verified": true,
+      "evidence": "98 entradas ZIP verificadas SHA-256, 33 recursos/licencias trasladados sin diferencias. Build/start correctos tras retirar fuentes antiguas. Backend solo .gitkeep."
+    },
+    {
+      "id": "AC-005",
+      "implementation": [
+        "firebase.json",
+        ".vscode/launch.json",
+        "README.md",
+        "AGENTS.md",
+        "docs/adr/0004-single-angular-workspace.md",
+        ".agents/skills/iglesia-angular/SKILL.md"
+      ],
+      "verification": [
+        "specs/007-public-finalization-cleanup/validation.md",
+        "scripts/check-skills.mjs",
+        "scripts/check-specs.mjs"
+      ],
+      "verified": true,
+      "evidence": "Build final 463,34 kB sin advertencias. Checks de assets, diseño, dependencias, skills, specs y formato correctos. Firebase/VSCode, README, docs, skill y estructura actualizados; reviews sin errores y servidor activo. Sin pruebas unitarias, backend o despliegue."
+    }
+  ]
+}

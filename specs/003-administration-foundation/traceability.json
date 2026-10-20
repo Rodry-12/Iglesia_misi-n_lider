@@ -1,0 +1,91 @@
+{
+  "status": "in-progress",
+  "criteria": [
+    {
+      "id": "AC-001",
+      "implementation": [
+        "frontend/package.json",
+        "frontend/package-lock.json",
+        "docs/ui-dependencies.json",
+        "scripts/prepare-ui-notices.mjs"
+      ],
+      "verification": [
+        "specs/003-administration-foundation/validation.md",
+        "scripts/check-ui-dependencies.mjs"
+      ],
+      "verified": false,
+      "evidence": "Build e instalacion correctos. Suite final pendiente: primera pasada 19/20 y repeticion no autorizada."
+    },
+    {
+      "id": "AC-002",
+      "implementation": [
+        "frontend/src/styles/tokens.css",
+        "frontend/src/styles/tailwind.css",
+        "frontend/src/app/core/theme/primeng-preset.ts",
+        "frontend/src/app/core/theme/theme-state.ts"
+      ],
+      "verification": [
+        "frontend/src/app/core/theme/theme-state.spec.ts",
+        "specs/003-administration-foundation/validation.md"
+      ],
+      "verified": true,
+      "evidence": "Evidencia histórica con Material; sustituido por PrimeNG en spec 006. Consultar su validación y ADR 0003 para el estado vigente."
+    },
+    {
+      "id": "AC-003",
+      "implementation": [
+        "frontend/src/app/shared/forms/site-form.ts",
+        "frontend/src/app/features/design-system/design-system-page.ts"
+      ],
+      "verification": [
+        "frontend/src/app/shared/forms/site-form.spec.ts",
+        "frontend/src/app/features/design-system/design-system-page.spec.ts"
+      ],
+      "verified": true,
+      "evidence": "Tres pruebas de formulario y una de tabla/vista previa correctas."
+    },
+    {
+      "id": "AC-004",
+      "implementation": [
+        "frontend/src/app/core/auth/access-guards.ts",
+        "frontend/src/app/features/administration/admin.routes.ts"
+      ],
+      "verification": [
+        "frontend/src/app/core/auth/access-context.spec.ts",
+        "specs/003-administration-foundation/validation.md"
+      ],
+      "verified": false,
+      "evidence": "Denegacion y cuatro rutas autorizadas correctas. Finanzas agoto 5 s; ajuste y caso de metadatos pendientes de ejecucion."
+    },
+    {
+      "id": "AC-005",
+      "implementation": [
+        "frontend/src/app/core/auth/access-context.ts",
+        "frontend/src/app/layout/admin-layout/admin-layout.ts"
+      ],
+      "verification": [
+        "frontend/src/app/core/auth/access-context.spec.ts",
+        "specs/003-administration-foundation/validation.md"
+      ],
+      "verified": true,
+      "evidence": "Navegacion filtrada, acceso directo denegado y sede-a/sede-b correctos. Caso adicional de ambito vacio/all-sites sin ejecutar."
+    },
+    {
+      "id": "AC-006",
+      "implementation": [
+        "README.md",
+        "docs/administration.md",
+        "docs/frontend-stack.md",
+        "docs/adr/0002-admin-ui-stack.md",
+        ".agents/skills/iglesia-angular/SKILL.md",
+        ".agents/skills/iglesia-sdd/SKILL.md"
+      ],
+      "verification": [
+        "frontend/src/app/app.spec.ts",
+        "specs/003-administration-foundation/validation.md"
+      ],
+      "verified": true,
+      "evidence": "Regresion publica correcta, skills:check y enlaces locales correctos; pendientes explicitos."
+    }
+  ]
+}

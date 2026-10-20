@@ -1,0 +1,84 @@
+{
+  "status": "verified",
+  "criteria": [
+    {
+      "id": "AC-001",
+      "implementation": [
+        "frontend/package.json",
+        "frontend/package-lock.json",
+        "docs/ui-dependencies.json",
+        "scripts/prepare-ui-notices.mjs"
+      ],
+      "verification": [
+        "scripts/check-ui-dependencies.mjs",
+        "specs/006-primeng-design-system/validation.md"
+      ],
+      "verified": true,
+      "evidence": "Instalación exacta, revisión de sección MIT comunitaria, deps:check y build con avisos de licencia correctos; Material retirado, CDK conservado."
+    },
+    {
+      "id": "AC-002",
+      "implementation": [
+        "frontend/src/styles/tokens.css",
+        "frontend/src/app/core/theme/primeng-preset.ts",
+        "frontend/src/styles/tailwind.css",
+        "frontend/src/app/features/design-system/design-system-page.ts"
+      ],
+      "verification": [
+        "scripts/check-design-system.mjs",
+        "scripts/visual-public-review.mjs",
+        "specs/006-primeng-design-system/validation.md"
+      ],
+      "verified": true,
+      "evidence": "design:check correcto. Catálogo y campos PrimeNG cambian entre fondo blanco/texto oscuro y fondo rgb(32,39,30)/texto rgb(228,236,222) en Chrome escritorio y móvil."
+    },
+    {
+      "id": "AC-003",
+      "implementation": [
+        "frontend/src/app/features/public/home/sections/welcome-slider.ts",
+        "frontend/src/app/features/public/home/sections/welcome-slider.html"
+      ],
+      "verification": [
+        "scripts/visual-public-review.mjs",
+        "specs/006-primeng-design-system/validation.md"
+      ],
+      "verified": true,
+      "evidence": "Galleria revisado en 390/1440; overflow ampliado corregido en 007 y nuevamente registrado en 320/390/768/930/1440 con overflow 0. Ver specs/007-public-finalization-cleanup/validation.md."
+    },
+    {
+      "id": "AC-004",
+      "implementation": [
+        "frontend/src/app/shared/forms/site-form.ts",
+        "frontend/src/app/features/public/contact/components/contact-section.html",
+        "frontend/src/app/features/design-system/design-system-page.ts",
+        "frontend/src/app/shared/ui/theme-toggle.ts"
+      ],
+      "verification": [
+        "scripts/visual-public-review.mjs",
+        "specs/006-primeng-design-system/validation.md"
+      ],
+      "verified": true,
+      "evidence": "Ajustes cerrados en 007: título visible bajo header en cinco anchos, horarios cierran con puntero encima, footer centralizado y recuperación de espera máxima. Review de catálogo/controles correcto; sin envío real ni pruebas unitarias. Ver specs/007-public-finalization-cleanup/validation.md."
+    },
+    {
+      "id": "AC-005",
+      "implementation": [
+        "AGENTS.md",
+        "docs/design-system.md",
+        "docs/adr/0003-primeng-design-system.md",
+        ".agents/skills/iglesia-angular/SKILL.md",
+        ".agents/skills/iglesia-sdd/SKILL.md",
+        "specs/templates/plan.md",
+        "specs/templates/spec.md"
+      ],
+      "verification": [
+        "scripts/check-skills.mjs",
+        "scripts/check-specs.mjs",
+        "scripts/check-design-system.mjs",
+        "specs/006-primeng-design-system/validation.md"
+      ],
+      "verified": true,
+      "evidence": "ADR/contrato/AGENTS/skills/plantillas actualizados. Build final 461,76 kB sin advertencia de presupuesto. Checks de specs, skills, dependencias, diseño y formato correctos. Revisión Chrome registrada. Pruebas unitarias expresamente fuera del alcance actual."
+    }
+  ]
+}

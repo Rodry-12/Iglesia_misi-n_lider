@@ -1,0 +1,202 @@
+{
+  "assets": [
+    {
+      "path": "backgrounds/background1.png",
+      "source": "src/backgrounds/background1.png",
+      "sha256": "2494e3f9d67e8982a8ff9dbc5cf986237c7c77409081d49e101d72cb188f5d28",
+      "bytes": 55769
+    },
+    {
+      "path": "fonts/DM-Sans-Italic.ttf",
+      "source": "fonts/DM-Sans-Italic.ttf",
+      "sha256": "22259c0cc8237221b80f44c76ba8d36e6bce3cda72779f5b2773643d499720ae",
+      "bytes": 285040
+    },
+    {
+      "path": "fonts/DM-Sans.ttf",
+      "source": "fonts/DM-Sans.ttf",
+      "sha256": "8cd08d97e89c24d0aa92edd2f0f4c8ee6195eee9b7c9f154865a58b02f0c1c0d",
+      "bytes": 240164
+    },
+    {
+      "path": "fonts/Grape-Nuts.ttf",
+      "source": "fonts/Grape-Nuts.ttf",
+      "sha256": "d4772724931dbafc507c610f10d8cffa4602f8b8e8abfc0bd384996875af4134",
+      "bytes": 122812
+    },
+    {
+      "path": "icon-fonts/fontawesome-webfont.eot",
+      "source": "src/font-awesome-4.7.0/fonts/fontawesome-webfont.eot",
+      "sha256": "7bfcab6db99d5cfbf1705ca0536ddc78585432cc5fa41bbd7ad0f009033b2979",
+      "bytes": 165742
+    },
+    {
+      "path": "icon-fonts/fontawesome-webfont.svg",
+      "source": "src/font-awesome-4.7.0/fonts/fontawesome-webfont.svg",
+      "sha256": "fc378232f9dad500890aa9e0bdd030a53d2f317d517393a3b91400b4ddce4c7c",
+      "bytes": 447050
+    },
+    {
+      "path": "icon-fonts/fontawesome-webfont.ttf",
+      "source": "src/font-awesome-4.7.0/fonts/fontawesome-webfont.ttf",
+      "sha256": "aa58f33f239a0fb02f5c7a6c45c043d7a9ac9a093335806694ecd6d4edc0d6a8",
+      "bytes": 165548
+    },
+    {
+      "path": "icon-fonts/fontawesome-webfont.woff",
+      "source": "src/font-awesome-4.7.0/fonts/fontawesome-webfont.woff",
+      "sha256": "ba0c59deb5450f5cb41b3f93609ee2d0d995415877ddfa223e8a8a7533474f07",
+      "bytes": 98024
+    },
+    {
+      "path": "icon-fonts/fontawesome-webfont.woff2",
+      "source": "src/font-awesome-4.7.0/fonts/fontawesome-webfont.woff2",
+      "sha256": "2adefcbc041e7d18fcf2d417879dc5a09997aa64d675b7a3c4b6ce33da13f3fe",
+      "bytes": 77160
+    },
+    {
+      "path": "images/Bienvenidos2.png",
+      "source": "src/images/Bienvenidos2.png",
+      "sha256": "818a42c7c0678d05f5f5c604e8d8915b304df2bea9ec404d37ee7250680aef2a",
+      "bytes": 667583
+    },
+    {
+      "path": "images/Bienvenidos4.PNG",
+      "source": "src/images/Bienvenidos4.PNG",
+      "sha256": "c08fd9e1129d05e9bfbe333764f9850dc9db6e86b29c032c2a680ee2f1117761",
+      "bytes": 291859
+    },
+    {
+      "path": "images/MISIÓN LÍDER .png",
+      "source": "src/images/MISIÓN LÍDER .png",
+      "sha256": "91b31a51928af569bcf67b714cb303149ca4e6eb81ce957f4c4ddc3fdc48eb88",
+      "bytes": 234161
+    },
+    {
+      "path": "images/Scamer.png",
+      "source": "src/images/Scamer.png",
+      "sha256": "065b85721ddd31867c33d4655e16c64160ad7c5f9373bffb1b2cda537fcd944c",
+      "bytes": 7174
+    },
+    {
+      "path": "images/about.jpg",
+      "source": "src/images/about.jpg",
+      "sha256": "c424c5761735af3cdd5e8743e5651ddae3e3ed862edc32925198645160119ed4",
+      "bytes": 92463
+    },
+    {
+      "path": "images/alabanza1.jpg",
+      "source": "src/images/alabanza1.jpg",
+      "sha256": "17fd9844adac40c776e748b62c9bcad8066cee6e207ed2f4e340eb52e0b46867",
+      "bytes": 178405
+    },
+    {
+      "path": "images/bancolombia.png",
+      "source": "src/images/bancolombia.png",
+      "sha256": "b373e56540fd7e721a131b58355674ded597eae40f6eaf7741764c0923a36b4a",
+      "bytes": 14034
+    },
+    {
+      "path": "images/bienvenidos.png",
+      "source": "src/images/bienvenidos.png",
+      "sha256": "c519fcd21cefee0a8811168b87c6c8fb3eb9228f051d8495df6141a96a44d334",
+      "bytes": 265076
+    },
+    {
+      "path": "images/eventos-background1.jpg",
+      "source": "src/images/eventos-background1.jpg",
+      "sha256": "6ccf1a5144ef5689f9c52333cb1c38f63cf4635e5c6bb624cd8e5ef9586dbaef",
+      "bytes": 230092
+    },
+    {
+      "path": "images/formacion.jpeg",
+      "source": "src/images/formacion.jpeg",
+      "sha256": "f1c1e993ada7d8815cd338c85d392b6650d28d7c89d67299f864226833a42206",
+      "bytes": 200413
+    },
+    {
+      "path": "images/horarios-background.png",
+      "source": "src/images/horarios-background.png",
+      "sha256": "3f00f73a16e8db2345f5bd354de806eb5a70c186ccc703429b285d253d77cf8d",
+      "bytes": 65704
+    },
+    {
+      "path": "images/jovenes.jpg",
+      "source": "src/images/jovenes.jpg",
+      "sha256": "8b5631e93ddd575c72f979ec0501733504546bdac848a49b6f4c75503021919c",
+      "bytes": 92115
+    },
+    {
+      "path": "images/ministerio_infantil.jpg",
+      "source": "src/images/ministerio_infantil.jpg",
+      "sha256": "e5db92707524af88defcf2af4782108254fbfe3b3fa8e50fdeb982386bdb89ab",
+      "bytes": 206001
+    },
+    {
+      "path": "images/mission.png",
+      "source": "src/images/mission.png",
+      "sha256": "8bb880c337108a6e1fa7f88fc40ceb68d553e1da64a9a5050a0b820e035c0235",
+      "bytes": 6870
+    },
+    {
+      "path": "images/pastores1.jpg",
+      "source": "src/images/pastores1.jpg",
+      "sha256": "9565e1af4e552bbb1c97ed0f1743f6708964da85df86ea764c2275773ff2fce7",
+      "bytes": 134626
+    },
+    {
+      "path": "images/qr.png",
+      "source": "src/images/qr.png",
+      "sha256": "5386e391161683fe95b537551fdb3b9cb6dc2a62bda679f159818d9ee52ba8a2",
+      "bytes": 85401
+    },
+    {
+      "path": "images/servicio-domingo.png",
+      "source": "src/images/servicio-domingo.png",
+      "sha256": "28a667c5cfe7ff78d8c664188f7d818085292f45adc34af65404d61eb4831d86",
+      "bytes": 37299
+    },
+    {
+      "path": "images/servicio-miercoles.png",
+      "source": "src/images/servicio-miercoles.png",
+      "sha256": "e73eb4c0fafafb4753c4d4f833e37dbbc76a5db606817a24386e58522a1f2dc9",
+      "bytes": 106580
+    },
+    {
+      "path": "images/servicio-sabado.png",
+      "source": "src/images/servicio-sabado.png",
+      "sha256": "d7748518baff8e73d7266e31c7d90a06aecdabe3fc6fb6c0759a57ef40bcb457",
+      "bytes": 169883
+    },
+    {
+      "path": "images/servidores.jpeg",
+      "source": "src/images/servidores.jpeg",
+      "sha256": "c4e4d12c5c2140b8fef9940437ad400695ea68623256ac21a57666be1dc39aee",
+      "bytes": 155995
+    },
+    {
+      "path": "images/serviviosTitle-background.png",
+      "source": "src/images/serviviosTitle-background.png",
+      "sha256": "9767a70a49bca5b450b27f6cc83929bc52f982e508b7c8379e0d25b64d272a96",
+      "bytes": 361686
+    },
+    {
+      "path": "images/view.png",
+      "source": "src/images/view.png",
+      "sha256": "f360c28b836e60aeeaeabf25e61463bd41ad0ee5a03c73ba331558490cf7e14f",
+      "bytes": 6488
+    },
+    {
+      "path": "fonts/DM-Sans-OFL.txt",
+      "source": "fonts/DM-Sans-OFL.txt",
+      "sha256": "9af36190332437f5ecd09974de43c1f7c77a310a996cdd8ceb25628b458840e1",
+      "bytes": 4482
+    },
+    {
+      "path": "fonts/Grape-Nuts-OFL.txt",
+      "source": "fonts/Grape-Nuts-OFL.txt",
+      "sha256": "5818012656b5ba904c83dad6a0011bd25071d840231f83d69ba34eebd5e510e7",
+      "bytes": 4393
+    }
+  ]
+}

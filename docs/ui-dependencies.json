@@ -1,0 +1,18 @@
+{
+  "checkedOn": "2026-10-19",
+  "packages": [
+    {
+      "name": "primeng",
+      "version": "21.1.10",
+      "license": "SEE LICENSE IN LICENSE.md",
+      "licenseSection": "PRIMENG COMMUNITY VERSIONS LICENSE",
+      "licenseText": "The MIT License (MIT)"
+    },
+    { "name": "@primeuix/themes", "version": "2.0.3", "license": "MIT" },
+    { "name": "@angular/cdk", "version": "21.2.14", "license": "MIT" },
+    { "name": "@lucide/angular", "version": "1.59.0", "license": "ISC" },
+    { "name": "tailwindcss", "version": "4.3.3", "license": "MIT" },
+    { "name": "@tailwindcss/postcss", "version": "4.3.3", "license": "MIT" },
+    { "name": "postcss", "version": "8.5.31", "license": "MIT" }
+  ]
+}

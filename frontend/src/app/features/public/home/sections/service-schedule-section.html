@@ -1,0 +1,31 @@
+<section class="horarios" aria-labelledby="services-heading">
+  <div class="horarios-title">
+    <h2 id="services-heading">Visita nuestra iglesia</h2>
+    <p><span>Horarios</span> de nuestros servicios</p>
+  </div>
+  <div class="horarios-list">
+    @for (service of services(); track service.title; let index = $index) {
+      <article class="card" [class.is-flipped]="selected() === index">
+        <div [class]="'front ' + service.frontClass" [attr.aria-hidden]="selected() === index">
+          <img [src]="service.image" [alt]="service.title" loading="lazy" />
+          <div class="card-title" aria-hidden="true"></div>
+          <h2>{{ service.title }}</h2>
+          <p>{{ service.schedule }}</p>
+        </div>
+        <div class="back" [attr.aria-hidden]="selected() !== index">
+          <p>{{ service.description }}</p>
+          <h2>{{ service.invitation }}</h2>
+        </div>
+        <button
+          type="button"
+          class="service-toggle"
+          [attr.aria-expanded]="selected() === index"
+          [attr.aria-label]="'Ver detalles: ' + service.title"
+          (click)="toggle(index)"
+        >
+          {{ selected() === index ? 'Volver' : 'Ver detalles' }}
+        </button>
+      </article>
+    }
+  </div>
+</section>

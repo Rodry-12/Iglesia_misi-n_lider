@@ -1,0 +1,14 @@
+@import './tokens.css';
+@import 'tailwindcss' source('../');
+
+@theme inline {
+  --color-brand: var(--ml-color-primary);
+  --color-brand-soft: var(--ml-color-primary-soft);
+  --color-panel: var(--ml-color-surface);
+  --color-canvas: var(--ml-color-background);
+  --color-content: var(--ml-color-text);
+  --color-muted: var(--ml-color-muted);
+  --color-outline: var(--ml-color-outline);
+  --font-sans: var(--ml-font);
+  --radius-panel: var(--ml-radius-panel);
+}

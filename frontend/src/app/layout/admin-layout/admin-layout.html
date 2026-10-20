@@ -1,0 +1,56 @@
+<a class="skip-link" href="#gestion-contenido">Saltar al contenido</a>
+<div class="admin-frame min-h-dvh bg-canvas text-content">
+  <header
+    class="flex flex-wrap items-center justify-between gap-4 border-b border-outline bg-panel px-4 py-3"
+  >
+    <div class="flex items-center gap-3">
+      <button
+        pButton
+        [text]="true"
+        class="admin-menu-button"
+        type="button"
+        aria-controls="admin-navigation"
+        [attr.aria-expanded]="menuOpen()"
+        (click)="menuOpen.set(!menuOpen())"
+      >
+        <svg lucidePanelLeft aria-hidden="true" [size]="20"></svg> Menú
+      </button>
+      <a routerLink="/gestion" class="font-semibold text-brand">Misión Líder París · Gestión</a>
+    </div>
+    <div class="flex flex-wrap items-center gap-3">
+      <span class="text-sm text-muted">{{ access.principal()?.displayName }}</span>
+      <app-theme-toggle />
+      <a pButton [text]="true" routerLink="/">Sitio público</a>
+    </div>
+  </header>
+  <div class="admin-body">
+    <nav
+      id="admin-navigation"
+      aria-label="Administración"
+      [class.is-open]="menuOpen()"
+      class="border-r border-outline bg-panel p-4"
+    >
+      <p class="mb-4 flex items-center gap-2 text-sm font-semibold text-muted">
+        <svg lucideShieldCheck aria-hidden="true" [size]="18"></svg> Área de gestión
+      </p>
+      <a
+        routerLink="/gestion"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        ariaCurrentWhenActive="page"
+        (click)="menuOpen.set(false)"
+        >Resumen</a
+      >
+      @for (item of navigation(); track item.path) {
+        <a
+          [routerLink]="item.path"
+          routerLinkActive="active"
+          ariaCurrentWhenActive="page"
+          (click)="menuOpen.set(false)"
+          >{{ item.title }}</a
+        >
+      }
+    </nav>
+    <main id="gestion-contenido" tabindex="-1" class="min-w-0 p-4 md:p-8"><router-outlet /></main>
+  </div>
+</div>

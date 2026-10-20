@@ -1,0 +1,57 @@
+<header class="header" (keydown.escape)="closeMenu(true)">
+  <div class="nav-main" [class.scroll]="scrolled() || !isHome()">
+    <div class="logo">
+      <button
+        id="menu-btn"
+        #menuButton
+        class="menu-toggle"
+        type="button"
+        aria-controls="primary-navigation"
+        [attr.aria-expanded]="menuOpen()"
+        (click)="menuOpen.set(!menuOpen())"
+      >
+        <i class="fa fa-bars" aria-hidden="true"></i
+        ><span class="sr-only">{{ menuOpen() ? 'Cerrar menú' : 'Abrir menú' }}</span></button
+      ><app-site-brand (click)="closeMenu()" />
+    </div>
+    <nav
+      id="primary-navigation"
+      class="nav-bar"
+      aria-label="Navegación principal"
+      [class.show]="menuOpen()"
+      [class.is-open]="menuOpen()"
+    >
+      <ul class="nav-menu">
+        @for (item of navigation; track item.label) {
+          <li>
+            <a [routerLink]="item.path" [fragment]="item.fragment" (click)="closeMenu()">{{
+              item.label
+            }}</a>
+          </li>
+        }
+      </ul>
+      <div class="nav-menu-right">
+        <a [href]="church.facebook" target="_blank" rel="noopener noreferrer" aria-label="Facebook"
+          ><i class="fa fa-facebook" aria-hidden="true"></i></a
+        ><a
+          [href]="church.instagram"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Instagram"
+          ><i class="fa fa-instagram" aria-hidden="true"></i></a
+        ><a class="btn-principal" routerLink="/" fragment="contacto" (click)="closeMenu()"
+          >Contacto</a
+        ><a class="sign-in" [routerLink]="signIn.path" (click)="closeMenu()">{{ signIn.label }}</a>
+      </div>
+    </nav>
+  </div>
+  <a
+    id="btn-wsp"
+    [href]="church.whatsapp"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="btn-wsp"
+    aria-label="Hablar con la iglesia por WhatsApp"
+    ><i class="fa fa-whatsapp" aria-hidden="true"></i
+  ></a>
+</header>
