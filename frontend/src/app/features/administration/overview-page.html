@@ -1,0 +1,126 @@
+<app-page-heading
+  title="Resumen de gestión"
+  description="Accede a las áreas habilitadas para tu cuenta y tus sedes."
+/>
+@if (access.can('USER_CREATE') && !access.can('USER_VIEW')) {
+  <p><a pButton routerLink="/gestion/usuarios/invitar">Invitar usuario</a></p>
+}
+@if (access.can('PERSON_CREATE') && !access.can('PERSON_VIEW')) {
+  <p><a pButton routerLink="/gestion/miembros/registrar">Registrar persona</a></p>
+}
+@if (auth.session(); as session) {
+  <section class="session-section" aria-labelledby="session-title">
+    <div class="section-heading">
+      <h2 id="session-title">Tu sesión</h2>
+      <button
+        pButton
+        type="button"
+        [text]="true"
+        [disabled]="auth.busy()"
+        (click)="auth.refreshSession()"
+      >
+        Actualizar sesión
+      </button>
+    </div>
+    <div class="session-grid">
+      <article class="session-card">
+        <span class="card-label">Rol de la cuenta</span><strong>{{ roles() }}</strong>
+        <p>Perfil de acceso de tu sesión</p>
+      </article>
+      <article class="session-card">
+        <span class="card-label">Ámbito de acceso</span>
+        <strong>{{
+          globalAccess()
+            ? 'Acceso global'
+            : branches().length +
+              (branches().length === 1 ? ' sede autorizada' : ' sedes autorizadas')
+        }}</strong>
+        <p>{{ globalAccess() ? 'Todas las sedes' : 'Limitado a tus concesiones vigentes' }}</p>
+      </article>
+      <article class="session-card">
+        <span class="card-label">Permisos</span><strong>{{ permissionCount() }}</strong>
+        <p>Acciones habilitadas, sin duplicados</p>
+      </article>
+      <article class="session-card">
+        <span class="card-label">Cuenta conectada</span><strong>{{ session.displayName }}</strong>
+        <p>Información de la sesión actual</p>
+      </article>
+    </div>
+  </section>
+}
+<section class="modules-section" aria-labelledby="modules-title">
+  <div class="section-heading">
+    <div>
+      <h2 id="modules-title">Módulos disponibles</h2>
+      <p>Accesos habilitados para tu cuenta.</p>
+    </div>
+  </div>
+  <div class="module-grid">
+    @for (item of navigation(); track item.path) {
+      <a class="module-card" [routerLink]="item.path">
+        <span class="module-icon"><app-management-icon [path]="item.path" /></span>
+        <h3>{{ item.title }}</h3>
+        <p>{{ item.description }}</p>
+        <span class="module-link">Abrir {{ item.title }} <span aria-hidden="true">→</span></span>
+      </a>
+    } @empty {
+      <p class="empty-modules">
+        Todavía no tienes áreas habilitadas. Consulta con el responsable de tu sede.
+      </p>
+    }
+  </div>
+</section>
+@if (auth.session(); as session) {
+  <section class="permissions-section" aria-labelledby="permissions-title">
+    <div class="section-heading">
+      <div>
+        <h2 id="permissions-title">Permisos de tu cuenta</h2>
+        <p>Estas son las acciones que tu cuenta tiene habilitadas según su ámbito de acceso.</p>
+      </div>
+      <button
+        pButton
+        type="button"
+        [text]="true"
+        [attr.aria-expanded]="permissionsOpen()"
+        aria-controls="session-permissions"
+        (click)="permissionsOpen.set(!permissionsOpen())"
+      >
+        {{ permissionsOpen() ? 'Ocultar mis permisos' : 'Ver mis permisos' }}
+      </button>
+    </div>
+    @if (permissionsOpen()) {
+      <div id="session-permissions" class="permissions-panel">
+        @for (grant of grantDetails(); track $index) {
+          <article class="grant-card">
+            <h3>
+              {{ roleLabel(grant.roleCode) }}
+            </h3>
+            <p class="grant-scope">
+              {{
+                grant.roleCode === 'SUPER_ADMIN' && grant.branchId === null
+                  ? 'Todas las sedes'
+                  : 'Solo en las sedes autorizadas para esta concesión'
+              }}
+            </p>
+            <div class="permission-groups">
+              @for (group of grant.groups; track group.name) {
+                <div>
+                  <h4>{{ group.name }}</h4>
+                  <ul>
+                    @for (permission of group.permissions; track permission.code) {
+                      <li>
+                        {{ permission.label }}
+                      </li>
+                    }
+                  </ul>
+                </div>
+              } @empty {
+                <p>Sin permisos funcionales concedidos.</p>
+              }
+            </div>
+          </article>
+        }
+      </div>
+    }
+  </section>
+}

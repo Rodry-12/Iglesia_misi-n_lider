@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><IsPackable>false</IsPackable><IsTestProject>true</IsTestProject></PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../src/MisionLiderParis.Application/MisionLiderParis.Application.csproj" />
+    <ProjectReference Include="../../src/MisionLiderParis.Infrastructure/MisionLiderParis.Infrastructure.csproj" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" PrivateAssets="all" />
+    <Using Include="Xunit" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="../../docs/reference/ministerial-reconstruction.sql.reference.txt" Link="schema-reference.txt" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

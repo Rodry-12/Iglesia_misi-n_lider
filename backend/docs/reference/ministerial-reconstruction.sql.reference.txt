@@ -1,0 +1,1165 @@
+
+-- ============================================================
+-- PROYECTO: MISION LIDER PARIS
+-- MOTOR: POSTGRESQL / SUPABASE
+-- ESQUEMA: iglesia
+-- OBJETIVO: REFERENCIA COMPLETA PARA DESARROLLAR BACKEND .NET
+--
+-- ATENCION:
+-- NO EJECUTAR SOBRE LA BASE EXISTENTE.
+-- ESTE SCRIPT RECONSTRUYE EL MODELO DESDE CERO.
+-- NO ES UN DUMP VERIFICADO DE LA BASE ACTUAL.
+--
+-- AUTENTICACION:
+-- ASP.NET CORE IDENTITY SE IMPLEMENTARA DESDE .NET 10.
+-- SUS TABLAS NO SE INCLUYEN AQUI.
+-- ============================================================
+
+
+-- ============================================================
+-- 01. ESQUEMA
+-- ============================================================
+
+CREATE SCHEMA IF NOT EXISTS iglesia;
+
+
+-- ============================================================
+-- 02. SEDE
+-- ============================================================
+
+CREATE TABLE iglesia.sede (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+
+    codigo VARCHAR(20) NOT NULL,
+    nombre VARCHAR(150) NOT NULL,
+    direccion VARCHAR(250),
+    telefono VARCHAR(30),
+
+    activa BOOLEAN NOT NULL DEFAULT TRUE,
+
+    fecha_creacion TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    fecha_actualizacion TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT uq_sede_codigo
+        UNIQUE (codigo),
+
+    CONSTRAINT ck_sede_codigo
+        CHECK (LENGTH(TRIM(codigo)) > 0),
+
+    CONSTRAINT ck_sede_nombre
+        CHECK (LENGTH(TRIM(nombre)) > 0)
+);
+
+
+-- ============================================================
+-- 03. PERSONA
+-- ============================================================
+
+CREATE TABLE iglesia.persona (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+
+    nombres VARCHAR(150) NOT NULL,
+    apellidos VARCHAR(150) NOT NULL,
+
+    telefono VARCHAR(30),
+    correo VARCHAR(255),
+    fecha_nacimiento DATE,
+
+    activa BOOLEAN NOT NULL DEFAULT TRUE,
+
+    fecha_creacion TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    fecha_actualizacion TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT ck_persona_nombres
+        CHECK (LENGTH(TRIM(nombres)) > 0),
+
+    CONSTRAINT ck_persona_apellidos
+        CHECK (LENGTH(TRIM(apellidos)) > 0)
+);
+
+
+-- ============================================================
+-- 04. PERSONA_DOCUMENTO
+-- ============================================================
+
+CREATE TABLE iglesia.persona_documento (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+
+    persona_id UUID NOT NULL
+        REFERENCES iglesia.persona(id)
+        ON DELETE RESTRICT,
+
+    tipo_documento VARCHAR(30) NOT NULL,
+    numero_documento VARCHAR(50) NOT NULL,
+    pais_emisor CHAR(2) NOT NULL DEFAULT 'CO',
+
+    vigente BOOLEAN NOT NULL DEFAULT TRUE,
+
+    fecha_creacion TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    fecha_finalizacion TIMESTAMPTZ,
+
+    CONSTRAINT uq_persona_documento
+        UNIQUE (
+            pais_emisor,
+            tipo_documento,
+            numero_documento
+        ),
+
+    CONSTRAINT ck_documento_numero
+        CHECK (LENGTH(TRIM(numero_documento)) > 0),
+
+    CONSTRAINT ck_documento_tipo
+        CHECK (LENGTH(TRIM(tipo_documento)) > 0),
+
+    CONSTRAINT ck_documento_vigencia
+        CHECK (
+            (
+                vigente = TRUE
+                AND fecha_finalizacion IS NULL
+            )
+            OR
+            (
+                vigente = FALSE
+                AND fecha_finalizacion IS NOT NULL
+            )
+        )
+);
+
+CREATE UNIQUE INDEX ux_persona_documento_vigente
+ON iglesia.persona_documento(persona_id)
+WHERE vigente = TRUE;
+
+CREATE INDEX ix_persona_documento_persona
+ON iglesia.persona_documento(persona_id);
+
+
+-- ============================================================
+-- 05. PERSONA_SEDE
+-- ============================================================
+
+CREATE TABLE iglesia.persona_sede (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+
+    persona_id UUID NOT NULL
+        REFERENCES iglesia.persona(id)
+        ON DELETE RESTRICT,
+
+    sede_id UUID NOT NULL
+        REFERENCES iglesia.sede(id)
+        ON DELETE RESTRICT,
+
+    fecha_inicio TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    fecha_fin TIMESTAMPTZ,
+
+    motivo_salida TEXT,
+
+    fecha_creacion TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT ck_persona_sede_fechas
+        CHECK (
+            fecha_fin IS NULL
+            OR fecha_fin >= fecha_inicio
+        )
+);
+
+CREATE UNIQUE INDEX ux_persona_sede_activa
+ON iglesia.persona_sede(persona_id)
+WHERE fecha_fin IS NULL;
+
+CREATE INDEX ix_persona_sede_sede
+ON iglesia.persona_sede(sede_id);
+
+
+-- ============================================================
+-- 06. CATEGORIA_PROCESO
+-- ============================================================
+
+CREATE TABLE iglesia.categoria_proceso (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+
+    nombre VARCHAR(150) NOT NULL,
+    descripcion TEXT,
+
+    orden INTEGER NOT NULL DEFAULT 0,
+    activa BOOLEAN NOT NULL DEFAULT TRUE,
+
+    fecha_creacion TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    fecha_actualizacion TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT uq_categoria_proceso_nombre
+        UNIQUE (nombre),
+
+    CONSTRAINT ck_categoria_proceso_nombre
+        CHECK (LENGTH(TRIM(nombre)) > 0),
+
+    CONSTRAINT ck_categoria_proceso_orden
+        CHECK (orden >= 0)
+);
+
+
+-- ============================================================
+-- 07. PROCESO
+-- ============================================================
+
+CREATE TABLE iglesia.proceso (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+
+    categoria_id UUID NOT NULL
+        REFERENCES iglesia.categoria_proceso(id)
+        ON DELETE RESTRICT,
+
+    nombre VARCHAR(150) NOT NULL,
+    descripcion TEXT,
+
+    orden INTEGER NOT NULL DEFAULT 0,
+    activo BOOLEAN NOT NULL DEFAULT TRUE,
+
+    fecha_creacion TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    fecha_actualizacion TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT uq_proceso_categoria_nombre
+        UNIQUE (categoria_id, nombre),
+
+    CONSTRAINT ck_proceso_nombre
+        CHECK (LENGTH(TRIM(nombre)) > 0),
+
+    CONSTRAINT ck_proceso_orden
+        CHECK (orden >= 0)
+);
+
+CREATE INDEX ix_proceso_categoria
+ON iglesia.proceso(categoria_id);
+
+
+-- ============================================================
+-- 08. ESTADO_PROCESO
+-- ============================================================
+
+CREATE TABLE iglesia.estado_proceso (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+
+    codigo VARCHAR(30) NOT NULL UNIQUE,
+    nombre VARCHAR(100) NOT NULL,
+
+    es_final BOOLEAN NOT NULL DEFAULT FALSE,
+
+    CONSTRAINT ck_estado_proceso_codigo
+        CHECK (LENGTH(TRIM(codigo)) > 0),
+
+    CONSTRAINT ck_estado_proceso_nombre
+        CHECK (LENGTH(TRIM(nombre)) > 0)
+);
+
+
+-- ============================================================
+-- 09. PERSONA_PROCESO
+-- ============================================================
+
+CREATE TABLE iglesia.persona_proceso (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+
+    persona_id UUID NOT NULL
+        REFERENCES iglesia.persona(id)
+        ON DELETE RESTRICT,
+
+    proceso_id UUID NOT NULL
+        REFERENCES iglesia.proceso(id)
+        ON DELETE RESTRICT,
+
+    responsable_persona_id UUID NOT NULL
+        REFERENCES iglesia.persona(id)
+        ON DELETE RESTRICT,
+
+    sede_id UUID NOT NULL
+        REFERENCES iglesia.sede(id)
+        ON DELETE RESTRICT,
+
+    estado_id UUID NOT NULL
+        REFERENCES iglesia.estado_proceso(id)
+        ON DELETE RESTRICT,
+
+    fecha_asignacion TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    fecha_inicio TIMESTAMPTZ,
+    fecha_finalizacion TIMESTAMPTZ,
+
+    fecha_creacion TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    fecha_actualizacion TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT ck_persona_proceso_responsable
+        CHECK (
+            persona_id <> responsable_persona_id
+        ),
+
+    CONSTRAINT ck_persona_proceso_fechas
+        CHECK (
+            (
+                fecha_inicio IS NULL
+                OR fecha_inicio >= fecha_asignacion
+            )
+            AND
+            (
+                fecha_finalizacion IS NULL
+                OR fecha_inicio IS NOT NULL
+            )
+            AND
+            (
+                fecha_finalizacion IS NULL
+                OR fecha_finalizacion >= fecha_inicio
+            )
+        )
+);
+
+CREATE INDEX ix_persona_proceso_persona
+ON iglesia.persona_proceso(persona_id);
+
+CREATE INDEX ix_persona_proceso_responsable
+ON iglesia.persona_proceso(responsable_persona_id);
+
+CREATE INDEX ix_persona_proceso_sede
+ON iglesia.persona_proceso(sede_id);
+
+CREATE INDEX ix_persona_proceso_proceso
+ON iglesia.persona_proceso(proceso_id);
+
+CREATE INDEX ix_persona_proceso_estado
+ON iglesia.persona_proceso(estado_id);
+
+
+-- ============================================================
+-- 10. ROL
+-- ============================================================
+
+CREATE TABLE iglesia.rol (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+
+    codigo VARCHAR(40) NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion VARCHAR(300),
+
+    es_global BOOLEAN NOT NULL DEFAULT FALSE,
+    activo BOOLEAN NOT NULL DEFAULT TRUE,
+
+    fecha_creacion TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    fecha_actualizacion TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT uq_rol_codigo
+        UNIQUE (codigo),
+
+    CONSTRAINT ck_rol_codigo
+        CHECK (LENGTH(TRIM(codigo)) > 0),
+
+    CONSTRAINT ck_rol_nombre
+        CHECK (LENGTH(TRIM(nombre)) > 0)
+);
+
+
+-- ============================================================
+-- 11. PERMISO
+-- ============================================================
+
+CREATE TABLE iglesia.permiso (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+
+    codigo VARCHAR(100) NOT NULL,
+    nombre VARCHAR(150) NOT NULL,
+    descripcion VARCHAR(300),
+
+    modulo VARCHAR(50) NOT NULL,
+    activo BOOLEAN NOT NULL DEFAULT TRUE,
+
+    fecha_creacion TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT uq_permiso_codigo
+        UNIQUE (codigo),
+
+    CONSTRAINT ck_permiso_codigo
+        CHECK (LENGTH(TRIM(codigo)) > 0),
+
+    CONSTRAINT ck_permiso_nombre
+        CHECK (LENGTH(TRIM(nombre)) > 0),
+
+    CONSTRAINT ck_permiso_modulo
+        CHECK (LENGTH(TRIM(modulo)) > 0)
+);
+
+
+-- ============================================================
+-- 12. ROL_PERMISO
+-- ============================================================
+
+CREATE TABLE iglesia.rol_permiso (
+    rol_id UUID NOT NULL,
+    permiso_id UUID NOT NULL,
+
+    fecha_creacion TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT pk_rol_permiso
+        PRIMARY KEY (rol_id, permiso_id),
+
+    CONSTRAINT fk_rol_permiso_rol
+        FOREIGN KEY (rol_id)
+        REFERENCES iglesia.rol(id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_rol_permiso_permiso
+        FOREIGN KEY (permiso_id)
+        REFERENCES iglesia.permiso(id)
+        ON DELETE CASCADE
+);
+
+CREATE INDEX ix_rol_permiso_permiso
+ON iglesia.rol_permiso(permiso_id);
+
+
+-- ============================================================
+-- 13. FUNCION: VALIDAR ASIGNACION
+-- ============================================================
+
+CREATE OR REPLACE FUNCTION iglesia.validar_asignacion_proceso()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SET search_path = ''
+AS $$
+DECLARE
+    v_participante_valido BOOLEAN;
+    v_responsable_valido BOOLEAN;
+    v_proceso_activo BOOLEAN;
+BEGIN
+
+    IF NEW.persona_id = NEW.responsable_persona_id THEN
+        RAISE EXCEPTION
+            'El participante y el responsable deben ser personas diferentes';
+    END IF;
+
+    SELECT EXISTS (
+        SELECT 1
+        FROM iglesia.persona p
+        INNER JOIN iglesia.persona_sede ps
+            ON ps.persona_id = p.id
+        WHERE p.id = NEW.persona_id
+          AND p.activa = TRUE
+          AND ps.sede_id = NEW.sede_id
+          AND ps.fecha_fin IS NULL
+    )
+    INTO v_participante_valido;
+
+    IF NOT v_participante_valido THEN
+        RAISE EXCEPTION
+            'El participante no pertenece activamente a la sede';
+    END IF;
+
+    SELECT EXISTS (
+        SELECT 1
+        FROM iglesia.persona p
+        INNER JOIN iglesia.persona_sede ps
+            ON ps.persona_id = p.id
+        WHERE p.id = NEW.responsable_persona_id
+          AND p.activa = TRUE
+          AND ps.sede_id = NEW.sede_id
+          AND ps.fecha_fin IS NULL
+    )
+    INTO v_responsable_valido;
+
+    IF NOT v_responsable_valido THEN
+        RAISE EXCEPTION
+            'El responsable no pertenece activamente a la sede';
+    END IF;
+
+    SELECT EXISTS (
+        SELECT 1
+        FROM iglesia.proceso pr
+        INNER JOIN iglesia.categoria_proceso cp
+            ON cp.id = pr.categoria_id
+        WHERE pr.id = NEW.proceso_id
+          AND pr.activo = TRUE
+          AND cp.activa = TRUE
+    )
+    INTO v_proceso_activo;
+
+    IF NOT v_proceso_activo THEN
+        RAISE EXCEPTION
+            'El proceso o su categoria no estan activos';
+    END IF;
+
+    RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER trg_validar_asignacion_proceso
+BEFORE INSERT OR UPDATE OF
+    persona_id,
+    responsable_persona_id,
+    sede_id,
+    proceso_id
+ON iglesia.persona_proceso
+FOR EACH ROW
+EXECUTE FUNCTION iglesia.validar_asignacion_proceso();
+
+
+-- ============================================================
+-- 14. FUNCION: EVITAR PROCESOS ABIERTOS DUPLICADOS
+-- ============================================================
+
+CREATE OR REPLACE FUNCTION iglesia.validar_proceso_duplicado()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SET search_path = ''
+AS $$
+DECLARE
+    v_estado_final BOOLEAN;
+BEGIN
+
+    SELECT ep.es_final
+    INTO v_estado_final
+    FROM iglesia.estado_proceso ep
+    WHERE ep.id = NEW.estado_id;
+
+    IF v_estado_final IS NULL THEN
+        RAISE EXCEPTION 'Estado de proceso invalido';
+    END IF;
+
+    PERFORM pg_catalog.pg_advisory_xact_lock(
+        pg_catalog.hashtextextended(
+            NEW.persona_id::text || ':' || NEW.proceso_id::text,
+            0
+        )
+    );
+
+    IF NOT v_estado_final AND EXISTS (
+        SELECT 1
+        FROM iglesia.persona_proceso pp
+        INNER JOIN iglesia.estado_proceso ep
+            ON ep.id = pp.estado_id
+        WHERE pp.persona_id = NEW.persona_id
+          AND pp.proceso_id = NEW.proceso_id
+          AND ep.es_final = FALSE
+          AND pp.id <> NEW.id
+    ) THEN
+        RAISE EXCEPTION
+            'La persona ya tiene una asignacion abierta de este proceso';
+    END IF;
+
+    RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER trg_validar_proceso_duplicado
+BEFORE INSERT OR UPDATE OF
+    persona_id,
+    proceso_id,
+    estado_id
+ON iglesia.persona_proceso
+FOR EACH ROW
+EXECUTE FUNCTION iglesia.validar_proceso_duplicado();
+
+
+-- ============================================================
+-- 15. FUNCION: VALIDAR ESTADOS Y FECHAS
+-- ============================================================
+
+CREATE OR REPLACE FUNCTION iglesia.validar_estado_fechas()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SET search_path = ''
+AS $$
+DECLARE
+    v_codigo VARCHAR(30);
+BEGIN
+
+    SELECT codigo
+    INTO v_codigo
+    FROM iglesia.estado_proceso
+    WHERE id = NEW.estado_id;
+
+    IF v_codigo IS NULL THEN
+        RAISE EXCEPTION
+            'El estado del proceso no existe';
+    END IF;
+
+    IF v_codigo = 'PENDING' THEN
+
+        IF NEW.fecha_inicio IS NOT NULL
+           OR NEW.fecha_finalizacion IS NOT NULL THEN
+            RAISE EXCEPTION
+                'Un proceso pendiente no puede tener fechas de inicio o finalizacion';
+        END IF;
+
+    ELSIF v_codigo = 'IN_PROGRESS' THEN
+
+        NEW.fecha_inicio := COALESCE(
+            NEW.fecha_inicio,
+            NOW()
+        );
+
+        NEW.fecha_finalizacion := NULL;
+
+    ELSIF v_codigo = 'SUSPENDED' THEN
+
+        NEW.fecha_inicio := COALESCE(
+            NEW.fecha_inicio,
+            NOW()
+        );
+
+        NEW.fecha_finalizacion := NULL;
+
+    ELSIF v_codigo = 'COMPLETED' THEN
+
+        NEW.fecha_inicio := COALESCE(
+            NEW.fecha_inicio,
+            NOW()
+        );
+
+        NEW.fecha_finalizacion := COALESCE(
+            NEW.fecha_finalizacion,
+            NOW()
+        );
+
+    ELSIF v_codigo = 'WITHDRAWN' THEN
+
+        NEW.fecha_finalizacion := COALESCE(
+            NEW.fecha_finalizacion,
+            NOW()
+        );
+
+    ELSE
+
+        RAISE EXCEPTION
+            'Codigo de estado no permitido: %',
+            v_codigo;
+    END IF;
+
+    IF NEW.fecha_inicio IS NOT NULL
+       AND NEW.fecha_inicio < NEW.fecha_asignacion THEN
+        RAISE EXCEPTION
+            'La fecha de inicio no puede ser anterior a la asignacion';
+    END IF;
+
+    IF NEW.fecha_finalizacion IS NOT NULL
+       AND NEW.fecha_inicio IS NOT NULL
+       AND NEW.fecha_finalizacion < NEW.fecha_inicio THEN
+        RAISE EXCEPTION
+            'La fecha de finalizacion no puede ser anterior al inicio';
+    END IF;
+
+    RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER trg_validar_estado_fechas
+BEFORE INSERT OR UPDATE OF estado_id
+ON iglesia.persona_proceso
+FOR EACH ROW
+EXECUTE FUNCTION iglesia.validar_estado_fechas();
+
+
+-- ============================================================
+-- 16. ESTADOS INICIALES
+-- ============================================================
+
+INSERT INTO iglesia.estado_proceso
+    (codigo, nombre, es_final)
+VALUES
+    ('PENDING', 'Pendiente', FALSE),
+    ('IN_PROGRESS', 'En proceso', FALSE),
+    ('SUSPENDED', 'Suspendido', FALSE),
+    ('COMPLETED', 'Completado', TRUE),
+    ('WITHDRAWN', 'Retirado', TRUE);
+
+
+-- ============================================================
+-- 17. ROLES INICIALES
+-- ============================================================
+
+INSERT INTO iglesia.rol (
+    codigo,
+    nombre,
+    descripcion,
+    es_global
+)
+VALUES
+(
+    'SUPER_ADMIN',
+    'SuperAdministrador',
+    'Administracion global de todas las sedes',
+    TRUE
+),
+(
+    'BRANCH_ADMIN',
+    'Administrador de Sede',
+    'Administracion de su sede',
+    FALSE
+),
+(
+    'OPERATOR',
+    'Operador',
+    'Acceso segun permisos autorizados',
+    FALSE
+);
+
+
+-- ============================================================
+-- 18. PERMISOS INICIALES
+-- ============================================================
+
+INSERT INTO iglesia.permiso
+    (codigo, nombre, modulo)
+VALUES
+
+-- SEDES
+('BRANCH_VIEW', 'Consultar sedes', 'BRANCH'),
+('BRANCH_CREATE', 'Crear sedes', 'BRANCH'),
+('BRANCH_UPDATE', 'Editar sedes', 'BRANCH'),
+
+-- PERSONAS
+('PERSON_VIEW', 'Consultar personas', 'PERSON'),
+('PERSON_CREATE', 'Registrar personas', 'PERSON'),
+('PERSON_UPDATE', 'Editar personas', 'PERSON'),
+('PERSON_DEACTIVATE', 'Desactivar personas', 'PERSON'),
+('PERSON_TRANSFER', 'Trasladar personas entre sedes', 'PERSON'),
+
+-- CATEGORIAS
+('CATEGORY_VIEW', 'Consultar categorias', 'CATEGORY'),
+('CATEGORY_CREATE', 'Crear categorias', 'CATEGORY'),
+('CATEGORY_UPDATE', 'Editar categorias', 'CATEGORY'),
+
+-- PROCESOS
+('PROCESS_VIEW', 'Consultar procesos', 'PROCESS'),
+('PROCESS_CREATE', 'Crear procesos', 'PROCESS'),
+('PROCESS_UPDATE', 'Editar procesos', 'PROCESS'),
+('PROCESS_ASSIGN', 'Asignar procesos a personas', 'PROCESS'),
+('PROCESS_CHANGE_STATUS', 'Cambiar estado de procesos', 'PROCESS'),
+('PROCESS_CHANGE_RESPONSIBLE', 'Cambiar responsable', 'PROCESS'),
+
+-- REPORTES
+('REPORT_VIEW', 'Consultar reportes', 'REPORT'),
+('REPORT_EXPORT', 'Exportar reportes', 'REPORT'),
+
+-- USUARIOS
+('USER_VIEW', 'Consultar usuarios', 'USER'),
+('USER_CREATE', 'Crear usuarios', 'USER'),
+('USER_UPDATE', 'Editar usuarios', 'USER'),
+('USER_CHANGE_STATUS', 'Activar o desactivar usuarios', 'USER'),
+('USER_ASSIGN_ROLE', 'Asignar roles a usuarios', 'USER');
+
+
+-- ============================================================
+-- 19. PERMISOS DEL SUPERADMIN
+-- ============================================================
+
+INSERT INTO iglesia.rol_permiso (
+    rol_id,
+    permiso_id
+)
+SELECT
+    r.id,
+    p.id
+FROM iglesia.rol r
+CROSS JOIN iglesia.permiso p
+WHERE r.codigo = 'SUPER_ADMIN'
+  AND r.activo = TRUE
+  AND p.activo = TRUE
+ON CONFLICT (rol_id, permiso_id) DO NOTHING;
+
+
+-- ============================================================
+-- 20. PERMISOS DEL ADMINISTRADOR DE SEDE
+-- ============================================================
+
+INSERT INTO iglesia.rol_permiso (
+    rol_id,
+    permiso_id
+)
+SELECT
+    r.id,
+    p.id
+FROM iglesia.rol r
+CROSS JOIN iglesia.permiso p
+WHERE r.codigo = 'BRANCH_ADMIN'
+  AND r.activo = TRUE
+  AND p.activo = TRUE
+  AND p.codigo IN (
+
+    'BRANCH_VIEW',
+
+    'PERSON_VIEW',
+    'PERSON_CREATE',
+    'PERSON_UPDATE',
+    'PERSON_DEACTIVATE',
+
+    'CATEGORY_VIEW',
+
+    'PROCESS_VIEW',
+    'PROCESS_ASSIGN',
+    'PROCESS_CHANGE_STATUS',
+    'PROCESS_CHANGE_RESPONSIBLE',
+
+    'REPORT_VIEW',
+    'REPORT_EXPORT',
+
+    'USER_VIEW',
+    'USER_CREATE',
+    'USER_UPDATE',
+    'USER_CHANGE_STATUS'
+  )
+ON CONFLICT (rol_id, permiso_id) DO NOTHING;
+
+-- OPERATOR:
+-- NO TIENE PERMISOS INICIALES.
+-- SU AUTORIZACION GRANULAR SE COMPLETARA EN EL BACKEND.
+
+
+-- ============================================================
+-- 21. SEDE MISION LIDER PARIS
+-- ============================================================
+
+INSERT INTO iglesia.sede (
+    codigo,
+    nombre
+)
+VALUES (
+    'MLP-001',
+    'Misión Líder París'
+);
+
+
+-- ============================================================
+-- 22. CATEGORIA CONSOLIDACION
+-- ============================================================
+
+INSERT INTO iglesia.categoria_proceso (
+    nombre,
+    descripcion,
+    orden
+)
+VALUES (
+    'Consolidación',
+    'Procesos de acompañamiento y formación inicial',
+    1
+);
+
+
+-- ============================================================
+-- 23. PROCESOS MINISTERIALES
+-- ============================================================
+
+INSERT INTO iglesia.proceso (
+    categoria_id,
+    nombre,
+    descripcion,
+    orden
+)
+SELECT
+    c.id,
+    v.nombre,
+    v.descripcion,
+    v.orden
+FROM iglesia.categoria_proceso c
+CROSS JOIN (
+    VALUES
+    (
+        'Tres palabras que definen nuestra razón existencial',
+        'Formacion sobre identidad y proposito cristiano',
+        1
+    ),
+    (
+        'Conexión Divina',
+        'Fortalecimiento de la relacion personal con Dios',
+        2
+    ),
+    (
+        'LBS',
+        'Proceso ministerial LBS',
+        3
+    ),
+    (
+        'Fundamentos de la fe',
+        'Enseñanzas esenciales de la vida cristiana',
+        4
+    )
+) AS v(nombre, descripcion, orden)
+WHERE c.nombre = 'Consolidación';
+
+
+-- ============================================================
+-- 24. PERSONAS FICTICIAS
+-- ============================================================
+
+WITH datos(nombres, apellidos, numero) AS (
+    VALUES
+    ('Andrés', 'Gómez', 1),
+    ('María', 'Rodríguez', 2),
+    ('Carlos', 'Martínez', 3),
+    ('Daniela', 'López', 4),
+    ('Juan', 'Pérez', 5),
+    ('Valentina', 'García', 6),
+    ('David', 'Hernández', 7),
+    ('Laura', 'Ramírez', 8),
+    ('Samuel', 'Torres', 9),
+    ('Camila', 'Morales', 10),
+    ('José', 'Castro', 11),
+    ('Paula', 'Vargas', 12),
+    ('Felipe', 'Rojas', 13),
+    ('Natalia', 'Ortiz', 14),
+    ('Mateo', 'Jiménez', 15),
+    ('Sara', 'Mendoza', 16),
+    ('Esteban', 'Ruiz', 17),
+    ('Juliana', 'Herrera', 18),
+    ('Sebastián', 'Muñoz', 19),
+    ('Isabella', 'Córdoba', 20),
+    ('Miguel', 'Álvarez', 21),
+    ('Angélica', 'Restrepo', 22),
+    ('Julián', 'Ospina', 23),
+    ('Tatiana', 'Quintero', 24),
+    ('Nicolás', 'Salazar', 25),
+    ('Andrea', 'Cardona', 26),
+    ('Cristian', 'Bedoya', 27),
+    ('Lorena', 'Arias', 28),
+    ('Santiago', 'Giraldo', 29),
+    ('Carolina', 'Mejía', 30)
+),
+nuevas_personas AS (
+    INSERT INTO iglesia.persona (
+        nombres,
+        apellidos
+    )
+    SELECT
+        nombres,
+        apellidos
+    FROM datos
+    RETURNING id, nombres, apellidos
+),
+documentos AS (
+    INSERT INTO iglesia.persona_documento (
+        persona_id,
+        tipo_documento,
+        numero_documento,
+        pais_emisor
+    )
+    SELECT
+        p.id,
+        'PRUEBA',
+        'MLP-TEST-' || LPAD(d.numero::text, 3, '0'),
+        'CO'
+    FROM nuevas_personas p
+    INNER JOIN datos d
+        ON d.nombres = p.nombres
+       AND d.apellidos = p.apellidos
+    RETURNING persona_id
+)
+INSERT INTO iglesia.persona_sede (
+    persona_id,
+    sede_id
+)
+SELECT
+    p.id,
+    s.id
+FROM nuevas_personas p
+CROSS JOIN iglesia.sede s
+WHERE s.codigo = 'MLP-001';
+
+
+-- ============================================================
+-- 25. ASIGNACIONES MINISTERIALES DE PRUEBA
+-- ============================================================
+
+WITH asignaciones (
+    participante_documento,
+    responsable_documento,
+    proceso_nombre,
+    estado_codigo
+) AS (
+    VALUES
+
+    -- PENDIENTES
+    ('MLP-TEST-005', 'MLP-TEST-001',
+     'Tres palabras que definen nuestra razón existencial', 'PENDING'),
+
+    ('MLP-TEST-006', 'MLP-TEST-002',
+     'Conexión Divina', 'PENDING'),
+
+    ('MLP-TEST-007', 'MLP-TEST-003',
+     'LBS', 'PENDING'),
+
+    ('MLP-TEST-008', 'MLP-TEST-004',
+     'Fundamentos de la fe', 'PENDING'),
+
+    ('MLP-TEST-009', 'MLP-TEST-001',
+     'Conexión Divina', 'PENDING'),
+
+    ('MLP-TEST-010', 'MLP-TEST-002',
+     'LBS', 'PENDING'),
+
+    ('MLP-TEST-011', 'MLP-TEST-003',
+     'Fundamentos de la fe', 'PENDING'),
+
+    ('MLP-TEST-012', 'MLP-TEST-004',
+     'Tres palabras que definen nuestra razón existencial', 'PENDING'),
+
+    -- EN PROCESO
+    ('MLP-TEST-013', 'MLP-TEST-001',
+     'Tres palabras que definen nuestra razón existencial', 'IN_PROGRESS'),
+
+    ('MLP-TEST-014', 'MLP-TEST-002',
+     'Conexión Divina', 'IN_PROGRESS'),
+
+    ('MLP-TEST-015', 'MLP-TEST-003',
+     'LBS', 'IN_PROGRESS'),
+
+    ('MLP-TEST-016', 'MLP-TEST-004',
+     'Fundamentos de la fe', 'IN_PROGRESS'),
+
+    ('MLP-TEST-017', 'MLP-TEST-001',
+     'Conexión Divina', 'IN_PROGRESS'),
+
+    ('MLP-TEST-018', 'MLP-TEST-002',
+     'LBS', 'IN_PROGRESS'),
+
+    ('MLP-TEST-019', 'MLP-TEST-003',
+     'Fundamentos de la fe', 'IN_PROGRESS'),
+
+    ('MLP-TEST-020', 'MLP-TEST-004',
+     'Tres palabras que definen nuestra razón existencial', 'IN_PROGRESS'),
+
+    -- COMPLETADOS
+    ('MLP-TEST-021', 'MLP-TEST-001',
+     'Tres palabras que definen nuestra razón existencial', 'COMPLETED'),
+
+    ('MLP-TEST-022', 'MLP-TEST-002',
+     'Conexión Divina', 'COMPLETED'),
+
+    ('MLP-TEST-023', 'MLP-TEST-003',
+     'LBS', 'COMPLETED'),
+
+    ('MLP-TEST-024', 'MLP-TEST-004',
+     'Fundamentos de la fe', 'COMPLETED'),
+
+    ('MLP-TEST-025', 'MLP-TEST-001',
+     'Conexión Divina', 'COMPLETED'),
+
+    ('MLP-TEST-026', 'MLP-TEST-002',
+     'LBS', 'COMPLETED'),
+
+    ('MLP-TEST-027', 'MLP-TEST-003',
+     'Fundamentos de la fe', 'COMPLETED'),
+
+    ('MLP-TEST-028', 'MLP-TEST-004',
+     'Tres palabras que definen nuestra razón existencial', 'COMPLETED')
+)
+INSERT INTO iglesia.persona_proceso (
+    persona_id,
+    responsable_persona_id,
+    proceso_id,
+    sede_id,
+    estado_id
+)
+SELECT
+    participante.persona_id,
+    responsable.persona_id,
+    proceso.id,
+    sede.id,
+    estado.id
+FROM asignaciones a
+
+JOIN iglesia.persona_documento participante
+    ON participante.numero_documento = a.participante_documento
+   AND participante.tipo_documento = 'PRUEBA'
+   AND participante.vigente = TRUE
+
+JOIN iglesia.persona_documento responsable
+    ON responsable.numero_documento = a.responsable_documento
+   AND responsable.tipo_documento = 'PRUEBA'
+   AND responsable.vigente = TRUE
+
+JOIN iglesia.proceso proceso
+    ON proceso.nombre = a.proceso_nombre
+
+JOIN iglesia.categoria_proceso categoria
+    ON categoria.id = proceso.categoria_id
+   AND categoria.nombre = 'Consolidación'
+
+JOIN iglesia.sede sede
+    ON sede.codigo = 'MLP-001'
+
+JOIN iglesia.estado_proceso estado
+    ON estado.codigo = a.estado_codigo;
+
+
+-- ============================================================
+-- 26. CONSULTAS DE REFERENCIA PARA EL BACKEND
+-- ============================================================
+
+-- CONSULTAR PERSONAS POR SEDE
+
+SELECT
+    p.id,
+    p.nombres,
+    p.apellidos,
+    p.telefono,
+    p.correo,
+    s.nombre AS sede
+FROM iglesia.persona p
+INNER JOIN iglesia.persona_sede ps
+    ON ps.persona_id = p.id
+INNER JOIN iglesia.sede s
+    ON s.id = ps.sede_id
+WHERE ps.fecha_fin IS NULL
+ORDER BY p.nombres, p.apellidos;
+
+
+-- CONSULTAR PROCESOS ASIGNADOS
+
+SELECT
+    pp.id,
+    p.nombres || ' ' || p.apellidos AS participante,
+    pr.nombre AS proceso,
+    r.nombres || ' ' || r.apellidos AS responsable,
+    s.nombre AS sede,
+    ep.nombre AS estado,
+    pp.fecha_asignacion,
+    pp.fecha_inicio,
+    pp.fecha_finalizacion
+FROM iglesia.persona_proceso pp
+INNER JOIN iglesia.persona p
+    ON p.id = pp.persona_id
+INNER JOIN iglesia.persona r
+    ON r.id = pp.responsable_persona_id
+INNER JOIN iglesia.proceso pr
+    ON pr.id = pp.proceso_id
+INNER JOIN iglesia.sede s
+    ON s.id = pp.sede_id
+INNER JOIN iglesia.estado_proceso ep
+    ON ep.id = pp.estado_id
+ORDER BY p.nombres, pr.nombre;
+
+
+-- CONSULTAR CANTIDAD DE PROCESOS POR ESTADO
+
+SELECT
+    ep.codigo,
+    ep.nombre,
+    COUNT(pp.id) AS cantidad
+FROM iglesia.estado_proceso ep
+LEFT JOIN iglesia.persona_proceso pp
+    ON pp.estado_id = ep.id
+GROUP BY ep.id, ep.codigo, ep.nombre
+ORDER BY ep.codigo;
+
+
+-- CONSULTAR PERMISOS POR ROL
+
+SELECT
+    r.codigo AS rol,
+    p.modulo,
+    p.codigo AS permiso,
+    p.nombre
+FROM iglesia.rol_permiso rp
+INNER JOIN iglesia.rol r
+    ON r.id = rp.rol_id
+INNER JOIN iglesia.permiso p
+    ON p.id = rp.permiso_id
+ORDER BY r.codigo, p.modulo, p.codigo;
+
+
+-- ============================================================
+-- FIN DEL SCRIPT DE REFERENCIA
+-- ============================================================

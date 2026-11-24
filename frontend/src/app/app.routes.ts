@@ -13,6 +13,20 @@ export const routes: Routes = [
     path: '',
     loadComponent: () => import('./layout/public/public-layout').then((m) => m.PublicLayout),
     children: [
+      ...(
+        [
+          ['activar-cuenta', 'activate-invitation'],
+          ['recuperar-acceso', 'forgot-password'],
+          ['restablecer-contrasena', 'reset-password'],
+          ['confirmar-correo', 'confirm-email'],
+          ['solicitar-confirmacion', 'resend-confirmation'],
+        ] as const
+      ).map(([path, operation]) => ({
+        path,
+        data: { operation },
+        loadComponent: () =>
+          import('./features/access/account-action-page').then((m) => m.AccountActionPage),
+      })),
       {
         path: 'diseno',
         title: 'Sistema de diseño · Misión Líder París',

@@ -1,0 +1,45 @@
+{
+  "status": "verified",
+  "criteria": [
+    {
+      "id": "AC-001",
+      "implementation": [
+        "backend/src/MisionLiderParis.Infrastructure/Ministry/PeopleService.cs",
+        "backend/src/MisionLiderParis.Infrastructure/Ministry/MinistryDbContext.cs",
+        "backend/src/MisionLiderParis.Application/Ministry/Contracts.cs"
+      ],
+      "verification": [
+        "backend/tests/MisionLiderParis.IntegrationTests/PeopleEditingTests.cs"
+      ],
+      "verified": true,
+      "evidence": "2026-11-07: 89 Angular unit tests, 58 .NET unit tests, 58 isolated integrations (including two real browser viewports), 46 controlled E2E; builds/checks passed. See validation.md. Supabase not modified."
+    },
+    {
+      "id": "AC-002",
+      "implementation": [
+        "frontend/src/app/features/members/person-edit-page.ts",
+        "frontend/src/app/features/members/person-edit-page.html",
+        "frontend/src/app/features/members/members.store.ts"
+      ],
+      "verification": [
+        "frontend/src/app/features/members/person-edit-page.spec.ts",
+        "frontend/src/app/features/members/members.store.spec.ts",
+        "frontend/e2e/people-editing.spec.ts"
+      ],
+      "verified": true,
+      "evidence": "2026-11-07: 89 Angular unit tests, 58 .NET unit tests, 58 isolated integrations (including two real browser viewports), 46 controlled E2E; builds/checks passed. See validation.md. Supabase not modified."
+    },
+    {
+      "id": "AC-003",
+      "implementation": [
+        "frontend/src/app/features/administration/admin.routes.ts"
+      ],
+      "verification": [
+        "backend/tests/MisionLiderParis.IntegrationTests/PeopleBrowserFixtureTests.cs",
+        "frontend/e2e/people-registration-real.spec.ts"
+      ],
+      "verified": true,
+      "evidence": "2026-11-07: 89 Angular unit tests, 58 .NET unit tests, 58 isolated integrations (including two real browser viewports), 46 controlled E2E; builds/checks passed. See validation.md. Supabase not modified."
+    }
+  ]
+}

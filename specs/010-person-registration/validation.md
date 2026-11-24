@@ -1,0 +1,33 @@
+# Validación
+
+2026-11-07: 58 unitarias .NET y 54 integraciones correctas, cero fallidas/omitidas en selección; excluida activación histórica. Incluye cinco integraciones nuevas y una fixture que ejecuta dos E2E reales desktop/mobile contra API HTTPS y PostgreSQL aislados. Evidencia final `backend/artifacts/people-registration/registration-final_net10.0_20261107121504.trx`, `registration-final_net10.0_20261107121608.trx` y `browser-registration-result.txt`.
+
+77 unitarias Angular y 38 E2E controlados correctos. Regresión HU-001/autenticación/sitio público incluida. Registro, documento textual, sede única/múltiple, cuenta solo CREATE sin lectura, permisos, 409, conservación y cancelación del borrador, doble envío, errores y limpieza de sesión verificados. El guard de capacidad específica tiene precedencia sobre metadatos heredados del contenedor.
+
+Build backend Release correcto sin advertencias/errores; Angular correcto, bundle inicial final 491,64 kB. Checks SDD/diseño/formato/dependencias/skills correctos. Capturas formulario escritorio/móvil `frontend/artifacts/010-registration-*.png`, revisadas visualmente. Labels editables de Select corregidos con ariaLabel; pruebas utilizan nombre accesible del ConfirmDialog. Tras localizar etiquetas del calendario y comprobar cierre del selector con Escape se repitieron los ocho E2E de alta: ocho correctos en 26,3 segundos.
+
+Sin cambios Supabase, SQL, migraciones, bootstrap, 090 ni remediación. Pruebas con cuentas sintéticas y credenciales efímeras, sin User Secrets; procesos y PFX de fixture cerrados/eliminados. Detalles, inventario, comandos y límites en `docs/person-registration.md`: aceptación Supabase, normalización histórica, alcance de confidencialidad del 409 y ausencia de catálogo documental cerrado.
+
+## Registro modal — 2026-11-22
+
+Registrar persona abre Dialog después de cargar las opciones, desde el listado o la URL directa existente. Formulario reutilizado y store aislado: documento primero, datos personales y sede. País CO permanece interno; se retira Estado inicial activo de la interfaz, sin alterar el alta activa del backend ni añadir isActive al payload. Cancelar y Guardar persona comparten footer fijo con submit externo por form/id. Se conservan validación, normalización, duplicados, creación única, descarte y guard de navegación; éxito confirmado notifica Toast, cierra y refresca listado manteniendo filtros. Con PERSON_CREATE sin PERSON_VIEW no se consulta listado antes ni después del alta; cierre retorna a Gestión.
+
+Verificación: 49 unitarias de Personas aprobadas; 26/26 casos de navegador en escritorio/móvil aprobados (registro, consulta, edición y sus regresiones), con HTTP interceptado. Se verificó footer alineado, ausencia de país/estado inicial visibles, CO en payload, ausencia de isActive, una sola petición POST, duplicado conserva datos, cancelar confirma, sede única/múltiple y CREATE sin lectura (cero GET de listado). Build correcto; advertencia inicial previa de 583,02 kB/500 kB. Formato, design:check y spec:check correctos. Sin imágenes, SQL, migraciones, correo ni creación de personas reales. Prueba integral contra PostgreSQL aislado/Supabase no ejecutada; la evidencia anterior real es histórica, y la aceptación operativa del modal queda para el propietario.
+
+## Catalogo de documentos - 2026-11-22
+
+Inspeccion real de solo lectura: iglesia.tipo_documento existe con codigo varchar(2) y nombre varchar(100); owner postgres, RLS habilitado, sin politicas; mlp_api_runtime carece de SELECT (42501). La implementacion anterior deducia tipos de persona_documento, por lo que podia devolver vacio o PRUEBA. Se sustituye por catalogo real ordenado por nombre, DTO code/name, mapeo EF excluido de migraciones y selector no editable con nombre visible/codigo enviado. Lecturas en una transaccion de contexto firmado. SQL de lectura preparado en backend/sql/proposals/document-type-catalog-read.sql, NO ejecutado; incluye precondiciones y recuperacion separada. No hay cambios remotos ni fallback inventado.
+
+Evidencia local: 2/2 unitarias .NET de mapeo; 37/37 Angular de formulario/store; 8/8 recorridos de navegador desktop/mobile con HTTP interceptado (seleccion por nombre y envio de codigo). Builds API y Angular correctos; advertencia previa bundle 583,02 kB/500 kB. design:check y spec:check correctos. Sin imagenes ni altas reales. Integracion PostgreSQL y aceptacion Supabase pendientes: catalogo/permisos deben estar aprovisionados. La API en ejecucion no se reinicio con un acceso al catalogo todavia bloqueado.
+
+### Comprobacion operativa posterior a autorizacion - 2026-11-22
+
+El usuario autorizo aplicar la propuesta. Primer intento administrativo fallo en conexion; segundo conecto y se detuvo antes del SQL porque las precondiciones cambiaron. Inspeccion posterior runtime confirmo que SELECT a mlp_runtime y politica mlp_runtime_document_types_read ya estaban presentes con USING auth_app.verified_actor_id() IS NOT NULL. No se repitio el cambio ni se atribuye su creacion a este ejecutor (sqlInvoked=false). Respaldo historico cifrado verificado por hash y evidencia previa de restauracion; no se genero copia nueva al detenerse antes de cambios.
+
+API Release recompilada y reiniciada con helper existente. Se corrigio readiness para exigir RLS/politicas en las doce tablas esperadas por nombre (las once originales mas tipo_documento), en lugar de comparar todo el esquema contra once. Verificacion REAL por runtime TLS VerifyFull: Identity accesible, contexto firmado aceptado, catalogo devuelve CC/CE/PA/RC/TI con nombres; sin actor devuelve cero filas. /health/ready=200; session y Gmail anonimos=401; sin cambios de datos/User Secrets ni envios. La comprobacion del modal con la sesion real del usuario sigue siendo manual; los ocho recorridos anteriores usan HTTP interceptado.
+
+### Validacion de entradas de registro - 2026-11-22
+
+Documento y telefono usan KeyFilter pint de PrimeNG, inputmode numeric y Validators.pattern de digitos ASCII; siguen siendo strings para conservar ceros. Documento requerido; telefono y correo opcionales. Correo mantiene Validators.email, type=email y mensaje explicito de formato. No confirma existencia del buzon. No se modifican documentos historicos, contratos backend ni datos Supabase.
+
+6/6 unitarias focalizadas correctas; 10/10 recorridos de navegador controlados desktop/mobile correctos, incluyendo bloqueo de teclas y pegado mixto, correo invalido bloquea guardar, correo valido habilita y ceros conservados en payload/ficha. Build Angular correcto (advertencia bundle 583,56 kB/500 kB); design:check y spec:check correctos. Sin imagenes, correos ni creaciones reales.

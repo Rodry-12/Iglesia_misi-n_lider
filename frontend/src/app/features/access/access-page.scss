@@ -1,0 +1,100 @@
+.access-page,
+.access-card {
+  box-sizing: border-box;
+}
+.access-page {
+  display: grid;
+  place-items: center;
+  padding: clamp(var(--ml-space-6), 5vw, var(--ml-space-12)) var(--ml-space-4);
+  color: var(--ml-color-text);
+  background: var(--ml-color-background);
+}
+.access-card {
+  width: 100%;
+  max-width: 34rem;
+  min-width: 0;
+  margin-inline: auto;
+  padding: clamp(var(--ml-space-6), 4vw, var(--ml-space-8));
+  border: 1px solid var(--ml-color-outline);
+  border-radius: var(--ml-radius-panel);
+  background: var(--ml-color-surface);
+  box-shadow: var(--ml-shadow-panel);
+}
+form,
+.field {
+  display: grid;
+  gap: var(--ml-space-2);
+}
+form {
+  gap: var(--ml-space-6);
+}
+label {
+  font-weight: 600;
+}
+input {
+  width: 100%;
+  min-width: 0;
+  min-height: var(--ml-touch-target);
+}
+.password-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ml-space-2) var(--ml-space-4);
+  font-size: 0.875rem;
+}
+.password-toggle {
+  padding-inline: 0;
+  font-size: inherit;
+}
+.password-tools a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--ml-touch-target);
+  color: var(--ml-color-primary);
+  text-underline-offset: var(--ml-space-1);
+}
+.access-submit {
+  width: 100%;
+  min-height: var(--ml-touch-target);
+  justify-content: center;
+  font-weight: 600;
+}
+[role='status']:empty {
+  display: none;
+}
+[role='status'] p {
+  margin: 0;
+  color: var(--ml-color-muted);
+  font-size: 0.875rem;
+}
+.field-error {
+  color: var(--ml-color-danger);
+  margin: 0;
+}
+.access-help {
+  margin-top: var(--ml-space-8);
+  padding-top: var(--ml-space-6);
+  border-top: 1px solid var(--ml-color-outline);
+  color: var(--ml-color-muted);
+  font-size: 0.875rem;
+  line-height: var(--ml-line-height-body);
+}
+.access-help p {
+  margin: 0 0 var(--ml-space-3);
+}
+.access-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ml-space-2);
+  justify-content: space-between;
+}
+.access-links a {
+  min-height: var(--ml-touch-target);
+}
+.access-card a:focus-visible,
+.access-card button:focus-visible {
+  outline: var(--ml-focus-width) solid var(--ml-color-focus);
+  outline-offset: var(--ml-space-1);
+}

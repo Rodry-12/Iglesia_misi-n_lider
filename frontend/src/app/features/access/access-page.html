@@ -1,0 +1,94 @@
+<section class="access-page" aria-label="Acceso a gestión">
+  <div class="access-card">
+    <app-page-heading
+      title="Acceso a gestión"
+      description="Ingresa con tu cuenta autorizada por la iglesia."
+    />
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate [attr.aria-busy]="auth.busy()">
+      <div class="field">
+        <label for="login-email">Correo electrónico</label>
+        <input
+          pInputText
+          id="login-email"
+          type="email"
+          autocomplete="username"
+          formControlName="email"
+          maxlength="254"
+          [invalid]="invalid('email')"
+          [attr.aria-invalid]="invalid('email')"
+          aria-describedby="login-email-error"
+        />
+        <p id="login-email-error" class="field-error" [hidden]="!invalid('email')">
+          Escribe un correo electrónico válido.
+        </p>
+      </div>
+      <div class="field">
+        <label for="login-password">Contraseña</label>
+        <input
+          pInputText
+          id="login-password"
+          [type]="showPassword() ? 'text' : 'password'"
+          autocomplete="current-password"
+          formControlName="password"
+          maxlength="128"
+          [invalid]="invalid('password')"
+          [attr.aria-invalid]="invalid('password')"
+          aria-describedby="login-password-error"
+        />
+        <p id="login-password-error" class="field-error" [hidden]="!invalid('password')">
+          Escribe tu contraseña.
+        </p>
+        <div class="password-tools">
+          <button
+            pButton
+            class="password-toggle"
+            type="button"
+            [text]="true"
+            [disabled]="auth.busy()"
+            [attr.aria-pressed]="showPassword()"
+            aria-controls="login-password"
+            (click)="showPassword.set(!showPassword())"
+          >
+            {{ showPassword() ? 'Ocultar contraseña' : 'Mostrar contraseña' }}
+          </button>
+          <a routerLink="/recuperar-acceso">¿Olvidaste tu contraseña?</a>
+        </div>
+      </div>
+      @if (auth.error(); as error) {
+        <app-toast-feedback severity="warn" [message]="error" />
+      }
+      <div role="status" aria-live="polite">
+        @if (auth.busy()) {
+          <p>Comprobando tu sesión…</p>
+        }
+      </div>
+      <button
+        pButton
+        class="access-submit"
+        type="submit"
+        [disabled]="auth.busy()"
+        [loading]="auth.busy()"
+      >
+        Entrar
+      </button>
+      @if (auth.state() === 'error') {
+        <button
+          pButton
+          type="button"
+          [text]="true"
+          [disabled]="auth.busy()"
+          (click)="auth.refreshSession()"
+        >
+          Reintentar sesión
+        </button>
+      }
+    </form>
+    <aside class="access-help" aria-label="Ayuda con el acceso">
+      <p>Si necesitas una cuenta o ayuda con el acceso, contacta al responsable de tu sede.</p>
+      <div class="access-links">
+        <a pButton [text]="true" [href]="'mailto:' + church.email">Solicitar ayuda</a>
+        <a pButton [text]="true" routerLink="/">Volver al inicio</a>
+      </div>
+    </aside>
+  </div>
+</section>

@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/MisionLiderParis.Api/MisionLiderParis.Api.csproj" />
+    <Project Path="src/MisionLiderParis.Application/MisionLiderParis.Application.csproj" />
+    <Project Path="src/MisionLiderParis.Domain/MisionLiderParis.Domain.csproj" />
+    <Project Path="src/MisionLiderParis.Infrastructure/MisionLiderParis.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/MisionLiderParis.UnitTests/MisionLiderParis.UnitTests.csproj" />
+    <Project Path="tests/MisionLiderParis.IntegrationTests/MisionLiderParis.IntegrationTests.csproj" />
+  </Folder>
+</Solution>

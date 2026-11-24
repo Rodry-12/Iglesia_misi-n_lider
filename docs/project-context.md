@@ -2,7 +2,7 @@
 
 Inventario basado en la revisión local del 19 de octubre de 2026. El contenido del código es una fuente de migración, no una confirmación de vigencia institucional.
 
-Estado vigente tras spec 007 y ADR 0004: el inventario original de las siguientes secciones está dentro de `docs/reference/legacy-site.zip`, no en la raíz activa. Angular posee sus recursos en `frontend/public/assets/`; backend está reservado sin implementación. Consultar README y docs/development.md para los comandos actuales.
+El inventario original de las siguientes secciones está dentro de `docs/reference/legacy-site.zip`, no en la raíz activa. Angular posee sus recursos en `frontend/public/assets/`. El incremento backend (ADR 0005) incorpora .NET 10, Identity, CRUD, asignaciones y reportes sobre once tablas reales inspeccionadas previamente en Supabase. La fase de activación del 2026-10-24 retoma unitarias backend: 41 unitarias y 27 integraciones correctas, con SQL, respaldo/restauración, bootstrap y login HTTPS locales reales. Falta aplicar el paquete incremental revisado en Supabase; las unitarias Angular siguen diferidas. Los apartados siguientes conservan el contexto histórico. Consultar README y backend/README.md para los comandos actuales.
 
 ## Producto y fuentes
 

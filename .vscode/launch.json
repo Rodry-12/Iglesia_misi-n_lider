@@ -8,7 +8,7 @@
       "type": "chrome",
       "request": "launch",
       "name": "Angular: Chrome",
-      "url": "http://localhost:4200",
+      "url": "https://localhost:4200",
       "webRoot": "${workspaceFolder}/frontend",
       "preLaunchTask": "Angular: iniciar"
     }

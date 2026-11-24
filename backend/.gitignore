@@ -1,0 +1,12 @@
+**/bin/
+**/obj/
+**/TestResults/
+.dotnet/
+.nuget/
+.local/
+artifacts/
+appsettings.Local.json
+schema-inspection.json
+schema-comparison.json
+schema-security-metadata.json
+*.user

@@ -1,0 +1,26 @@
+{
+  "status": "verified",
+  "criteria": [
+    {
+      "id": "AC-001",
+      "implementation": ["backend/src/MisionLiderParis.Infrastructure/Ministry/AssignmentService.cs", "backend/src/MisionLiderParis.Application/Ministry/Contracts.cs", "backend/src/MisionLiderParis.Api/Controllers/MinistryControllers.cs"],
+      "verification": ["backend/tests/MisionLiderParis.IntegrationTests/AssignmentResponsibleTests.cs"],
+      "verified": true,
+      "evidence": "2026-11-08: 20 targeted PostgreSQL integrations passed, including responsible permission/eligibility/preservation. See validation.md. No Supabase access."
+    },
+    {
+      "id": "AC-002",
+      "implementation": ["backend/src/MisionLiderParis.Infrastructure/Ministry/AssignmentService.cs"],
+      "verification": ["backend/tests/MisionLiderParis.IntegrationTests/AssignmentResponsibleTests.cs"],
+      "verified": true,
+      "evidence": "2026-11-08: concurrent conditional writes produce one200/one409; stale request rejected; injected commit failure rolls back actual update."
+    },
+    {
+      "id": "AC-003",
+      "implementation": ["frontend/src/app/features/training/assignment-page.ts", "frontend/src/app/features/training/assignment-page.html", "frontend/src/app/features/training/assignment.store.ts", "frontend/src/app/core/auth/access-context.ts"],
+      "verification": ["frontend/src/app/features/training/assignment-responsible.spec.ts", "frontend/e2e/assignment-responsible.spec.ts", "frontend/e2e/people-registration-real.spec.ts", "backend/tests/MisionLiderParis.IntegrationTests/PeopleBrowserFixtureTests.cs"],
+      "verified": true,
+      "evidence": "2026-11-08: 83 Angular units, 46 distinct controlled E2E across targeted runs, real HTTPS browser/API/isolated PostgreSQL desktop+mobile fixture passed. See validation.md; remote acceptance pending."
+    }
+  ]
+}

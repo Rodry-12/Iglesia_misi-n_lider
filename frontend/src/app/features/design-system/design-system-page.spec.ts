@@ -18,6 +18,6 @@ describe('003 AC-003: guía visual', () => {
     form.reset();
     fixture.detectChanges();
     await fixture.whenStable();
-    expect(page.querySelectorAll('td').length).toBe(0);
+    expect(page.querySelector('table')?.textContent).not.toContain('Sede de ejemplo');
   });
 });

@@ -1,0 +1,33 @@
+{
+  "status": "in-progress",
+  "criteria": [
+    {
+      "id": "AC-001",
+      "implementation": ["src/MisionLiderParis.Api/Health/HealthMonitorCredential.cs", "src/MisionLiderParis.Api/Health/DatabaseMonitorEndpoint.cs", "src/MisionLiderParis.Api/Program.cs"],
+      "verification": ["tests/MisionLiderParis.IntegrationTests/DatabaseMonitorTests.cs", "specs/003-protected-database-health/validation.md"],
+      "verified": true,
+      "evidence": "HTTP tests cover valid, invalid, malformed, absent and unconfigured tokens and refusal of ministerial authorization. No real token committed."
+    },
+    {
+      "id": "AC-002",
+      "implementation": ["src/MisionLiderParis.Application/Health/IDatabaseConnectivityProbe.cs", "src/MisionLiderParis.Infrastructure/Database/NpgsqlConnectivityProbe.cs", "src/MisionLiderParis.Infrastructure/DependencyInjection.cs", "src/MisionLiderParis.Api/Health/DatabaseMonitorEndpoint.cs"],
+      "verification": ["tests/MisionLiderParis.IntegrationTests/DatabaseMonitorTests.cs", "tests/MisionLiderParis.IntegrationTests/NpgsqlConnectivityProbeTests.cs", "specs/003-protected-database-health/validation.md"],
+      "verified": false,
+      "evidence": "Healthy/unavailable contracts, secret-safe errors, deadline, refused TCP and unresponsive PostgreSQL handshake tested. Optional real SELECT1 test skipped: no isolated PostgreSQL configured. No remote/schema changes."
+    },
+    {
+      "id": "AC-003",
+      "implementation": ["src/MisionLiderParis.Api/Health/DatabaseMonitorEndpoint.cs", "src/MisionLiderParis.Api/Program.cs"],
+      "verification": ["tests/MisionLiderParis.IntegrationTests/DatabaseMonitorTests.cs", "tests/MisionLiderParis.IntegrationTests/HttpSecurityTests.cs", "specs/003-protected-database-health/validation.md"],
+      "verified": true,
+      "evidence": "Monitor no-store, CORS denial,6/min rate limit and ministry token isolation pass; existing HTTP login/CSRF/CORS security regression checks pass. OpenAPI known failure documented separately."
+    },
+    {
+      "id": "AC-004",
+      "implementation": ["docs/protected-database-health.md"],
+      "verification": ["specs/003-protected-database-health/validation.md"],
+      "verified": true,
+      "evidence": "2026-11-24: locked restore and Release build succeed;164 tests pass in final run,105 database/browser tests skipped and known OpenAPI failure explicitly excluded. Workflow YAML checked with Prettier; deployment guide and variable template prepared. No remote Actions schedule or secrets activated."
+    }
+  ]
+}

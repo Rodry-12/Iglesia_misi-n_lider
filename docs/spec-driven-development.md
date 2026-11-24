@@ -8,7 +8,7 @@ Las reglas transversales no se reinventan en cada spec: [ADR 0003](adr/0003-prim
 
 Para una funcionalidad, definir primero el resultado y sus estados; después seleccionar componentes PrimeNG, tokens, accesibilidad y responsive en `plan.md`; descomponer tareas y registrar evidencia. No duplicar hexadecimales ni elegir otra biblioteca porque una spec no repita el stack. Si cambia una decisión compartida, crear/sustituir el ADR y actualizar contrato, instrucciones y guía. Las plantillas ya incluyen esta referencia.
 
-Instrucción vigente del usuario: pruebas unitarias diferidas. No crearlas, modificarlas ni ejecutarlas hasta que se retomen. Registrar esa limitación; build y revisión visual no acreditan cobertura unitaria.
+Las unitarias Angular siguen diferidas. La fase de activación del backend del 2026-10-24 retoma explícitamente sus pruebas unitarias e integración PostgreSQL aislada. Registrar resultados separados; build y revisión visual no acreditan cobertura unitaria.
 
 ## Ciclo de trabajo
 
@@ -24,6 +24,8 @@ Instrucción vigente del usuario: pruebas unitarias diferidas. No crearlas, modi
 `Borrador` identifica requisitos propuestos; `Lista` significa que existe suficiente información para implementar; `En curso` indica trabajo activo; `Verificada` requiere evidencia para todos sus criterios. La autorización del usuario procede de la conversación, no del nombre de un estado.
 
 `traceability.json` relaciona criterios con archivos y verificación. En cada criterio, `verified` solo puede ser `true` cuando la evidencia ya existe. Los nombres de pruebas deben describir el comportamiento y pueden incluir el ID de aceptación.
+
+Desde ADR 0005, el backend tiene su propio ámbito `backend/specs/`: crear con `npm run spec:new -- nombre --backend`. Las rutas de su trazabilidad se resuelven desde `backend/`; la numeración es independiente de las specs de raíz. `npm run spec:check` recorre ambos ámbitos. La fase de activación del 2026-10-24 retoma las pruebas del backend; la prohibición de pruebas unitarias sigue aplicando a Angular.
 
 ## Qué comprueba el script
 

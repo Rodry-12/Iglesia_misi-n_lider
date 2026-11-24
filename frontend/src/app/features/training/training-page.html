@@ -1,0 +1,197 @@
+<app-page-heading [title]="title" [description]="description" />
+@if (store.notice(); as notice) {
+  <app-toast-feedback severity="success" [message]="notice" />
+}
+<app-catalog-error [error]="store.commandError()" />
+@if (access.can(kind === 'category' ? 'CATEGORY_VIEW' : 'PROCESS_VIEW')) {
+  <section class="catalog-panel catalog-filter-panel" aria-label="Filtros del catálogo">
+    <div class="catalog-toolbar">
+      @if (access.can(kind === 'category' ? 'CATEGORY_CREATE' : 'PROCESS_CREATE', null)) {
+        <a
+          pButton
+          [routerLink]="['/gestion/formacion', segment, 'crear']"
+          queryParamsHandling="preserve"
+        >
+          <svg lucidePlus [size]="18" aria-hidden="true"></svg> Crear
+          {{ kind === 'category' ? 'categoría' : 'proceso' }}
+        </a>
+      }
+    </div>
+    <form class="catalog-filters" [formGroup]="filterForm" (ngSubmit)="$event.preventDefault()">
+      <div>
+        <label for="catalog-search"
+          >Buscar {{ kind === 'category' ? 'categoría' : 'proceso' }}</label
+        >
+        <div class="catalog-search">
+          <svg lucideSearch [size]="18" aria-hidden="true"></svg>
+          <input
+            pInputText
+            id="catalog-search"
+            type="text"
+            formControlName="search"
+            maxlength="150"
+            [placeholder]="
+              kind === 'category' ? 'Buscar por nombre...' : 'Buscar por nombre o categoría...'
+            "
+          />
+          @if (filterForm.controls.search.value) {
+            <button
+              pButton
+              type="button"
+              [text]="true"
+              aria-label="Limpiar búsqueda"
+              (click)="filterForm.controls.search.setValue('')"
+            >
+              <svg lucideX [size]="16" aria-hidden="true"></svg>
+            </button>
+          }
+        </div>
+      </div>
+      <div>
+        <label for="catalog-state" id="catalog-state-label"
+          >Estado de {{ kind === 'category' ? 'categorías' : 'procesos' }}</label
+        >
+        <p-select
+          inputId="catalog-state"
+          ariaLabelledBy="catalog-state-label"
+          formControlName="active"
+          [options]="states"
+          optionLabel="label"
+          optionValue="value"
+        />
+      </div>
+    </form>
+    @if (kind === 'process' && store.filters().processes.categoryId) {
+      <button pButton type="button" [text]="true" (click)="selectCategory('')">
+        Quitar filtro de categoría
+      </button>
+    }
+  </section>
+  <app-catalog-error [error]="kind === 'category' ? store.categoryError() : store.processError()" />
+  @if (kind === 'category' ? store.categoryError() : store.processError()) {
+    <button pButton type="button" (click)="store.load()">Reintentar consulta</button>
+  }
+  <section
+    class="catalog-panel catalog-results"
+    [attr.aria-label]="'Listado de ' + title.toLowerCase()"
+  >
+    <p-table
+      [value]="items()"
+      [scrollable]="true"
+      scrollHeight="min(55vh, 32rem)"
+      dataKey="id"
+      [tableStyle]="{ 'min-width': '42rem' }"
+    >
+      <ng-template #header
+        ><tr>
+          <th scope="col">Nombre</th>
+          @if (kind === 'process') {
+            <th scope="col">Categoría</th>
+          }
+          <th scope="col">Orden</th>
+          <th scope="col">Estado</th>
+          <th scope="col" class="catalog-actions-column">Acciones</th>
+        </tr></ng-template
+      >
+      <ng-template #body let-item
+        ><tr>
+          <td>
+            <strong>{{ item.name }}</strong>
+          </td>
+          @if (kind === 'process') {
+            <td>{{ item.categoryName || 'No disponible' }}</td>
+          }
+          <td>{{ item.sortOrder }}</td>
+          <td>
+            <span class="catalog-status" [class.is-active]="item.isActive">{{
+              item.isActive
+                ? kind === 'category'
+                  ? 'Activa'
+                  : 'Activo'
+                : kind === 'category'
+                  ? 'Inactiva'
+                  : 'Inactivo'
+            }}</span>
+            @if (kind === 'process' && item.categoryIsActive === false) {
+              <small>Categoría inactiva</small>
+            }
+          </td>
+          <td>
+            <div class="catalog-row-actions">
+              <a
+                pButton
+                [text]="true"
+                [routerLink]="['/gestion/formacion', segment, item.id]"
+                queryParamsHandling="preserve"
+                [attr.aria-label]="
+                  'Ver ' + (kind === 'category' ? 'categoría ' : 'proceso ') + item.name
+                "
+                title="Ver detalle"
+                ><svg lucideEye [size]="18" aria-hidden="true"></svg
+              ></a>
+              @if (access.can(kind === 'category' ? 'CATEGORY_UPDATE' : 'PROCESS_UPDATE', null)) {
+                <a
+                  pButton
+                  [text]="true"
+                  [routerLink]="['/gestion/formacion', segment, item.id, 'editar']"
+                  queryParamsHandling="preserve"
+                  [attr.aria-label]="
+                    'Editar ' + (kind === 'category' ? 'categoría ' : 'proceso ') + item.name
+                  "
+                  title="Editar"
+                  ><svg lucidePencil [size]="18" aria-hidden="true"></svg
+                ></a>
+                <app-catalog-state [kind]="kind" [item]="item" />
+              }
+              @if (kind === 'category' && access.can('PROCESS_VIEW')) {
+                <button
+                  pButton
+                  [text]="true"
+                  type="button"
+                  [attr.aria-label]="'Ver procesos de ' + item.name"
+                  title="Ver procesos"
+                  (click)="selectCategory(item.id)"
+                >
+                  <svg lucideListTree [size]="18" aria-hidden="true"></svg>
+                </button>
+              }
+            </div>
+          </td></tr
+      ></ng-template>
+      <ng-template #emptymessage
+        ><tr>
+          <td [attr.colspan]="kind === 'category' ? 4 : 5">
+            @if (!(kind === 'category' ? store.categoryLoading() : store.processLoading())) {
+              No se encontraron {{ kind === 'category' ? 'categorías' : 'procesos' }} con estos
+              filtros.
+            }
+          </td>
+        </tr></ng-template
+      >
+    </p-table>
+    <app-table-pagination
+      [ariaLabel]="'Paginación de ' + title.toLowerCase()"
+      [first]="
+        kind === 'category'
+          ? (store.filters().categories.page - 1) * store.filters().categories.pageSize
+          : (store.filters().processes.page - 1) * store.filters().processes.pageSize
+      "
+      [rows]="
+        kind === 'category'
+          ? store.filters().categories.pageSize
+          : store.filters().processes.pageSize
+      "
+      [totalRecords]="
+        (kind === 'category' ? store.categories()?.totalCount : store.processes()?.totalCount) ?? 0
+      "
+      [noun]="title.toLowerCase()"
+      (onPageChange)="pageChanged(kind, $event)"
+    />
+  </section>
+}
+@if (mode === 'create' || mode === 'edit') {
+  <app-catalog-form />
+}
+@if (mode === 'detail') {
+  <app-catalog-detail />
+}

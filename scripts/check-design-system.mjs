@@ -38,6 +38,10 @@ function inspect(directory) {
       continue;
     const content = readFileSync(file, "utf8");
     const label = path.relative(root, file);
+    if (/<p-message\b/.test(content))
+      errors.push(
+        `${label}: usar ToastFeedback/Notifications para avisos de operación, sin banners p-message.`,
+      );
     if (/@angular\/material/.test(content))
       errors.push(`${label}: importación de Material.`);
     if (/::ng-deep/.test(content))

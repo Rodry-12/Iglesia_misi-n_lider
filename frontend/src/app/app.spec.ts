@@ -1,4 +1,6 @@
 import { TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideRouter } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { routes } from './app.routes';
@@ -12,6 +14,8 @@ describe('AC-002: rutas publicas', () => {
     TestBed.configureTestingModule({
       providers: [
         provideRouter(routes),
+        provideHttpClient(),
+        provideHttpClientTesting(),
         { provide: CONTACT_GATEWAY, useValue: { send: async () => {} } },
       ],
     }),
@@ -21,7 +25,7 @@ describe('AC-002: rutas publicas', () => {
     ['/', 'Nuestra comunidad'],
     ['/donar', 'Diezmos y Ofrendas'],
     ['/contacto', 'Habla con nosotros'],
-    ['/pagina-inexistente', 'No encontramos esta página'],
+    ['/pagina-inexistente', 'Página no encontrada'],
   ])('resuelve %s y presenta su contenido', async (url, heading) => {
     const harness = await RouterTestingHarness.create();
     await harness.navigateByUrl(url);
@@ -61,7 +65,7 @@ describe('AC-002: rutas publicas', () => {
     }
   });
 
-  it('004 AC-002: muestra acceso futuro sin enlaces internos en el menú del visitante', async () => {
+  it('008: muestra acceso real sin enlaces internos en el menú del visitante', async () => {
     const harness = await RouterTestingHarness.create('/');
     const nav = harness.routeNativeElement!.querySelector('header nav')!;
     expect(nav.querySelector('a[href="/gestion"]')).toBeNull();
@@ -71,7 +75,7 @@ describe('AC-002: rutas publicas', () => {
     access.click();
     await harness.fixture.whenStable();
     expect(TestBed.inject(Router).url).toBe('/acceso');
-    expect(harness.routeNativeElement!.querySelector('input[type="password"]')).toBeNull();
+    expect(harness.routeNativeElement!.querySelector('input[type="password"]')).not.toBeNull();
   });
 
   it('004 AC-004: conserva el contenido de las secciones y los canales de contacto', async () => {

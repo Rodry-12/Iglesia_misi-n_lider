@@ -51,7 +51,8 @@ test('005: secciones, imágenes, footer responsive y ausencia de desbordamiento'
 test('005: slider original con selección y navegación', async ({ page }) => {
   await page.goto('/');
   const carousel = page.getByRole('region', { name: 'Bienvenida a Misión Líder París' });
-  await expect(carousel.locator('img')).toHaveCount(3);
+  await expect(carousel.locator('img')).toHaveCount(1);
+  await expect(carousel.getByRole('button', { name: /^Mostrar imagen / })).toHaveCount(3);
   await carousel.getByRole('button', { name: 'Imagen siguiente', exact: true }).click();
   await expect(carousel.getByRole('button', { name: 'Mostrar imagen 2' })).toHaveAttribute(
     'aria-current',
@@ -109,10 +110,10 @@ test('005: formulario pendiente, fallo, reintento y reinicio sin envío externo'
   await expect(page.getByRole('button', { name: 'Enviando…', exact: true })).toBeDisabled();
   await expect.poll(() => calls).toBe(1);
   release();
-  await expect(page.getByRole('status')).toContainText('No pudimos enviar');
+  await expect(page.locator('p-toast')).toContainText('No pudimos enviar');
   await expect(page.getByLabel('Nombre', { exact: true })).toHaveValue('Persona de prueba');
   await page.getByRole('button', { name: 'Enviar', exact: true }).click();
-  await expect(page.getByRole('status')).toContainText('Correo enviado exitosamente');
+  await expect(page.locator('p-toast')).toContainText('Correo enviado exitosamente');
   await expect(page.getByLabel('Nombre', { exact: true })).toHaveValue('');
   await page.getByRole('button', { name: 'Enviar', exact: true }).click();
   expect(calls).toBe(2);
@@ -129,5 +130,5 @@ test('005: donación manual y entrada futura de sesión', async ({ page }, testI
   if (testInfo.project.name === 'mobile') await page.locator('#menu-btn').click();
   await page.getByRole('link', { name: 'Iniciar sesión', exact: true }).click();
   await expect(page).toHaveURL(/\/acceso$/);
-  await expect(page.locator('input[type="password"]')).toHaveCount(0);
+  await expect(page.locator('input[type="password"]')).toHaveCount(1);
 });

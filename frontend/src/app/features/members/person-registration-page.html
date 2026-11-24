@@ -1,0 +1,220 @@
+<p-confirmdialog [closable]="false" />
+<p-dialog
+  header="Registrar persona"
+  [visible]="opened()"
+  [modal]="true"
+  [closable]="false"
+  [closeOnEscape]="false"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{ width: '48rem', maxWidth: 'calc(100vw - 2rem)' }"
+  (keydown.escape)="cancel()"
+>
+  @if (store.registrationOptions(); as options) {
+    @if (store.createError(); as errorCode) {
+      <div class="registration-error">
+        <app-toast-feedback
+          severity="error"
+          [message]="
+            errorCode === 'duplicate'
+              ? 'No se pudo registrar la identificación. Revisa los datos o busca entre tus registros autorizados.'
+              : errorCode === 'invalid'
+                ? 'Revisa los datos del formulario; la API no aceptó la información.'
+                : errorCode === 'forbidden'
+                  ? 'No tienes permiso para registrar personas en esa sede.'
+                  : 'No se pudo confirmar el registro. Comprueba si existe antes de volver a intentarlo.'
+          "
+        />
+        @if (
+          access.can('PERSON_VIEW') && (errorCode === 'duplicate' || errorCode === 'unconfirmed')
+        ) {
+          <a
+            pButton
+            [text]="true"
+            routerLink="/gestion/miembros"
+            [queryParams]="{ search: form.controls.documentNumber.value, page: 1 }"
+            >Buscar entre personas autorizadas</a
+          >
+        }
+      </div>
+    }
+
+    <form
+      id="person-registration-form"
+      [formGroup]="form"
+      (ngSubmit)="submit()"
+      [attr.aria-busy]="store.creating()"
+      novalidate
+    >
+      <p class="person-caption">Los campos marcados con * son obligatorios.</p>
+      <fieldset>
+        <legend>Información personal</legend>
+        <div class="registration-grid">
+          <div>
+            <label id="type-label" for="registration-type">Tipo de documento *</label>
+            <p-select
+              inputId="registration-type"
+              ariaLabelledBy="type-label"
+              ariaLabel="Tipo de documento *"
+              formControlName="documentType"
+              [options]="options.documentTypes"
+              optionLabel="name"
+              optionValue="code"
+              [showClear]="!!form.controls.documentType.value"
+              appendTo="body"
+              placeholder="Selecciona el tipo de documento"
+              [invalid]="invalid('documentType')"
+            />
+            @if (invalid('documentType')) {
+              <p class="field-error" role="alert">{{ error('documentType') }}</p>
+            }
+          </div>
+          <div>
+            <label for="registration-number">Número de documento *</label>
+            <input
+              pInputText
+              id="registration-number"
+              formControlName="documentNumber"
+              pKeyFilter="pint"
+              inputmode="numeric"
+              pattern="[0-9]+"
+              maxlength="50"
+              type="text"
+              [attr.aria-invalid]="invalid('documentNumber')"
+            />
+            @if (invalid('documentNumber')) {
+              <p class="field-error" role="alert">{{ error('documentNumber') }}</p>
+            }
+          </div>
+        </div>
+
+        <div class="registration-grid">
+          <div>
+            <label for="registration-first">Nombres *</label
+            ><input
+              pInputText
+              id="registration-first"
+              formControlName="firstNames"
+              maxlength="150"
+              autocomplete="given-name"
+              [attr.aria-invalid]="invalid('firstNames')"
+            />
+            @if (invalid('firstNames')) {
+              <p class="field-error" role="alert">{{ error('firstNames') }}</p>
+            }
+          </div>
+          <div>
+            <label for="registration-last">Apellidos *</label
+            ><input
+              pInputText
+              id="registration-last"
+              formControlName="lastNames"
+              maxlength="150"
+              autocomplete="family-name"
+              [attr.aria-invalid]="invalid('lastNames')"
+            />
+            @if (invalid('lastNames')) {
+              <p class="field-error" role="alert">{{ error('lastNames') }}</p>
+            }
+          </div>
+          <div>
+            <label for="registration-phone">Teléfono</label
+            ><input
+              pInputText
+              id="registration-phone"
+              formControlName="phone"
+              pKeyFilter="pint"
+              inputmode="numeric"
+              pattern="[0-9]+"
+              maxlength="30"
+              type="tel"
+              autocomplete="tel"
+              [attr.aria-invalid]="invalid('phone')"
+            />
+            @if (invalid('phone')) {
+              <p class="field-error" role="alert">{{ error('phone') }}</p>
+            }
+          </div>
+          <div>
+            <label for="registration-email">Correo electrónico</label
+            ><input
+              pInputText
+              id="registration-email"
+              formControlName="email"
+              maxlength="255"
+              type="email"
+              inputmode="email"
+              autocapitalize="off"
+              spellcheck="false"
+              autocomplete="email"
+              [attr.aria-invalid]="invalid('email')"
+            />
+            @if (invalid('email')) {
+              <p class="field-error" role="alert">{{ error('email') }}</p>
+            }
+          </div>
+          <div>
+            <label id="birth-label" for="registration-birth">Fecha de nacimiento</label>
+            <p-datepicker
+              appendTo="body"
+              inputId="registration-birth"
+              ariaLabelledBy="birth-label"
+              formControlName="birthDate"
+              dateFormat="dd/mm/yy"
+              [maxDate]="maxDate"
+              [showClear]="!!form.controls.birthDate.value"
+              [showIcon]="true"
+              [readonlyInput]="true"
+              [invalid]="invalid('birthDate')"
+            />
+            @if (invalid('birthDate')) {
+              <p class="field-error" role="alert">{{ error('birthDate') }}</p>
+            }
+          </div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Sede</legend>
+        @if (options.branches.length === 1) {
+          <p><strong>Sede:</strong> {{ options.branches[0].name }}</p>
+        } @else {
+          <label id="branch-label" for="registration-branch">Sede *</label
+          ><p-select
+            inputId="registration-branch"
+            ariaLabelledBy="branch-label"
+            formControlName="branchId"
+            [options]="options.branches"
+            [showClear]="!!form.controls.branchId.value"
+            appendTo="body"
+            optionLabel="name"
+            optionValue="id"
+            placeholder="Selecciona una sede"
+            [invalid]="invalid('branchId')"
+          />
+        }
+      </fieldset>
+    </form>
+  }
+  <ng-template #footer
+    ><div class="person-dialog-actions">
+      <button
+        pButton
+        type="button"
+        [outlined]="true"
+        [disabled]="store.creating()"
+        (click)="cancel()"
+      >
+        Cancelar
+      </button>
+      <button
+        pButton
+        type="submit"
+        form="person-registration-form"
+        [loading]="store.creating()"
+        [disabled]="form.invalid || store.creating() || !!store.created() || !opened()"
+      >
+        Guardar persona
+      </button>
+    </div></ng-template
+  >
+</p-dialog>

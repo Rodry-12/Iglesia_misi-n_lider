@@ -1,6 +1,11 @@
 # Desarrollo y publicación
 
-La aplicación ejecutable es `frontend/`. El paquete raíz ofrece comandos de coordinación; el frontend no depende de él como paquete npm. El backend está reservado sin implementación. Consultar `frontend/package.json` y su lockfile para las versiones fijadas.
+Arranque operativo actual contra Supabase y corrección de latencia de lecturas:
+[rendimiento y ejecución local](../backend/docs/performance-and-local-development.md).
+Incluye los dos lanzadores HTTPS existentes y sus diferencias con `npm start` y el
+perfil Development de dotnet.
+
+Angular se ejecuta desde `frontend/`. El paquete raíz ofrece comandos de coordinación; el frontend no depende de él como paquete npm. El nuevo backend .NET 10 vive en `backend/`, con [instrucciones propias](../backend/README.md) y evidencia de lo implementado y pendiente. Consultar `frontend/package.json` y su lockfile para las versiones fijadas de UI.
 
 ## Inicio y comprobaciones
 
@@ -16,9 +21,9 @@ npm run format:check
 npm run build
 ```
 
-El servidor escucha en `http://localhost:4200`. VS Code utiliza el perfil `Angular: Chrome`; se retiró el perfil del sitio HTML en 8080. Si se cambian dependencias mientras el servidor está abierto y Vite informa una caché obsoleta, reiniciar `npm start`.
+El servidor escucha en `https://localhost:4200`. El proxy `/api` valida TLS hacia `https://localhost:7243`; configurar la CA pública backend en `NODE_EXTRA_CA_CERTS`. Ver [arranque de autenticación](angular-authentication.md). VS Code utiliza el perfil `Angular: Chrome`. Si Vite informa una caché obsoleta, reiniciar `npm start`.
 
-Las pruebas unitarias permanecen diferidas por instrucción del usuario. No crearlas, modificarlas ni ejecutarlas hasta retomarlas; los archivos históricos pueden necesitar ajustes al markup PrimeNG. No usar el formato global si reescribe archivos de pruebas.
+La etapa 2.1 retoma explícitamente unitarias Angular y E2E. Ejecutar `npm --prefix frontend test -- --watch=false` y `npm run test:e2e`; el E2E real es opt-in con cuenta local y se registra separado de los casos interceptados. Usar formato solo sobre archivos afectados.
 
 ## Código, contenido y recursos
 
@@ -41,7 +46,7 @@ Requieren Chrome instalado y Angular ejecutándose. El primero compara capturas 
 
 `CONTACT_GATEWAY` utiliza HttpClient y configuración pública de EmailJS heredada. El formulario valida al enviar, enfoca el primer inválido, bloquea duplicados mientras espera, conserva los datos ante fallo y reinicia tras confirmación. La petición tiene un timeout de 15 s y no se reintenta automáticamente. La entrega real y la configuración externa del proveedor no están verificadas.
 
-`/diseno` es un catálogo sin persistencia; `/acceso` es una entrada futura. La sesión predeterminada es nula y `/gestion` requiere proveedor de identidad. No crear accesos simulados para habilitar gestión. Consultar [administración](administration.md).
+`/diseno` es un catálogo sin persistencia; `/acceso` usa la API real y `/gestion` exige sesión verificada. No se guardan contraseñas ni tokens en localStorage. Consultar [administración](administration.md) y [autenticación](angular-authentication.md).
 
 ## Build y hosting
 

@@ -1,0 +1,118 @@
+<p-confirmdialog [closable]="false" [style]="{ width: '32rem', maxWidth: 'calc(100vw - 2rem)' }" />
+<app-catalog-error [error]="store.detailError()" />
+@if (store.detailError()) {
+  <button pButton type="button" (click)="cancel()">Volver al listado</button>
+}
+<p-dialog
+  [header]="title()"
+  [visible]="visible()"
+  [modal]="true"
+  [closable]="false"
+  [closeOnEscape]="false"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{ width: '40rem', maxWidth: 'calc(100vw - 2rem)' }"
+  (keydown.escape)="cancel()"
+>
+  <app-catalog-error [error]="store.commandError()" />
+  <form
+    id="catalog-form"
+    [formGroup]="form"
+    (ngSubmit)="submit()"
+    [attr.aria-busy]="store.busy()"
+    novalidate
+  >
+    <p class="catalog-caption">Los campos marcados con * son obligatorios.</p>
+    @if (kind === 'process') {
+      @if (store.optionsError()) {
+        <app-toast-feedback
+          severity="error"
+          [message]="'No fue posible consultar las categorías autorizadas.'"
+        />
+        <button pButton type="button" [text]="true" (click)="store.loadOptions()">
+          Reintentar categorías
+        </button>
+      } @else if (store.optionsLoaded() && !store.optionsLoading() && !store.options().length) {
+        <app-toast-feedback
+          severity="warn"
+          [message]="'No hay categorías activas disponibles. Crea o activa una categoría antes de guardar el proceso.'"
+        />
+      }
+      <label id="catalog-category-label" for="catalog-category">Categoría *</label>
+      <p-select
+        inputId="catalog-category"
+        ariaLabelledBy="catalog-category-label"
+        formControlName="categoryId"
+        [options]="store.options()"
+        optionLabel="name"
+        optionValue="id"
+        placeholder="Selecciona una categoría activa"
+        appendTo="body"
+        [showClear]="!!form.controls.categoryId.value"
+        [invalid]="invalid('categoryId')"
+      />
+      @if (invalid('categoryId')) {
+        <p class="field-error" role="alert">Selecciona una categoría activa disponible.</p>
+      }
+    }
+    <label for="catalog-name">Nombre *</label>
+    <input
+      pInputText
+      id="catalog-name"
+      formControlName="name"
+      maxlength="150"
+      [attr.aria-invalid]="invalid('name')"
+    />
+    @if (invalid('name')) {
+      <p class="field-error" role="alert">
+        El nombre es obligatorio y admite hasta 150 caracteres.
+      </p>
+    }
+    <label for="catalog-description">Descripción</label>
+    <textarea
+      pTextarea
+      id="catalog-description"
+      formControlName="description"
+      rows="4"
+      maxlength="4000"
+      [attr.aria-invalid]="invalid('description')"
+    ></textarea>
+    @if (invalid('description')) {
+      <p class="field-error" role="alert">Máximo 4000 caracteres.</p>
+    }
+    <label for="catalog-order">Orden *</label>
+    <input
+      pInputText
+      id="catalog-order"
+      type="number"
+      min="0"
+      max="2147483647"
+      step="1"
+      formControlName="sortOrder"
+      [attr.aria-invalid]="invalid('sortOrder')"
+    />
+    @if (invalid('sortOrder')) {
+      <p class="field-error" role="alert">Escribe un entero entre 0 y 2147483647.</p>
+    }
+  </form>
+  <ng-template #footer>
+    <button pButton type="button" [outlined]="true" [disabled]="store.busy()" (click)="cancel()">
+      Cancelar
+    </button>
+    <button
+      pButton
+      type="submit"
+      form="catalog-form"
+      [disabled]="
+        form.invalid ||
+        !changed() ||
+        store.busy() ||
+        store.optionsLoading() ||
+        (kind === 'process' && store.optionsError())
+      "
+      [loading]="store.busy()"
+    >
+      Guardar {{ kind === 'category' ? 'categoría' : 'proceso' }}
+    </button>
+  </ng-template>
+</p-dialog>

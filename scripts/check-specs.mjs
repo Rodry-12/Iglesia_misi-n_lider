@@ -91,6 +91,10 @@ export function checkSpecs(root = repository) {
     }
   }
   if (!directories.length) errors.push("No hay especificaciones numeradas.");
+  const backend = path.join(root, "backend");
+  if (existsSync(path.join(backend, "specs"))) {
+    errors.push(...checkSpecs(backend).map((error) => `backend/${error}`));
+  }
   return errors;
 }
 

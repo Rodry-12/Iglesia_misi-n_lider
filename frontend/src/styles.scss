@@ -23,7 +23,7 @@ input,
 textarea {
   font: inherit;
 }
-a {
+a:not([pButton]) {
   color: var(--color-green);
   overflow-wrap: anywhere;
 }

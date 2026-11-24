@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><IsPackable>false</IsPackable><IsTestProject>true</IsTestProject></PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../src/MisionLiderParis.Api/MisionLiderParis.Api.csproj" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" PrivateAssets="all" />
+    <Using Include="Xunit" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="../../docs/reference/live-ministry-baseline.sql.txt" Link="activation/live-ministry-baseline.sql.txt" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="../../sql/001-auth-app.sql" Link="reviewed-sql/001-auth-app.sql" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="../../sql/002-explicit-operator-permissions.sql" Link="reviewed-sql/002-explicit-operator-permissions.sql" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="../../docs/reference/verified-catalog.json" Link="verified-catalog.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="../../sql/proposals/003-assignment-integrity.sql" Link="reviewed-sql/003-assignment-integrity.sql" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="../../sql/004-auth-ministry-references.sql" Link="reviewed-sql/004-auth-ministry-references.sql" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="../../sql/005-runtime-role-rls.sql" Link="reviewed-sql/005-runtime-role-rls.sql" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

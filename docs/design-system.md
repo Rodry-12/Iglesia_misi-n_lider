@@ -1,5 +1,7 @@
 # Contrato del sistema de diseño
 
+Etapa 2.1 (2026-11-06): el usuario retoma explícitamente unitarias Angular y E2E de autenticación. Esta autorización sustituye las referencias históricas a pruebas diferidas de este documento; el contrato visual permanece vigente.
+
 Este documento rige las nuevas pantallas y cambios de UI de Misión Líder París. La decisión técnica vigente está en [ADR 0003](adr/0003-primeng-design-system.md). Cambiar biblioteca, identidad o comportamiento compartido requiere actualizar la decisión y la especificación correspondiente; no basta con escribirlo en una conversación o duplicar valores en un componente.
 
 ## Fuentes únicas
@@ -32,14 +34,18 @@ La vista 404 conserva excepcionalmente la composición y acentos de la referenci
 | Acciones | Button / directiva pButton; enlaces reales conservan navegación |
 | Campos y formularios | InputText, Textarea, Select, DatePicker según necesidad; Reactive Forms tipados |
 | Datos tabulares y filtros | Table; paginación/ordenación de servidor cuando el volumen lo requiera |
-| Diálogos y notificaciones | Dialog, ConfirmDialog, Toast o Message según contexto |
+| Diálogos y notificaciones | Dialog, ConfirmDialog y un único Toast global |
 | Iconos nuevos | Importaciones individuales de Lucide |
 
 No añadir Material, Bootstrap, otro kit o widgets personalizados que dupliquen una necesidad cubierta sin justificarlo en la spec. Importar componentes por funcionalidad; no crear un módulo global que cargue todo PrimeNG ni wrappers vacíos de cada control. SCSS se usa para composición propia; los estilos de PrimeNG se ajustan con preset, tokens o sus APIs públicas, sin `::ng-deep` ni selectores privados.
 
+Avisos de operación (2026-11-21): éxito, advertencias, errores de API y resúmenes de validación se presentan mediante Notifications o ToastFeedback, siempre en el Toast raíz existente. ToastFeedback declara texto/severidad y emite al cambiar sus entradas, sin renderizar un banner. No duplicar con p-message o alertas de página; design:check rechaza p-message en código de aplicación. La deduplicación normaliza espacios y evita repetir el mismo texto entre consumidores, con un solo aviso visible. Mantener las confirmaciones explícitas, acciones de reintento y ayudas de validación asociadas a campos. Un 403 de recurso se propaga al consumidor, sin generar un segundo aviso global ni invalidar la sesión.
+
 El preset importa Aura base y los temas de Button, InputText, Textarea, Galleria y DataTable, evitando cargar el catálogo completo en el arranque. Al incorporar otro componente, registrar también su tema Aura y los de controles auxiliares que use, y comprobar el presupuesto de build. No aumentar el límite para ocultar una importación innecesaria.
 
 ## Criterios UI y UX
+
+Tablas administrativas (2026-11-21): usar scroll interno mediante las entradas públicas scrollable/scrollHeight de PrimeNG Table; encabezado fijo y paginación externa al área desplazable. Los listados de Personas, Sedes, Usuarios, Procesos y Seguimiento comparten TablePagination: 10 filas iniciales, opciones exclusivas 10/20/50, contador inferior, anterior/página actual/siguiente y selección que vuelve a la primera página. El tamaño se envía a la API y se conserva en la URL. No aplicar este límite a las consultas auxiliares que completan catálogos o selecciones internas.
 
 - Mantener header/footer persistentes y jerarquía de encabezados. Las páginas públicas preservan el contenido institucional; autenticación y CRUD esperan sus requisitos.
 - Definir estados vacío, cargando, éxito, error, deshabilitado y validación solo cuando apliquen. Conservar datos ante fallo y mostrar éxito únicamente tras confirmación.

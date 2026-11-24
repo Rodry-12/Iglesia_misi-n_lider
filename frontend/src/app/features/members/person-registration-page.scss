@@ -1,0 +1,58 @@
+:host {
+  display: block;
+}
+fieldset {
+  min-width: 0;
+  margin: var(--ml-space-6) 0;
+  padding: var(--ml-space-6);
+  border: 1px solid var(--ml-color-outline);
+  border-radius: var(--ml-radius-panel);
+  background: var(--ml-color-surface);
+}
+legend {
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding-inline: var(--ml-space-2);
+}
+.registration-grid {
+  display: grid;
+  gap: var(--ml-space-6);
+}
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: var(--ml-space-2);
+}
+input,
+p-select,
+p-datepicker {
+  width: 100%;
+  min-width: 0;
+}
+small {
+  display: block;
+  margin-top: var(--ml-space-2);
+  color: var(--ml-color-muted);
+}
+.field-error {
+  color: var(--ml-color-danger);
+  margin-top: var(--ml-space-2);
+}
+.registration-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ml-space-4);
+  margin-block: var(--ml-space-6);
+}
+button,
+a[pButton] {
+  min-height: var(--ml-touch-target);
+}
+.registration-error {
+  margin-block: var(--ml-space-4);
+}
+@media (min-width: 48rem) {
+  .registration-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

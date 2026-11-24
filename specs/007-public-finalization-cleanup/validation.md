@@ -26,3 +26,7 @@ CSS scroll-margin por sí solo no compensaba el scroll numérico del router; se 
 ## Límites
 
 No se crearon, modificaron ni ejecutaron pruebas unitarias, ni se ejecutó la suite E2E. Las revisiones Chrome son evidencia local de escenarios observados, no garantía de todos los navegadores, alturas o combinaciones de accesibilidad. No se enviaron correos reales, verificaron datos bancarios, implementó backend/autenticación o realizó despliegue. La fecha de evento/horarios/contactos siguen necesitando confirmación institucional. El 404 SPA no acredita estado HTTP 404 del hosting; SSR/SEO y publicación requieren su trabajo específico.
+
+## Evolución posterior
+
+El 2026-10-23 el usuario abrió el incremento backend (ADR 0005). La carpeta ya contiene una solución .NET y dejó de necesitar `.gitkeep`; AC-004 conserva su evidencia histórica en ADR 0004. La trazabilidad enlaza ese documento en lugar del marcador retirado. No se repitió revisión visual ni se modificaron tests Angular por este ajuste documental.

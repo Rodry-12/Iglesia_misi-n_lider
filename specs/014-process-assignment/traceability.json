@@ -1,0 +1,51 @@
+{
+    "status":  "verified",
+    "criteria":  [
+                     {
+                         "id":  "AC-001",
+                         "implementation":  [
+                                                "backend/src/MisionLiderParis.Infrastructure/Ministry/AssignmentService.cs",
+                                                "backend/src/MisionLiderParis.Application/Ministry/Contracts.cs",
+                                                "backend/src/MisionLiderParis.Api/Controllers/MinistryControllers.cs"
+                                            ],
+                         "verification":  [
+                                              "backend/tests/MisionLiderParis.IntegrationTests/AssignmentSelectionTests.cs",
+                                              "backend/tests/MisionLiderParis.IntegrationTests/PostgresMinistryTests.cs",
+                                              "backend/tests/MisionLiderParis.IntegrationTests/ProcessCatalogTests.cs"
+                                          ],
+                         "verified":  true,
+                         "evidence":  "2026-11-07: 132 Angular unit tests, 58 .NET unit tests, 74 isolated integrations including one fixture with six real HTTPS browser flows (assignment/catalog/people desktop/mobile), and 74 controlled E2E passed. Builds and checks passed; see validation.md. Supabase untouched; remote acceptance pending."
+                     },
+                     {
+                         "id":  "AC-002",
+                         "implementation":  [
+                                                "frontend/src/app/features/training/assignment.store.ts",
+                                                "frontend/src/app/features/training/assignment-page.ts",
+                                                "frontend/src/app/features/training/assignment-page.html",
+                                                "frontend/src/app/features/administration/admin.routes.ts",
+                                                "frontend/src/app/core/auth/access-context.ts",
+                                                "frontend/src/app/core/navigation/admin-navigation.ts"
+                                            ],
+                         "verification":  [
+                                              "frontend/src/app/features/training/assignment.store.spec.ts",
+                                              "frontend/src/app/features/training/assignment-page.spec.ts",
+                                              "frontend/e2e/assignment.spec.ts"
+                                          ],
+                         "verified":  true,
+                         "evidence":  "2026-11-07: 132 Angular unit tests, 58 .NET unit tests, 74 isolated integrations including one fixture with six real HTTPS browser flows (assignment/catalog/people desktop/mobile), and 74 controlled E2E passed. Builds and checks passed; see validation.md. Supabase untouched; remote acceptance pending."
+                     },
+                     {
+                         "id":  "AC-003",
+                         "implementation":  [
+                                                "docs/process-assignments.md"
+                                            ],
+                         "verification":  [
+                                              "backend/tests/MisionLiderParis.IntegrationTests/PeopleBrowserFixtureTests.cs",
+                                              "frontend/e2e/people-registration-real.spec.ts",
+                                              "specs/014-process-assignment/validation.md"
+                                          ],
+                         "verified":  true,
+                         "evidence":  "2026-11-07: 132 Angular unit tests, 58 .NET unit tests, 74 isolated integrations including one fixture with six real HTTPS browser flows (assignment/catalog/people desktop/mobile), and 74 controlled E2E passed. Builds and checks passed; see validation.md. Supabase untouched; remote acceptance pending."
+                     }
+                 ]
+}

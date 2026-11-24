@@ -13,18 +13,19 @@ try {
   const layoutOnly = process.argv.includes("--layout-only");
   for (const width of layoutOnly ? [320, 1440] : [320, 390, 768, 930, 1440]) {
     const context = await browser.newContext({
+      ignoreHTTPSErrors: true,
       viewport: { width, height: width === 1440 ? 720 : 900 },
       reducedMotion: "reduce",
     });
     await context.route("**/*", (route) =>
-      route.request().url().startsWith("http://localhost:4200/")
+      route.request().url().startsWith("https://localhost:4200/")
         ? route.continue()
         : route.abort(),
     );
     const page = await context.newPage();
     const errors = [];
     page.on("pageerror", (e) => errors.push(e.message));
-    await page.goto("http://localhost:4200/", {
+    await page.goto("https://localhost:4200/", {
       waitUntil: "networkidle",
       timeout: 60000,
     });
@@ -96,7 +97,7 @@ try {
       front: getComputedStyle(el.querySelector(".front")).transform,
       backHidden: el.querySelector(".back").getAttribute("aria-hidden"),
     }));
-    await page.goto("http://localhost:4200/contacto", {
+    await page.goto("https://localhost:4200/contacto", {
       waitUntil: "networkidle",
     });
     await page.getByRole("button", { name: "Enviar", exact: true }).click();
@@ -129,7 +130,7 @@ try {
       };
       await blocked?.abort().catch(() => {});
     }
-    await page.goto("http://localhost:4200/ruta-inexistente", {
+    await page.goto("https://localhost:4200/ruta-inexistente", {
       waitUntil: "networkidle",
     });
     item.notFound = {

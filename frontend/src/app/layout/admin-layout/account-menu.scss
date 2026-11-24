@@ -1,0 +1,49 @@
+:host {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+}
+.account-trigger {
+  min-width: 0;
+  max-width: 100%;
+  min-height: var(--ml-touch-target);
+  text-align: start;
+  color: var(--ml-color-text);
+  gap: var(--ml-space-3);
+  padding-block: var(--ml-space-1);
+}
+.account-identity {
+  display: block;
+  white-space: normal;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.account-identity strong {
+  display: block;
+  font-size: 0.875rem;
+}
+.account-identity span {
+  display: block;
+  font-size: 0.8125rem;
+  color: var(--ml-color-muted);
+  font-weight: 400;
+}
+.account-avatar {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: var(--ml-space-8);
+  height: var(--ml-space-8);
+  border-radius: 50%;
+  background: var(--ml-color-primary);
+  color: var(--ml-color-on-primary);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+.logout-label {
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding-block: var(--ml-space-1);
+}

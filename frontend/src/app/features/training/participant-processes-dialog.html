@@ -1,0 +1,107 @@
+<p-dialog
+  [header]="
+    editing()
+      ? 'Editar progreso'
+      : editable()
+        ? 'Administrar procesos'
+        : 'Procesos del participante'
+  "
+  [visible]="!!store.list() || !!editing()"
+  [modal]="true"
+  [closable]="false"
+  [closeOnEscape]="false"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{ width: '54rem', maxWidth: 'calc(100vw - 2rem)', maxHeight: 'calc(100dvh - 2rem)' }"
+  [contentStyle]="{ display: 'flex', flexDirection: 'column', minHeight: '0', overflow: 'hidden' }"
+  (keydown.escape)="!editing() && closed.emit()"
+>
+  <div class="participant-heading">
+    <h2>{{ person().personName ?? 'Participante no visible' }}</h2>
+    <p>
+      {{
+        person().documentNumber
+          ? (person().documentType ?? '') + ' ' + person().documentNumber
+          : 'Sin documento visible'
+      }}
+    </p>
+  </div>
+  @if (editing(); as id) {
+    <app-assignment-progress-editor
+      [assignmentId]="id"
+      (closed)="editing.set(null)"
+      (savedChange)="saved()"
+    />
+  } @else {
+    @if (store.list(); as result) {
+      <div class="process-list" role="region" aria-label="Procesos del participante" tabindex="0">
+        @for (item of result.items; track item.id) {
+          <article class="process-card">
+            <div class="process-card-heading">
+              <div>
+                <small>{{ item.categoryName ?? 'Categoría no disponible' }}</small>
+                <h3>{{ item.processName ?? 'Proceso no disponible' }}</h3>
+              </div>
+              <span class="catalog-status" [class.is-active]="item.stateCode === 'IN_PROGRESS'">{{
+                item.stateName ?? item.stateCode
+              }}</span>
+            </div>
+            <dl class="process-facts">
+              <div>
+                <dt>Responsable</dt>
+                <dd>{{ item.responsibleName ?? 'Responsable no visible' }}</dd>
+              </div>
+              <div>
+                <dt>Sede</dt>
+                <dd>{{ item.branchName ?? 'Sede no disponible' }}</dd>
+              </div>
+              <div>
+                <dt>Asignación</dt>
+                <dd>{{ date(item.assignedAt, 'No registrada') }}</dd>
+              </div>
+              <div>
+                <dt>Inicio</dt>
+                <dd>{{ date(item.startedAt, 'Sin iniciar') }}</dd>
+              </div>
+              <div>
+                <dt>Finalización</dt>
+                <dd>{{ date(item.finishedAt, 'Sin finalizar') }}</dd>
+              </div>
+            </dl>
+            @if (editable() && canEdit(item)) {
+              <div class="catalog-row-actions">
+                <button
+                  pButton
+                  type="button"
+                  [outlined]="true"
+                  (click)="editing.set(item.id)"
+                  [attr.aria-label]="'Editar progreso de ' + item.processName"
+                >
+                  <svg lucidePencil [size]="16" aria-hidden="true"></svg>Editar progreso
+                </button>
+              </div>
+            }
+          </article>
+        } @empty {
+          <p>No hay procesos disponibles para este participante.</p>
+        }
+      </div>
+      @if (result.totalCount > 10) {
+        <app-table-pagination
+          noun="procesos"
+          ariaLabel="Paginación de procesos del participante"
+          [first]="(result.pageNumber - 1) * result.pageSize"
+          [rows]="result.pageSize"
+          [totalRecords]="result.totalCount"
+          [disabled]="!!store.loading().list"
+          (onPageChange)="page(($event.page ?? 0) + 1, $event.rows ?? 10)"
+        />
+      }
+    }
+  }
+  <ng-template #footer>
+    @if (!editing()) {
+      <button pButton type="button" (click)="closed.emit()">Cerrar</button>
+    }
+  </ng-template>
+</p-dialog>

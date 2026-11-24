@@ -1,0 +1,272 @@
+<form class="catalog-panel" [attr.id]="formId()" [formGroup]="form" (ngSubmit)="save()">
+  @if (inviting) {
+    <label for="user-email">Correo de acceso *</label
+    ><input
+      pInputText
+      id="user-email"
+      type="email"
+      autocomplete="off"
+      formControlName="email"
+      maxlength="254"
+      [readonly]="store.busy()"
+    />
+  }
+  @if (inviting || editing() === 'profile') {
+    <label for="user-name">Nombre visible *</label
+    ><input
+      pInputText
+      id="user-name"
+      formControlName="displayName"
+      maxlength="150"
+      [readonly]="store.busy()"
+    />
+    <section class="user-person" aria-label="Persona asociada">
+      <h3>Persona asociada <span class="user-hint">Opcional</span></h3>
+      <p class="user-person-name">
+        {{
+          form.controls.personId.value
+            ? (selectedPerson()?.name ?? store.detail()?.personName ?? 'Persona asociada')
+            : 'Sin persona asociada'
+        }}
+      </p>
+      <p class="user-hint">
+        Vincula esta cuenta con alguien que ya esté registrado en Miembros. No crea otra persona.
+        Una cuenta administrativa puede funcionar sin esta asociación.
+      </p>
+      <button
+        pButton
+        type="button"
+        [outlined]="true"
+        [disabled]="store.busy()"
+        [attr.aria-expanded]="lookupOpen()"
+        aria-controls="user-person-lookup"
+        (click)="toggleLookup()"
+      >
+        {{
+          lookupOpen()
+            ? 'Ocultar búsqueda'
+            : form.controls.personId.value
+              ? 'Cambiar persona asociada'
+              : 'Vincular con una persona registrada'
+        }}
+      </button>
+      @if (lookupOpen()) {
+        <div id="user-person-lookup" class="user-person-lookup">
+          <label for="user-document-search">Número de documento</label>
+          <p id="user-document-help" class="user-hint">
+            Escribe el documento completo para identificar a la persona correcta. Solo aparecen
+            personas disponibles dentro de tus sedes autorizadas.
+          </p>
+          <div class="user-document-controls">
+            <input
+              pInputText
+              id="user-document-search"
+              [formControl]="document"
+              maxlength="150"
+              placeholder="Documento completo"
+              aria-describedby="user-document-help"
+              [readonly]="store.busy()"
+              (keydown.enter)="searchOnEnter($event)"
+            />
+            <button
+              pButton
+              type="button"
+              [disabled]="
+                store.busy() || !!store.loading().people || document.value.trim().length < 3
+              "
+              (click)="findPerson()"
+            >
+              Buscar en Miembros
+            </button>
+          </div>
+          @if (store.people(); as people) {
+            @for (person of people.items; track person.id) {
+              <article class="user-person-result">
+                <div>
+                  <strong>{{ person.name }}</strong>
+                  <p class="user-hint">
+                    {{ person.documentType }} {{ person.documentNumber }} ·
+                    {{ person.branchName ?? 'Sin sede activa' }}
+                  </p>
+                </div>
+                <button
+                  pButton
+                  type="button"
+                  [disabled]="store.busy()"
+                  (click)="choosePerson(person.id)"
+                >
+                  Vincular {{ person.name }}
+                </button>
+              </article>
+            }
+            @if (!people.totalCount) {
+              <p role="status" class="user-hint">
+                No encontramos una persona disponible con ese documento en tus sedes. Comprueba el
+                número; debe estar registrada en Miembros y no tener otra cuenta asociada.
+              </p>
+            }
+            @if (people.totalCount > people.pageSize) {
+              <div class="catalog-actions">
+                <button
+                  pButton
+                  type="button"
+                  [outlined]="true"
+                  [disabled]="people.pageNumber <= 1 || store.busy()"
+                  (click)="findPerson(people.pageNumber - 1)"
+                >
+                  Personas anteriores
+                </button>
+                <button
+                  pButton
+                  type="button"
+                  [outlined]="true"
+                  [disabled]="
+                    people.pageNumber * people.pageSize >= people.totalCount || store.busy()
+                  "
+                  (click)="findPerson(people.pageNumber + 1)"
+                >
+                  Más personas
+                </button>
+              </div>
+            }
+          }
+        </div>
+      }
+      @if (form.controls.personId.value) {
+        <button
+          pButton
+          type="button"
+          [outlined]="true"
+          [disabled]="store.busy()"
+          (click)="unlink()"
+        >
+          Quitar asociación con persona
+        </button>
+      }
+    </section>
+  }
+  @if (inviting || editing() === 'grants') {
+    <h2 class="user-access-title">Accesos y permisos</h2>
+    <p class="user-hint">Define en qué sede puede trabajar y qué acciones puede realizar.</p>
+    <div formArrayName="grants">
+      @for (group of form.controls.grants.controls; track group; let index = $index) {
+        <section [formGroupName]="index" class="user-access-card">
+          <h3>Acceso {{ index + 1 }}</h3>
+          <label [for]="'user-role-' + index">Perfil de acceso {{ index + 1 }} *</label
+          ><p-select
+            [inputId]="'user-role-' + index"
+            [ariaLabel]="'Perfil de acceso ' + (index + 1)"
+            formControlName="roleId"
+            [options]="roleOptions()"
+            optionLabel="label"
+            optionValue="id"
+            [fluid]="true"
+            appendTo="body"
+            [readonly]="store.busy()"
+            (onChange)="roleChanged(index)"
+          />
+          @if (role(group.controls.roleId.value) === 'BRANCH_ADMIN') {
+            <p class="user-hint">
+              Administrador de sede utiliza los permisos definidos para ese rol. Para permitir solo
+              acciones concretas, elige Acceso personalizado.
+            </p>
+          }
+          @if (role(group.controls.roleId.value) !== 'SUPER_ADMIN') {
+            <label [for]="'user-branch-' + index">Sede {{ index + 1 }} *</label
+            ><p-select
+              [inputId]="'user-branch-' + index"
+              [ariaLabel]="'Sede ' + (index + 1)"
+              formControlName="branchId"
+              [options]="store.options()?.branches ?? []"
+              optionLabel="name"
+              optionValue="id"
+              [fluid]="true"
+              appendTo="body"
+              [readonly]="store.busy()"
+            />
+          } @else {
+            <p>Alcance global, sin sede concreta.</p>
+          }
+          @if (role(group.controls.roleId.value) === 'OPERATOR') {
+            <p class="user-hint">
+              Selecciona las acciones permitidas en esta sede. Las casillas sin marcar no conceden
+              acceso.
+            </p>
+            <div class="user-permission-groups">
+              @for (module of permissionGroups(); track module.label) {
+                <fieldset class="user-permission-group">
+                  <legend>{{ module.label }}</legend>
+                  @for (permission of module.items; track permission.id) {
+                    <div class="user-permission-item">
+                      <p-checkbox
+                        [inputId]="'user-permission-' + index + '-' + permission.id"
+                        [value]="permission.id"
+                        formControlName="permissionIds"
+                        [readonly]="
+                          store.busy() ||
+                          (globalOnly(permission.code) &&
+                            !group.controls.permissionIds.value.includes(permission.id))
+                        "
+                      />
+                      <label [for]="'user-permission-' + index + '-' + permission.id">
+                        {{ permission.label }}
+                        @if (globalOnly(permission.code)) {
+                          <span class="user-hint"> · Solo SuperAdministrador</span>
+                        }
+                      </label>
+                    </div>
+                  }
+                </fieldset>
+              } @empty {
+                <p class="user-hint">
+                  No hay acciones disponibles para asignar con tus permisos actuales.
+                </p>
+              }
+            </div>
+          }
+          <button
+            pButton
+            type="button"
+            [outlined]="true"
+            [disabled]="form.controls.grants.length <= 1 || store.busy()"
+            (click)="removeGrant(index)"
+          >
+            Quitar acceso {{ index + 1 }}
+          </button>
+        </section>
+      }
+    </div>
+    <button
+      pButton
+      type="button"
+      [disabled]="store.busy() || form.controls.grants.length >= 20"
+      (click)="addGrant()"
+    >
+      Añadir otro acceso
+    </button>
+    @if (form.controls.grants.length > 1) {
+      <p class="user-hint">
+        Los accesos se suman. Añadir un acceso personalizado no reduce los permisos que ya concede
+        otro perfil en la misma sede.
+      </p>
+    }
+  }
+  @if (form.touched && form.invalid) {
+    <app-toast-feedback
+      severity="error"
+      [message]="'Completa los campos obligatorios y selecciona accesos válidos.'"
+    />
+  }
+  @if (showSubmit()) {
+    <div class="catalog-actions">
+      <button
+        pButton
+        type="submit"
+        [loading]="store.busy()"
+        [disabled]="store.busy() || confirming() || !store.options()"
+      >
+        {{ inviting ? 'Crear e invitar' : 'Guardar cambios' }}
+      </button>
+    </div>
+  }
+</form>

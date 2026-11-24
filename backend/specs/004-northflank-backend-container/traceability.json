@@ -1,0 +1,33 @@
+{
+  "status": "in-progress",
+  "criteria": [
+    {
+      "id": "AC-001",
+      "implementation": ["Dockerfile"],
+      "verification": ["specs/004-northflank-backend-container/validation.md"],
+      "verified": true,
+      "evidence": "2026-11-24: static review confirms official SDK/aspnet10.0 stages, locked cached restore, actual API paths, non-root APP_UID,8080 and no runtime migrations/secrets. No Docker engine available."
+    },
+    {
+      "id": "AC-002",
+      "implementation": ["Dockerfile", ".dockerignore"],
+      "verification": ["specs/004-northflank-backend-container/validation.md"],
+      "verified": true,
+      "evidence": "Twelve COPY source paths and four project references checked. Clean source-set restore/publish succeeds:19 files,14.77MiB; known private settings empty and no private file types, Windows apphost, development settings or SQL reference in resulting publish. Not a Docker image audit."
+    },
+    {
+      "id": "AC-003",
+      "implementation": ["Dockerfile", ".dockerignore"],
+      "verification": ["specs/004-northflank-backend-container/validation.md"],
+      "verified": true,
+      "evidence": "deploy/northflank.md (repository-root guide) documents runtime variable names, persistent HOME paths, root-owned secret-file issue, proxy trust and Strict same-site blockers with primary sources; no account-specific limits/costs fabricated. No remote provisioning."
+    },
+    {
+      "id": "AC-004",
+      "implementation": ["Dockerfile", ".dockerignore"],
+      "verification": ["specs/004-northflank-backend-container/validation.md"],
+      "verified": false,
+      "evidence": "Local restore/build/publish succeeds;164 tests pass with105 skips and the previously documented OpenAPI failure excluded. Docker absent: image build/Linux execution, effective runtime permissions, resources and Northflank production acceptance remain pending."
+    }
+  ]
+}

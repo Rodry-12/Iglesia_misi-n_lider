@@ -1,0 +1,47 @@
+{
+  "status": "in-progress",
+  "criteria": [
+    {
+      "id": "AC-001",
+      "implementation": ["docs/production-deployment.md", "deploy/.env.example"],
+      "verification": ["specs/020-production-deployment/validation.md"],
+      "verified": true,
+      "evidence": "2026-11-23: source inspection and primary vendor documentation complete. User confirmed Gmail and manages hosting/domain/DNS. No secret values inspected or printed."
+    },
+    {
+      "id": "AC-002",
+      "implementation": ["frontend/angular.json", "backend/src/MisionLiderParis.Api/MisionLiderParis.Api.csproj"],
+      "verification": ["specs/020-production-deployment/validation.md"],
+      "verified": true,
+      "evidence": "2026-11-23: Angular production build and isolated Release publish succeeded; API assembly/frontend index present. Existing bundle warning recorded. No remote publication or database/email calls."
+    },
+    {
+      "id": "AC-003",
+      "implementation": ["deploy/.env.example", "docs/production-deployment.md", "backend/src/MisionLiderParis.Api/Security/TrustedReverseProxy.cs", "backend/src/MisionLiderParis.Api/Program.cs"],
+      "verification": ["backend/tests/MisionLiderParis.IntegrationTests/TrustedReverseProxyTests.cs", "backend/tests/MisionLiderParis.IntegrationTests/HttpSecurityTests.cs", "specs/020-production-deployment/validation.md"],
+      "verified": true,
+      "evidence": "2026-11-23: template/guide provide actual configuration keys without secrets.22 focused HTTP tests passed, including7 proxy trust cases; default forwarding disabled. Final host values/OAuth not asserted."
+    },
+    {
+      "id": "AC-005",
+      "implementation": ["frontend/src/environments/environment.ts", "frontend/src/environments/environment.production.ts", "frontend/src/app/core/config/api-base-url.interceptor.ts", "frontend/src/app/app.config.ts", "frontend/angular.json", "docs/production-deployment.md"],
+      "verification": ["frontend/src/app/core/config/api-base-url.interceptor.spec.ts", "frontend/src/app/core/auth/auth.store.spec.ts", "specs/020-production-deployment/validation.md"],
+      "verified": true,
+      "evidence": "2026-11-23:35 HTTP/auth tests passed; production build succeeded with environment replacement configured. Session, CSRF, query parameters, credentials,401 and external isolation covered. Actual public origin/browser acceptance remains AC-004, pending."
+    },
+    {
+      "id": "AC-006",
+      "implementation": ["scripts/build-frontend.mjs", "frontend/.env.example", "frontend/package.json", "frontend/src/environments/environment.production.ts", "docs/production-deployment.md"],
+      "verification": ["scripts/build-frontend.test.mjs", "specs/020-production-deployment/validation.md"],
+      "verified": true,
+      "evidence": "2026-11-23:8 build configuration tests passed. Build with environment-provided test URL succeeded and literal was found in emitted JavaScript. Final default build succeeded to remove test destination. No source generation, remote calls or secrets."
+    },
+    {
+      "id": "AC-004",
+      "implementation": ["docs/production-deployment.md"],
+      "verification": ["specs/020-production-deployment/validation.md"],
+      "verified": false,
+      "evidence": "Remote hosting, DNS, OAuth consent, delivery and production acceptance are outside the executed local configuration work."
+    }
+  ]
+}

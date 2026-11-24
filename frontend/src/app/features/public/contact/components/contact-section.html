@@ -85,27 +85,25 @@
         </p>
       </div>
       <div class="form-group" id="group-validation">
-        <div
-          class="contact-status"
-          [class.error]="status() === 'error' || status() === 'invalid'"
-          role="status"
-          aria-live="polite"
-        >
+        <div>
           @switch (status()) {
             @case ('sending') {
               <p>Enviando tu mensaje…</p>
             }
             @case ('success') {
-              <p>¡Correo enviado exitosamente!</p>
+              <app-toast-feedback severity="success" message="¡Correo enviado exitosamente!" />
             }
             @case ('error') {
-              <p>
-                No pudimos enviar tu mensaje. Tus datos se conservan; inténtalo de nuevo o
-                contáctanos por WhatsApp.
-              </p>
+              <app-toast-feedback
+                severity="error"
+                message="No pudimos enviar tu mensaje. Tus datos se conservan; inténtalo de nuevo o contáctanos por WhatsApp."
+              />
             }
             @case ('invalid') {
-              <p>Revisa y completa los campos indicados.</p>
+              <app-toast-feedback
+                severity="warn"
+                message="Revisa y completa los campos indicados."
+              />
             }
           }
         </div>

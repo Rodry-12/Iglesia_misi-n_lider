@@ -1,1 +1,12 @@
-<router-outlet />
+<app-loading-overlay [blocking]="true" [fullscreen]="true">
+  <router-outlet />
+</app-loading-overlay>
+<p-toast
+  position="top-right"
+  [autoZIndex]="false"
+  [style]="{
+    top: 'var(--ml-toast-top)',
+    width: 'min(24rem, calc(100vw - 2rem))',
+    zIndex: 'var(--ml-z-toast)',
+  }"
+/>

@@ -1,0 +1,46 @@
+{
+  "status": "verified",
+  "criteria": [
+    {
+      "id": "AC-001",
+      "implementation": [
+        "backend/src/MisionLiderParis.Infrastructure/Ministry/PeopleService.cs"
+      ],
+      "verification": [
+        "backend/tests/MisionLiderParis.IntegrationTests/PeopleStateTests.cs"
+      ],
+      "verified": true,
+      "evidence": "2026-11-07: 101 Angular unit tests, 58 .NET unit tests, 67 isolated integrations including two real browser viewports; 56 controlled E2E, plus 10 repeated after responsive dialog adjustment. Builds and checks passed. See validation.md. Supabase untouched."
+    },
+    {
+      "id": "AC-002",
+      "implementation": [
+        "frontend/src/app/features/members/person-state-action.ts",
+        "frontend/src/app/features/members/members.store.ts",
+        "frontend/src/app/features/members/members-page.html",
+        "frontend/src/app/features/members/person-detail-dialog.html",
+        "frontend/src/app/core/auth/access-context.ts"
+      ],
+      "verification": [
+        "frontend/src/app/features/members/person-state-action.spec.ts",
+        "frontend/src/app/features/members/members.store.spec.ts",
+        "frontend/e2e/people-state.spec.ts"
+      ],
+      "verified": true,
+      "evidence": "2026-11-07: 101 Angular unit tests, 58 .NET unit tests, 67 isolated integrations including two real browser viewports; 56 controlled E2E, plus 10 repeated after responsive dialog adjustment. Builds and checks passed. See validation.md. Supabase untouched."
+    },
+    {
+      "id": "AC-003",
+      "implementation": [
+        "docs/person-state.md"
+      ],
+      "verification": [
+        "backend/tests/MisionLiderParis.IntegrationTests/PeopleBrowserFixtureTests.cs",
+        "frontend/e2e/people-registration-real.spec.ts",
+        "specs/012-person-state/validation.md"
+      ],
+      "verified": true,
+      "evidence": "2026-11-07: 101 Angular unit tests, 58 .NET unit tests, 67 isolated integrations including two real browser viewports; 56 controlled E2E, plus 10 repeated after responsive dialog adjustment. Builds and checks passed. See validation.md. Supabase untouched."
+    }
+  ]
+}

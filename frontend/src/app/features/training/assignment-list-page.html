@@ -1,0 +1,153 @@
+<div class="follow-up-heading">
+  <app-page-heading
+    title="Seguimiento de procesos"
+    description="Consulta los participantes y abre sus procesos para revisar o actualizar el avance."
+  />
+  <button pButton type="button" [outlined]="true" (click)="reset()">
+    <svg lucideX [size]="16" aria-hidden="true"></svg>Limpiar filtros
+  </button>
+</div>
+<form
+  class="catalog-panel follow-up-filters"
+  [formGroup]="form"
+  (ngSubmit)="$event.preventDefault()"
+  aria-label="Filtros de asignaciones"
+>
+  <div class="follow-up-search-field">
+    <label for="assignment-search">Buscar participante</label>
+    <div class="catalog-search">
+      <svg lucideSearch [size]="18" aria-hidden="true"></svg>
+      <input
+        pInputText
+        id="assignment-search"
+        formControlName="search"
+        maxlength="150"
+        placeholder="Nombre, apellidos o documento"
+      />
+      @if (form.controls.search.value) {
+        <button
+          pButton
+          type="button"
+          [text]="true"
+          aria-label="Limpiar búsqueda"
+          (click)="form.controls.search.setValue('')"
+        >
+          <svg lucideX [size]="16" aria-hidden="true"></svg>
+        </button>
+      }
+    </div>
+  </div>
+  @for (field of filterFields; track field.key) {
+    <div [class]="'follow-up-field follow-up-' + field.key">
+      <label [id]="field.key + '-label'" [for]="field.key">{{ field.label }}</label>
+      <p-select
+        [fluid]="true"
+        [inputId]="field.key"
+        [ariaLabelledBy]="field.key + '-label'"
+        [formControlName]="field.key"
+        [options]="options()[field.key]"
+        optionLabel="name"
+        optionValue="id"
+        [placeholder]="
+          field.key === 'processId' && !store.filters().categoryId
+            ? 'Selecciona una categoría'
+            : field.placeholder
+        "
+        [readonly]="field.key === 'processId' && !store.filters().categoryId"
+        [showClear]="!!form.controls[field.key].value"
+        appendTo="body"
+      />
+    </div>
+  }
+</form>
+@if (store.errors().list; as error) {
+  <app-toast-feedback severity="error" [message]="error" />
+}
+@if (store.participants(); as result) {
+  <section class="catalog-panel catalog-results" aria-label="Asignaciones ministeriales">
+    <p-table
+      [scrollable]="true"
+      scrollHeight="min(55vh, 32rem)"
+      [value]="result.items"
+      dataKey="personId"
+      [tableStyle]="{ 'min-width': '42rem' }"
+    >
+      <ng-template #header
+        ><tr>
+          <th scope="col" class="follow-up-document">Documento</th>
+          <th scope="col" class="follow-up-person">Participante</th>
+          <th scope="col" class="follow-up-branch">Sede</th>
+          <th scope="col" class="catalog-actions-column">Acciones</th>
+        </tr></ng-template
+      >
+      <ng-template #body let-assignment
+        ><tr>
+          <td class="follow-up-document">
+            {{
+              assignment.documentNumber
+                ? assignment.documentType + ' ' + assignment.documentNumber
+                : 'Sin documento visible'
+            }}
+          </td>
+          <td class="follow-up-person">
+            <strong>{{ assignment.personName ?? 'Participante no visible' }}</strong>
+          </td>
+          <td class="follow-up-branch">
+            @for (branch of assignment.branches; track branch.id) {
+              <span class="follow-up-category">{{ branch.name }}</span>
+            }
+          </td>
+          <td>
+            <div class="catalog-row-actions">
+              <button
+                pButton
+                type="button"
+                [text]="true"
+                (click)="openProcesses($event, assignment)"
+                [attr.aria-label]="'Ver procesos de ' + (assignment.personName ?? 'participante')"
+                title="Ver procesos"
+              >
+                <svg lucideEye [size]="18" aria-hidden="true"></svg>
+              </button>
+              @if (canEdit(assignment)) {
+                <button
+                  pButton
+                  type="button"
+                  [text]="true"
+                  (click)="openProcesses($event, assignment, true)"
+                  [attr.aria-label]="
+                    'Editar progreso de ' + (assignment.personName ?? 'participante')
+                  "
+                  title="Editar progreso"
+                >
+                  <svg lucidePencil [size]="18" aria-hidden="true"></svg>
+                </button>
+              }
+            </div>
+          </td></tr
+      ></ng-template>
+      <ng-template #emptymessage
+        ><tr>
+          <td colspan="4">No hay participantes con procesos que coincidan con los filtros.</td>
+        </tr></ng-template
+      >
+    </p-table>
+    <app-table-pagination
+      noun="participantes"
+      ariaLabel="Paginación de seguimiento"
+      [disabled]="!!store.loading().list"
+      [first]="(result.pageNumber - 1) * result.pageSize"
+      [rows]="result.pageSize"
+      [totalRecords]="result.totalCount"
+      (onPageChange)="pageChanged($event)"
+    />
+  </section>
+}
+@if (selected(); as person) {
+  <app-participant-processes-dialog
+    [person]="person"
+    [editable]="editMode()"
+    (closed)="closeDetail()"
+    (savedChange)="store.loadParticipants(store.filters(), true)"
+  />
+}

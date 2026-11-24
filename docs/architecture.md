@@ -1,6 +1,6 @@
 # Arquitectura Angular
 
-La prioridad vigente es el sitio público (spec 004). Su organización y las reglas para nuevas páginas se describen en [arquitectura pública](public-site-architecture.md). La administración y la autenticación real se retomarán después.
+La organización del sitio público se describe en [arquitectura pública](public-site-architecture.md). El incremento backend autorizado el 2026-10-23 se documenta en [ADR 0005](adr/0005-dotnet-ministry-backend.md) y [backend/README.md](../backend/README.md). La etapa 2.1 integra [autenticación Angular real](angular-authentication.md); los módulos de negocio siguen preparatorios.
 
 La base incluye administración por sedes (spec 003). El stack vigente es Angular 21 + PrimeNG 21 + Tailwind 4 + SCSS + tokens + Lucide; [ADR 0003](adr/0003-primeng-design-system.md) sustituye Material. Consultar [sistema de diseño](design-system.md), [stack](frontend-stack.md) y [administración](administration.md).
 
@@ -29,7 +29,7 @@ frontend/
       app.config.ts         # Proveedores de aplicación
     styles.scss             # Base global mínima
     styles/_public-site.scss # Estilos comunes delimitados al sitio público
-backend/                    # Reservado, vacío salvo .gitkeep
+backend/                    # API .NET 10 y specs; integración ministerial pendiente
 specs/                      # Contratos de comportamiento y evidencia
 docs/                       # Contexto, decisiones y operación
 scripts/                    # Generación y comprobación SDD

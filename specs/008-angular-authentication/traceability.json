@@ -1,0 +1,40 @@
+{
+  "status": "verified",
+  "criteria": [
+    {
+      "id": "AC-001",
+      "implementation": ["frontend/src/app/core/auth/auth.store.ts", "frontend/src/app/core/auth/csrf.service.ts", "frontend/src/app/core/auth/auth.interceptor.ts"],
+      "verification": ["frontend/src/app/core/auth/auth.store.spec.ts", "specs/008-angular-authentication/validation.md"],
+      "verified": true,
+      "evidence": "2026-11-06: 16 casos iniciales store/HTTP. Continuacion2026-11-10:22 store,6 guards y11 access-context aprobados, con repeticion aislada del timeout de importacion en frio. Navegacion reutiliza sesion;401 revoca y recarga consulta la API;CSRF/cookie y respuestas tardias conservados."
+    },
+    {
+      "id": "AC-002",
+      "implementation": ["frontend/src/app/features/access/access-page.ts", "frontend/src/app/features/access/access-page.html", "frontend/src/app/features/access/access-page.scss", "frontend/src/app/core/auth/access-guards.ts", "frontend/src/app/features/administration/overview-page.ts"],
+      "verification": ["frontend/src/app/core/auth/access-guards.spec.ts", "frontend/src/app/core/auth/access-context.spec.ts", "frontend/src/app/features/access/access-page.spec.ts"],
+      "verified": true,
+      "evidence": "Guards esperan carga inicial y reutilizan sesion comprobada al navegar; autorizacion real en cada endpoint sin cache backend. 401/403 diferenciados y capacidad/sede conservados. Continuacion2026-11-10:39 unitarias Angular distintas aprobadas;12 recorridos auth previos y2 nuevos de filtros/paginacion con API interceptada."
+    },
+    {
+      "id": "AC-003",
+      "implementation": ["frontend/src/app/core/auth/auth.store.ts", "frontend/src/app/features/access/access-page.html"],
+      "verification": ["frontend/e2e/auth.spec.ts", "specs/008-angular-authentication/validation.md"],
+      "verified": true,
+      "evidence": "12 E2E auth interceptados correctos en Chrome escritorio/movil. Continuacion2026-11-10:2 recorridos nuevos de busqueda/paginacion verifican session1 inicial,0 adicionales en filtros/pagina y1 mas al recargar; repetidos sin compilaciones simultaneas tras timeout de carga fria desktop. Separados de pruebas reales Supabase."
+    },
+    {
+      "id": "AC-004",
+      "implementation": ["frontend/proxy.conf.cjs", "frontend/angular.json", "frontend/src/app/app.config.ts"],
+      "verification": ["frontend/e2e/auth-real.spec.ts", "docs/angular-authentication.md", "specs/008-angular-authentication/validation.md"],
+      "verified": true,
+      "evidence": "Dos E2E reales correctos sin interceptación con cuenta existente y PostgreSQL local: login/session/reload 200, logout 204, sesión posterior 401; cookies seguras. Proxy secure:true validó el certificado local renovado. Sin Supabase."
+    },
+    {
+      "id": "AC-005",
+      "implementation": ["frontend/src/app/features/access/access-page.scss", "docs/angular-authentication.md"],
+      "verification": ["frontend/e2e/public-site.spec.ts", "specs/008-angular-authentication/validation.md"],
+      "verified": true,
+      "evidence": "50 unitarias, 22 E2E ordinarios y dos E2E reales correctos en ejecuciones separadas. Build 472,33 kB, checks de diseño/dependencias/skills/formato correctos y revisión visual móvil/escritorio sin overflow. Comandos locales y límites documentados."
+    }
+  ]
+}

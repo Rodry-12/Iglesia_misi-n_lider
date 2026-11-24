@@ -1,0 +1,95 @@
+{
+  "project": "sneceodpvscrvjrlqwgw",
+  "status": "prepared-not-executed",
+  "generated": [
+    {
+      "source": "sql/001-auth-app.sql",
+      "sourceSha256": "B50748F72562764DE89789D43E245F4557FCBC3C40B63FDEC966C1D4C94F2AC9",
+      "output": "020-identity-001.sql",
+      "outputSha256": "A5023CD5B70B070F8557CCF24F013CC45407AFED3DEC58EAD365DC34B2DCAD7D",
+      "unchangedSourceBody": false,
+      "unchangedIdentityStatements": true,
+      "executionMode": "guarded-first-run-top-level-ddl"
+    },
+    {
+      "source": "sql/002-explicit-operator-permissions.sql",
+      "sourceSha256": "E2702E7A875B0F78ED31BEC6670CF30DA44F859B518D03328A0FD1C5F13FB7F1",
+      "output": "030-identity-002.sql",
+      "outputSha256": "39C5CB90704C359F0A9F058BAB5C0F404FA4EC2C344CC7B866066DDCCD3A994A",
+      "unchangedSourceBody": true
+    },
+    {
+      "source": "sql/proposals/003-assignment-integrity.sql",
+      "sourceSha256": "60CDEB82DE9F8AE6E49FB1BC6BB6D7DE4C6D99016812F55BDF685539BD988703",
+      "output": "040-integrity-003.sql",
+      "outputSha256": "714FC31612239AC0DE5147849648A2F92A1552538A5DB12E70452BC9482BAF49",
+      "unchangedSourceBody": false,
+      "unchangedRoutineBodies": true,
+      "executionMode": "postgres-escape-string-routines"
+    },
+    {
+      "source": "sql/004-auth-ministry-references.sql",
+      "sourceSha256": "A887DC401ABC278CF523C8409CCF3D0B9A2ADDBAA534E666C452C6449E8EAFC1",
+      "output": "050-references-004.sql",
+      "outputSha256": "93EE0FD55BE3B07BE8742B18601641BFA9734136D1CF9D0A3F59108E248A3AA3",
+      "unchangedSourceBody": true
+    },
+    {
+      "source": "sql/005-runtime-role-rls.sql",
+      "sourceSha256": "4B915CCC5F9EB52C5BAEBBECAA3CCB65E80B3ADDBDBD6F4BA8019537C92A607C",
+      "output": "060-rls-005.sql",
+      "outputSha256": "AB04EBE63923D926866E80C3F701ADBB49D7C778F29539D45A313EFEEE38B8CF",
+      "unchangedSourceBody": true
+    }
+  ],
+  "files": [
+    {
+      "file": "000-preflight-readonly.sql",
+      "sha256": "44575EDEA17334FA84D32010E087190D64D181139B87F4067B2099F6AD1B51F4"
+    },
+    {
+      "file": "010-provision-roles-ownership.sql",
+      "sha256": "B53B3E664F2E4CA05620F0CFDEB8746EE167964D0A8F7B7B4D1D95D5605E8ECD"
+    },
+    {
+      "file": "020-identity-001.sql",
+      "sha256": "A5023CD5B70B070F8557CCF24F013CC45407AFED3DEC58EAD365DC34B2DCAD7D"
+    },
+    {
+      "file": "021-verify-identity-readonly.sql",
+      "sha256": "32976342BC390472E8C42D08B27A43F64EE8BE223880946D891A6ACFC25D2BE6"
+    },
+    {
+      "file": "030-identity-002.sql",
+      "sha256": "39C5CB90704C359F0A9F058BAB5C0F404FA4EC2C344CC7B866066DDCCD3A994A"
+    },
+    {
+      "file": "040-integrity-003.sql",
+      "sha256": "714FC31612239AC0DE5147849648A2F92A1552538A5DB12E70452BC9482BAF49"
+    },
+    {
+      "file": "041-verify-integrity-readonly.sql",
+      "sha256": "B4EBAFC2EF53590589397ADEAA6B15F2A7C69BDE0FBCED5BB4848544A5CD8AB5"
+    },
+    {
+      "file": "050-references-004.sql",
+      "sha256": "93EE0FD55BE3B07BE8742B18601641BFA9734136D1CF9D0A3F59108E248A3AA3"
+    },
+    {
+      "file": "060-rls-005.sql",
+      "sha256": "AB04EBE63923D926866E80C3F701ADBB49D7C778F29539D45A313EFEEE38B8CF"
+    },
+    {
+      "file": "070-runtime-login.sql",
+      "sha256": "5A50A88E135957D4EAD9CD8E5425894269443D86A39D10C03F649748348353ED"
+    },
+    {
+      "file": "080-verify-readonly.sql",
+      "sha256": "4A5A7D8A8C7113285E1463E61379A25CA70B3BB12E6FBA019F1CB6CF3F025803"
+    },
+    {
+      "file": "090-close-bootstrap-access.sql",
+      "sha256": "D3A6C85595206861167F2472629688DF8DCBF8A4F27E9443A2AA7A09F9D18F4C"
+    }
+  ]
+}

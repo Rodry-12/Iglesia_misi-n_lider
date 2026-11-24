@@ -1,0 +1,119 @@
+:host {
+  display: block;
+}
+.people-filters {
+  display: grid;
+  gap: var(--ml-space-4);
+  margin-block: var(--ml-space-6);
+}
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: var(--ml-space-2);
+}
+.search-controls {
+  display: flex;
+  gap: var(--ml-space-2);
+}
+.search-controls input {
+  min-width: 0;
+  width: 100%;
+}
+p-select {
+  width: 100%;
+}
+.people-table {
+  max-width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--ml-color-outline);
+  border-radius: var(--ml-radius-panel);
+}
+.people-panel {
+  padding: var(--ml-space-6);
+  background: var(--ml-color-surface);
+  border: 1px solid var(--ml-color-outline);
+  border-radius: var(--ml-radius-panel);
+}
+.person-status {
+  font-weight: 600;
+}
+.person-sections {
+  display: grid;
+  gap: var(--ml-space-4);
+}
+h2 {
+  font-size: 1.25rem;
+  margin: 0 0 var(--ml-space-4);
+}
+dl {
+  margin: 0;
+}
+dl > div + div {
+  margin-top: var(--ml-space-4);
+}
+dt {
+  color: var(--ml-color-muted);
+}
+dd {
+  margin: var(--ml-space-1) 0 0;
+  overflow-wrap: anywhere;
+}
+button,
+a[pButton] {
+  min-height: var(--ml-touch-target);
+}
+@media (min-width: 52rem) {
+  .people-filters {
+    grid-template-columns: 2fr 1fr 1fr;
+    align-items: end;
+  }
+  .person-sections {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.people-toolbar {
+  display: flex;
+  justify-content: flex-end;
+}
+.people-create {
+  color: var(--ml-color-on-primary);
+  gap: var(--ml-space-2);
+}
+.people-filter-panel {
+  margin-block: var(--ml-space-6);
+}
+.people-filter-panel .people-filters {
+  margin-bottom: 0;
+}
+.search-controls {
+  position: relative;
+}
+.search-controls input {
+  padding-right: var(--ml-touch-target);
+}
+.search-controls input::-webkit-search-cancel-button {
+  appearance: none;
+}
+.people-clear {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.people-icon-action {
+  width: var(--ml-touch-target);
+  display: inline-flex;
+  justify-content: center;
+}
+.people-table {
+  background: var(--ml-color-surface);
+}
+.people-table td:last-child {
+  white-space: nowrap;
+}
+.person-detail-name {
+  font-weight: 700;
+  font-size: 1.125rem;
+  margin: 0 0 var(--ml-space-4);
+  overflow-wrap: anywhere;
+}

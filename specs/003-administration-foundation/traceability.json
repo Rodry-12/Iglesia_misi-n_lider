@@ -2,6 +2,13 @@
   "status": "in-progress",
   "criteria": [
     {
+      "id": "AC-010",
+      "implementation": ["frontend/src/app/core/loading/http-activity.ts", "frontend/src/app/core/loading/http-activity.interceptor.ts", "frontend/src/app/shared/ui/loading-overlay.ts", "frontend/src/app/shared/ui/loading-overlay.scss", "frontend/src/app/app.config.ts", "frontend/src/app/layout/admin-layout/admin-layout.html"],
+      "verification": ["frontend/src/app/core/loading/http-activity.spec.ts", "frontend/src/app/shared/ui/loading-overlay.spec.ts", "frontend/e2e/loading.spec.ts", "specs/003-administration-foundation/validation.md"],
+      "verified": true,
+      "evidence": "2026-11-21:correccion final global fullscreen en App,centrado y sin textos duplicados en Sedes.9 unitarias y18 recorridos interceptados aprobados;inert,scroll,viewport,concurrencia,error y auth. Build correcto con advertencia521,70kB/500kB. Sin escrituras reales;validation.md conserva historia."
+    },
+    {
       "id": "AC-001",
       "implementation": [
         "frontend/package.json",
@@ -86,6 +93,72 @@
       ],
       "verified": true,
       "evidence": "Regresion publica correcta, skills:check y enlaces locales correctos; pendientes explicitos."
+    },
+    {
+      "id": "AC-007",
+      "implementation": [
+        "frontend/src/app/layout/admin-layout/admin-layout.ts",
+        "frontend/src/app/layout/admin-layout/admin-layout.html",
+        "frontend/src/app/layout/admin-layout/admin-layout.scss",
+        "frontend/src/app/features/administration/overview-page.ts",
+        "frontend/src/app/features/administration/overview-page.html",
+        "frontend/src/app/features/administration/overview-page.scss",
+        "frontend/src/app/shared/ui/management-icon.ts",
+        "frontend/src/app/shared/ui/account-labels.ts"
+      ],
+      "verification": [
+        "frontend/src/app/features/administration/overview-page.spec.ts",
+        "frontend/e2e/management-layout.spec.ts",
+        "specs/003-administration-foundation/validation.md"
+      ],
+      "verified": true,
+      "evidence": "2026-11-09: 21 unitarias,15 recorridos de navegador controlados y build aprobados; tema, scopes multiples, conteo unico, menu/teclado y responsive comprobados. Una duplicacion tablet omitida. Revision estetica manual pendiente, sin Supabase ni cambios de autorizacion."
+    },
+    {
+      "id": "AC-008",
+      "implementation": [
+        "frontend/src/app/layout/admin-layout/admin-layout.ts",
+        "frontend/src/app/layout/admin-layout/admin-layout.html",
+        "frontend/src/app/layout/admin-layout/admin-layout.scss",
+        "frontend/src/app/layout/admin-layout/account-menu.ts",
+        "frontend/src/app/layout/admin-layout/account-menu.scss"
+      ],
+      "verification": [
+        "frontend/src/app/features/administration/overview-page.spec.ts",
+        "frontend/e2e/management-layout.spec.ts",
+        "frontend/e2e/auth.spec.ts",
+        "specs/003-administration-foundation/validation.md"
+      ],
+      "verified": true,
+      "evidence": "2026-11-09: 16 unitarias y17 recorridos controlados aprobados; una duplicacion tablet omitida. Sticky en cinco rutas desktop/mobile, popup sin obstruccion, foco/Escape y logout conservados. Build correcto con advertencia502,04kB/500kB explicitada. Sin datos reales ni cambios de seguridad."
+    },
+    {
+      "id": "AC-009",
+      "implementation": [
+        "frontend/src/app/layout/admin-layout/admin-layout.ts",
+        "frontend/src/app/layout/admin-layout/admin-layout.html",
+        "frontend/src/app/layout/admin-layout/admin-layout.scss",
+        "frontend/src/app/layout/admin-layout/account-menu.ts",
+        "frontend/src/app/layout/admin-layout/account-menu.scss",
+        "frontend/src/app/shared/ui/theme-toggle.ts",
+        "frontend/src/app/shared/ui/permission-labels.ts",
+        "backend/src/MisionLiderParis.Domain/Access/AccessScope.cs",
+        "backend/src/MisionLiderParis.Infrastructure/Access/MinistryDirectory.cs",
+        "frontend/src/app/core/auth/auth.models.ts",
+        "frontend/src/app/features/administration/overview-page.scss",
+        "frontend/src/app/features/administration/overview-page.html",
+        "frontend/src/app/features/administration/overview-page.ts",
+        "frontend/src/app/features/users/users-page.ts",
+        "frontend/src/app/features/users/users-page.html"
+      ],
+      "verification": [
+        "frontend/src/app/features/administration/overview-page.spec.ts",
+        "frontend/src/app/features/users/users.spec.ts",
+        "frontend/e2e/management-layout.spec.ts",
+        "specs/003-administration-foundation/validation.md"
+      ],
+      "verified": true,
+      "evidence": "2026-11-09: incremento previo 29 unitarias y17 recorridos interceptados; ampliacion FR-012 con38 unitarias Angular,17 .NET y5 recorridos interceptados aprobados,1 duplicado tablet omitido. Sidebar Panel de gestion, navbar con nombres autorizados o Todas las sedes, categorias en negrita y permisos en items. Sin cambios remotos. Nombres con sesion real pendientes de API actualizada; build correcto con advertencia de presupuesto502,09kB."
     }
   ]
 }

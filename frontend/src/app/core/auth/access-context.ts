@@ -1,7 +1,27 @@
 import { computed, inject, Injectable, InjectionToken, Signal, signal } from '@angular/core';
 
-export type Permission =
-  'finanzas:leer' | 'miembros:leer' | 'formacion:leer' | 'sedes:leer' | 'usuarios:administrar';
+export const NAVIGATION_PERMISSIONS = [
+  'PERSON_VIEW',
+  'PERSON_CREATE',
+  'PERSON_UPDATE',
+  'PERSON_DEACTIVATE',
+  'PROCESS_VIEW',
+  'PROCESS_ASSIGN',
+  'PROCESS_CHANGE_STATUS',
+  'PROCESS_CHANGE_RESPONSIBLE',
+  'PROCESS_CREATE',
+  'PROCESS_UPDATE',
+  'CATEGORY_VIEW',
+  'CATEGORY_CREATE',
+  'CATEGORY_UPDATE',
+  'BRANCH_VIEW',
+  'USER_VIEW',
+  'USER_CREATE',
+  'USER_UPDATE',
+  'USER_CHANGE_STATUS',
+  'USER_ASSIGN_ROLE',
+] as const;
+export type Permission = (typeof NAVIGATION_PERMISSIONS)[number];
 export type SiteScope =
   { readonly kind: 'all-sites' } | { readonly kind: 'sites'; readonly ids: readonly string[] };
 export interface AccessGrant {
@@ -15,7 +35,7 @@ export interface Principal {
   readonly grants: readonly AccessGrant[];
 }
 
-/** El futuro proveedor de autenticación entrega una sesión validada. No hay sesión de prueba por defecto. */
+/** App configuration connects this to AuthStore; the fallback never fabricates a session. */
 export const AUTH_PRINCIPAL = new InjectionToken<Signal<Principal | null>>('AUTH_PRINCIPAL', {
   providedIn: 'root',
   factory: () => signal<Principal | null>(null).asReadonly(),
@@ -26,7 +46,14 @@ export class AccessContext {
   readonly principal = inject(AUTH_PRINCIPAL);
   readonly authenticated = computed(() => this.principal() !== null);
 
-  can(permission: Permission, siteId?: string): boolean {
+  can(permission: Permission, siteId?: string | null): boolean {
+    // A record without a current branch is visible/editable only with global scope.
+    if (siteId === null)
+      return (
+        this.principal()?.grants.some(
+          (grant) => grant.permission === permission && grant.scope.kind === 'all-sites',
+        ) ?? false
+      );
     if (siteId !== undefined && !siteId.trim()) return false;
     return (
       this.principal()?.grants.some(

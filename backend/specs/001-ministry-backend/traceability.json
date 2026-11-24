@@ -1,0 +1,439 @@
+{
+    "status":  "in-progress",
+    "criteria":  [
+                     {
+                         "id": "AC-031",
+                         "implementation": ["src/MisionLiderParis.Infrastructure/Ministry/ActorTransactionContext.cs", "src/MisionLiderParis.Infrastructure/Diagnostics/PerformanceDiagnostics.cs"],
+                         "verification": ["tests/MisionLiderParis.UnitTests/PerformanceDiagnosticsTests.cs", "tests/MisionLiderParis.IntegrationTests/SignedActorTests.cs", "specs/001-ministry-backend/validation.md"],
+                         "verified": true,
+                         "evidence": "2026-11-23: 114 units and89 focused ministerial integrations passed. Fresh real service before/batch/one-scope comparison preserved in docs;105 read-only samples. Broad suite had3 separately recorded failures; no complete-suite or95percent assertion."
+                     },
+                     {
+                         "id": "AC-032",
+                         "implementation": ["src/MisionLiderParis.Api/Security/MinistryReadScopeFilter.cs", "src/MisionLiderParis.Api/Program.cs"],
+                         "verification": ["tests/MisionLiderParis.IntegrationTests/AuthorizationPerformanceTests.cs", "specs/001-ministry-backend/validation.md"],
+                         "verified": true,
+                         "evidence": "2026-11-23: HTTP integration confirms one ministry transaction per independent read including user list/options.89 focused ministry tests and10 targeted user/security regressions passed. User browser confirms HTTP branches1008ms, people1146ms, categories1004ms, processes1031ms, followup1132ms reused filters. Users services paired afterward1250to1028/1981to1031ms; final user HTTP/P95 pending. Three broad-suite failures remain separately documented."
+                     },
+                     {
+                         "id": "AC-030",
+                         "implementation": ["src/MisionLiderParis.Infrastructure/Diagnostics/PerformanceDiagnostics.cs", "src/MisionLiderParis.Api/Diagnostics/RequestPerformanceMiddleware.cs", "src/MisionLiderParis.Infrastructure/Configuration/BackendOptions.cs", "docs/performance-and-local-development.md"],
+                         "verification": ["tests/MisionLiderParis.UnitTests/PerformanceDiagnosticsTests.cs", "tests/MisionLiderParis.IntegrationTests/PerformanceMiddlewareTests.cs", "specs/001-ministry-backend/validation.md"],
+                         "verified": true,
+                         "evidence": "2026-11-23: 113 unit tests, 15 focused HTTP tests and 20 controlled browser flows passed. 70 read-only remote service samples compare original vs pooled Identity. User-driven authenticated HTTP captured afterward; branches1800ms, people1854-1939ms, followup2505-4425ms. No equivalent HTTP baseline or P95 assertion. See validation for unrelated Development certificate failure and TLS proxy correction."
+                     },
+                     {
+                         "id":  "AC-001",
+                         "implementation":  [
+                                                "src/MisionLiderParis.Api/MisionLiderParis.Api.csproj"
+                                            ],
+                         "verification":  [
+                                              "specs/001-ministry-backend/validation.md"
+                                          ],
+                         "verified":  true,
+                         "evidence":  "2026-10-24: restore locked, build Release (0 advertencias/errores), 41 unitarias y 27 integraciones correctas en PostgreSQL efímero de loopback; build Angular correcto."
+                     },
+                     {
+                         "id":  "AC-002",
+                         "implementation":  [
+                                                "src/MisionLiderParis.Infrastructure/Database/SchemaInspector.cs",
+                                                "docs/reference/live-ministry-schema.json"
+                                            ],
+                         "verification":  [
+                                              "specs/001-ministry-backend/validation.md"
+                                          ],
+                         "verified":  true,
+                         "evidence":  "Supabase real READ ONLY por Session pooler/TLS VerifyFull: once tablas, restricciones, RLS y funciones inspeccionadas antes de EF."
+                     },
+                     {
+                         "id":  "AC-003",
+                         "implementation":  [
+                                                "src/MisionLiderParis.Api/Controllers/AuthController.cs"
+                                            ],
+                         "verification":  [
+                                              "tests/MisionLiderParis.IntegrationTests/PostgresIdentityTests.cs",
+                                              "specs/001-ministry-backend/validation.md"
+                                          ],
+                         "verified":  true,
+                         "evidence":  "2026-10-24: Identity persistente, bloqueo automatico tras cinco fallos, tokens/confirmacion/recuperacion, bootstrap CLI y logout/cookies verificados localmente. SMTP externo no acreditado."
+                     },
+                     {
+                         "id":  "AC-004",
+                         "implementation":  [
+                                                "src/MisionLiderParis.Api/Program.cs"
+                                            ],
+                         "verification":  [
+                                              "tests/MisionLiderParis.IntegrationTests/HttpSecurityTests.cs",
+                                              "specs/001-ministry-backend/validation.md"
+                                          ],
+                         "verified":  true,
+                         "evidence":  "Trece pruebas HTTP correctas; CSRF/CORS, cookies, 401, rate limit, OpenAPI y health."
+                     },
+                     {
+                         "id":  "AC-005",
+                         "implementation":  [
+                                                "src/MisionLiderParis.Infrastructure/Users/UserAdministration.cs",
+                                                "sql/005-runtime-role-rls.sql"
+                                            ],
+                         "verification":  [
+                                              "tests/MisionLiderParis.IntegrationTests/PostgresMinistryTests.cs",
+                                              "tests/MisionLiderParis.IntegrationTests/BranchIsolationTests.cs",
+                                              "tests/MisionLiderParis.UnitTests/ActorContextTests.cs",
+                                              "docs/branch-isolation-validation-2026-11-06.md",
+                                              "specs/001-ministry-backend/validation.md"
+                                          ],
+                         "verified":  true,
+                         "evidence":  "2026-11-06: dos sedes HTTP/RLS, asignaciones/reportes/CSV y contexto HTTP falsificado correctos en base aislada preaprovisionada sin migraciones. SuperAdmin real HTTPS correcto. Limite confirmado: SQL runtime puede suministrar otro actor y RLS no replica permisos granulares; ver docs/branch-isolation-validation-2026-11-06.md."
+                     },
+                     {
+                         "id":  "AC-006",
+                         "implementation":  [
+                                                "src/MisionLiderParis.Infrastructure/Ministry/MinistryDbContext.cs",
+                                                "src/MisionLiderParis.Infrastructure/Ministry/PeopleService.cs",
+                                                "src/MisionLiderParis.Infrastructure/Ministry/AssignmentService.cs",
+                                                "sql/proposals/003-assignment-integrity.sql"
+                                            ],
+                         "verification":  [
+                                              "tests/MisionLiderParis.IntegrationTests/PostgresMinistryTests.cs",
+                                              "specs/001-ministry-backend/validation.md"
+                                          ],
+                         "verified":  false,
+                         "evidence":  "CRUD implementados y flujos principales persistentes correctos: documento/sede, transiciones, retiro sin inicio, traslado y concurrencia; cobertura exhaustiva pendiente."
+                     },
+                     {
+                         "id":  "AC-007",
+                         "implementation":  [
+                                                "src/MisionLiderParis.Infrastructure/Ministry/ReportService.cs"
+                                            ],
+                         "verification":  [
+                                              "tests/MisionLiderParis.IntegrationTests/PostgresMinistryTests.cs",
+                                              "specs/001-ministry-backend/validation.md"
+                                          ],
+                         "verified":  true,
+                         "evidence":  "Resumen, personas distintas por estado, reportes paginados por responsable/categoría y CSV ejecutados correctamente en PostgreSQL local."
+                     },
+                     {
+                         "id":  "AC-008",
+                         "implementation":  [
+                                                "specs/001-ministry-backend/spec.md",
+                                                "README.md",
+                                                "docs/angular-api-contract.md",
+                                                "docs/database-rollout.md",
+                                                "sql/001-auth-app.sql"
+                                            ],
+                         "verification":  [
+                                              "specs/001-ministry-backend/validation.md"
+                                          ],
+                         "verified":  true,
+                         "evidence":  "Artefactos existentes y checks locales correctos; CI preparado para la solucion backend completa. Workflow remoto no ejecutado."
+                     },
+                     {
+                         "id":  "AC-009",
+                         "implementation":  [
+                                                "src/MisionLiderParis.Infrastructure/Database/SchemaComparison.cs",
+                                                "docs/reference/README.md"
+                                            ],
+                         "verification":  [
+                                              "specs/001-ministry-backend/validation.md"
+                                          ],
+                         "verified":  true,
+                         "evidence":  "Comparación real registró 37 observaciones revisadas; verificación READ ONLY de once mapeos. Referencia nunca ejecutada."
+                     },
+                     {
+                         "id":  "AC-010",
+                         "implementation":  [
+                                                "src/MisionLiderParis.Infrastructure/Users/UserAdministration.cs",
+                                                "sql/004-auth-ministry-references.sql"
+                                            ],
+                         "verification":  [
+                                              "tests/MisionLiderParis.IntegrationTests/PostgresMinistryTests.cs",
+                                              "specs/001-ministry-backend/validation.md"
+                                          ],
+                         "verified":  true,
+                         "evidence":  "BranchAdmin crea operador con PERSON_VIEW explícito; promoción global, USER_ASSIGN_ROLE y administración por operador denegadas en integración local."
+                     },
+                     {
+                         "id":  "AC-011",
+                         "implementation":  [
+                                                "MisionLiderParis.slnx",
+                                                ".env.example"
+                                            ],
+                         "verification":  [
+                                              "docs/activation-review.md",
+                                              "specs/001-ministry-backend/validation.md"
+                                          ],
+                         "verified":  true,
+                         "evidence":  "2026-10-24: restore locked y build Release (0 advertencias/errores); 41 unitarias y 27 integraciones correctas, cero omitidas/fallidas. AuthDbContext sin cambios pendientes."
+                     },
+                     {
+                         "id":  "AC-012",
+                         "implementation":  [
+                                                "sql/001-auth-app.sql",
+                                                "sql/002-explicit-operator-permissions.sql",
+                                                "sql/proposals/003-assignment-integrity.sql",
+                                                "sql/004-auth-ministry-references.sql",
+                                                "sql/005-runtime-role-rls.sql",
+                                                "src/MisionLiderParis.Infrastructure/Database/RuntimeDatabaseSafety.cs"
+                                            ],
+                         "verification":  [
+                                              "tests/MisionLiderParis.IntegrationTests/PostgresActivationTests.cs",
+                                              "tests/MisionLiderParis.IntegrationTests/PostgresMinistryTests.cs",
+                                              "docs/activation-review.md"
+                                          ],
+                         "verified":  true,
+                         "evidence":  "Scripts reales aplicados localmente con filas en once tablas; contenido y OID idénticos tras cada paso. FK validadas, RLS multi-sede verificado y runtime rechazado por falta de mlp_runtime, propiedad/membresía privilegiada, incluido pg_read_all_data."
+                     },
+                     {
+                         "id":  "AC-013",
+                         "implementation":  [
+                                                "docs/database-rollout.md"
+                                            ],
+                         "verification":  [
+                                              "tests/MisionLiderParis.IntegrationTests/PostgresActivationTests.cs",
+                                              "docs/activation-review.md"
+                                          ],
+                         "verified":  true,
+                         "evidence":  "pg_dump/pg_restore reales antes y después del bootstrap en bases nuevas; filas, hash Identity, concesión y ACL conservados. Preflight PENDING inválido abortó sin cambiar datos."
+                     },
+                     {
+                         "id":  "AC-014",
+                         "implementation":  [
+                                                "src/MisionLiderParis.Infrastructure/Identity/AdministratorBootstrap.cs",
+                                                "src/MisionLiderParis.Api/Program.cs",
+                                                "tests/MisionLiderParis.IntegrationTests/PostgresActivationTests.cs",
+                                                "docs/database-rollout.md"
+                                            ],
+                         "verification":  [
+                                              "tests/MisionLiderParis.IntegrationTests/PostgresActivationTests.cs",
+                                              "docs/activation-review.md"
+                                          ],
+                         "verified":  true,
+                         "evidence":  "Bootstrap dotnet real, repetición y configuración de contraseña débil rechazadas; Kestrel HTTPS/certificado validado, login 200, SUPER_ADMIN global, logout 204 y 401 posterior bajo runtime separado. Los helpers PowerShell citados en evidencia histórica no existen."
+                     },
+                     {
+                         "id":  "AC-015",
+                         "implementation":  [
+                                                "docs/activation-review.md",
+                                                "docs/database-rollout.md",
+                                                "README.md",
+                                                ".env.example"
+                                            ],
+                         "verification":  [
+                                              "specs/001-ministry-backend/validation.md"
+                                          ],
+                         "verified":  true,
+                         "evidence":  "Inventario SQL 001–005, cambios/riesgos, respaldo y recuperación, separación DDL/runtime y comandos de bootstrap/primer login documentados. Ningún acceso/cambio a Supabase en esta fase."
+                     },
+                     {
+                         "id":  "AC-016",
+                         "implementation":  [
+                                                "src/MisionLiderParis.Api/Program.cs",
+                                                "sql/review/018-live-security-metadata.sql",
+                                                "artifacts/step18-live-security-metadata.json"
+                                            ],
+                         "verification":  [
+                                              "docs/activation-review.md",
+                                              "specs/001-ministry-backend/validation.md"
+                                          ],
+                         "verified":  true,
+                         "evidence":  "Comparador live ejecutado por el usuario con mlp_inspector/VerifyFull: 37 findings review y cero blocking. Script 018 ejecutado por Npgsql en transacción REPEATABLE READ READ ONLY; terminó con ROLLBACK y código 0, sin DDL. Reporte schema-security-metadata.json SHA-256 3FA07647A2850D6649FE7F33954795C1D2832D9830DD0353C548E021B6E413B0. Roles/membresías/ACL/owners visibles inspeccionados. mlp_runtime y mlp_api_runtime no existen aún, auth_app no existe; son estados predespliegue, no configuraciones riesgosas existentes. RLS activo en once tablas, cero políticas; despliegue condicionado a operador DDL de mínimo privilegio, aprovisionamiento seguro runtime y revisión post-005. mlp_inspector tiene USAGE de iglesia no solicitado, sin privilegios de tablas, pendiente revocación autorizada. Sin cambios en Supabase."
+                     },
+                     {
+                         "id":  "AC-017",
+                         "implementation":  [
+                                                "sql/001-auth-app.sql",
+                                                "sql/002-explicit-operator-permissions.sql",
+                                                "sql/proposals/003-assignment-integrity.sql",
+                                                "sql/004-auth-ministry-references.sql",
+                                                "sql/005-runtime-role-rls.sql",
+                                                "src/MisionLiderParis.Infrastructure/Database/RuntimeDatabaseSafety.cs"
+                                            ],
+                         "verification":  [
+                                              "tests/MisionLiderParis.IntegrationTests/PostgresActivationTests.cs",
+                                              "docs/database-rollout.md",
+                                              "docs/activation-review.md"
+                                          ],
+                         "verified":  true,
+                         "evidence":  "Los cinco scripts pasaron secuencialmente en PostgreSQL 17.11 aislado bajo LOGIN sin SUPERUSER/BYPASSRLS/CREATEROLE/CREATEDB/REPLICATION que asume owner DDL NOLOGIN. mlp_runtime y mlp_security_definer fueron preaprovisionados por separado; 005 los exige. CREATE de base se revocó al owner tras 001 y 002-005 siguieron pasando. Fingerprints/OID de 11 tablas sin cambios; cuatro FK validadas, 11 políticas RLS, aislamiento de sede, transición inválida rechazada y backup posterior restaurado. Compatibilidad de permisos/datos del Supabase real aún pendiente."
+                     },
+                     {
+                         "id":  "AC-018",
+                         "implementation":  [
+                                                "tests/MisionLiderParis.IntegrationTests/PostgresActivationTests.cs",
+                                                "tests/MisionLiderParis.IntegrationTests/PostgresMinistryTests.cs",
+                                                "docs/database-rollout.md"
+                                            ],
+                         "verification":  [
+                                              "docs/activation-review.md",
+                                              "specs/001-ministry-backend/validation.md"
+                                          ],
+                         "verified":  true,
+                         "evidence":  "Restore/build y 68 pruebas backend correctas en un PostgreSQL efímero local, loopback y _tests; baseline solo estructural, backups/restauración, bootstrap y aislamiento por sede incluidos."
+                     },
+                     {
+                         "id":  "AC-019",
+                         "implementation":  [
+                                                ".gitignore",
+                                                "src/MisionLiderParis.Api/Program.cs",
+                                                "tests/MisionLiderParis.IntegrationTests/PostgresActivationTests.cs",
+                                                "docs/database-rollout.md"
+                                            ],
+                         "verification":  [
+                                              "docs/activation-review.md",
+                                              "specs/001-ministry-backend/validation.md"
+                                          ],
+                         "verified":  true,
+                         "evidence":  "Auditoría previa con Git 2.53.0: 122 rutas en status (13 modificadas/eliminadas, 109 sin seguimiento), cero staged; cambios preservados. En 337 archivos y 87 commits no se detectaron claves privadas, URI PostgreSQL con credenciales, claves cloud conocidas ni nombres sensibles rastreados. .env*, backend/.local, appsettings.Local.json y formatos pfx/p12/pem/key excluidos; reglas verificadas con git check-ignore. En Paso 21 git.exe no estuvo en PATH y no se revalidó el índice tras los últimos cambios; no se añadieron credenciales/certificados."
+                     },
+                     {
+                         "id":  "AC-020",
+                         "implementation":  [
+                                                "docs/database-rollout.md",
+                                                "sql/review/018-live-security-metadata.sql",
+                                                "docs/supabase-activation-2026-11-06.md",
+                                                "docs/supabase-activation-manifest.json",
+                                                "sql/supabase-editor/README.md",
+                                                "sql/supabase-editor/manifest.json",
+                                                "scripts/prepare-supabase-sql-editor.mjs",
+                                                "scripts/verify-identity-020.mjs",
+                                                "scripts/verify-integrity-040.mjs",
+                                                "docs/integrity-040-sql-editor-fix.md",
+                                                "docs/identity-020-sql-editor-fix.md",
+                                                "scripts/Set-SupabaseLoginPassword.ps1",
+                                                "sql/supabase-editor/000-preflight-readonly.sql",
+                                                "sql/supabase-editor/010-provision-roles-ownership.sql",
+                                                "sql/supabase-editor/020-identity-001.sql",
+                                                "sql/supabase-editor/021-verify-identity-readonly.sql",
+                                                "sql/supabase-editor/030-identity-002.sql",
+                                                "sql/supabase-editor/040-integrity-003.sql",
+                                                "sql/supabase-editor/041-verify-integrity-readonly.sql",
+                                                "sql/supabase-editor/050-references-004.sql",
+                                                "sql/supabase-editor/060-rls-005.sql",
+                                                "sql/supabase-editor/070-runtime-login.sql",
+                                                "sql/supabase-editor/080-verify-readonly.sql",
+                                                "sql/supabase-editor/090-close-bootstrap-access.sql",
+                                                "scripts/Backup-Supabase.ps1",
+                                                "sql/activation/010-data-preflight-readonly.sql",
+                                                "sql/activation/011-content-fingerprints-readonly.sql",
+                                                "sql/activation/020-provision-roles-and-ownership.sql",
+                                                "sql/activation/030-create-runtime-login.sql"
+                                            ],
+                         "verification":  [
+                                              "docs/activation-review.md",
+                                              "specs/001-ministry-backend/validation.md"
+                                          ],
+                         "verified":  true,
+                         "evidence":  "Procedimiento productivo documenta prerrequisitos, respaldo/restauración, cinco comandos SQL, verificaciones, LOGIN runtime, bootstrap Production, salud y recuperación. Preparación 2026-11-06 añade respaldo interactivo, SQL de preflight/roles/runtime y paquete para el proyecto existente; sintaxis y trazabilidad se verifican sin ejecutar cambios remotos. Respaldo real, ensayo de recuperación y aplicación Supabase permanecen pendientes; no hay autorización DDL."
+                     },
+                     {
+                         "id": "AC-021",
+                         "implementation": ["src/MisionLiderParis.Infrastructure/Users/UserAdministration.cs"],
+                         "verification": ["tests/MisionLiderParis.IntegrationTests/UserAccountScopeTests.cs", "specs/001-ministry-backend/validation.md"],
+                         "verified": true,
+                         "evidence": "2026-11-06: regresión ejecutada antes del fix falló por 201 en lugar de 404; después rechaza sin persistir. Edición y concesiones inválidas preservan perfil, grants y sesión previa. PostgreSQL local aislado."
+                     },
+                     {
+                         "id": "AC-022",
+                         "implementation": ["src/MisionLiderParis.Infrastructure/Access/AccountAccessValidator.cs", "src/MisionLiderParis.Infrastructure/Access/AccessService.cs", "src/MisionLiderParis.Infrastructure/Users/UserAdministration.cs", "src/MisionLiderParis.Infrastructure/DependencyInjection.cs"],
+                         "verification": ["tests/MisionLiderParis.UnitTests/AccountAccessValidatorTests.cs", "tests/MisionLiderParis.IntegrationTests/UserAccountScopeTests.cs"],
+                         "verified": true,
+                         "evidence": "2026-11-06: nueve unitarias nuevas y siete integraciones correctas; ámbito destinatario compartido en alta, edición, concesiones y sesión, roles globales y por sede, múltiples sedes y vínculo opcional."
+                     },
+                     {
+                         "id": "AC-023",
+                         "implementation": ["src/MisionLiderParis.Infrastructure/Users/UserAdministration.cs", "src/MisionLiderParis.Infrastructure/Access/AccountAccessValidator.cs"],
+                         "verification": ["tests/MisionLiderParis.IntegrationTests/UserAccountScopeTests.cs", "tests/MisionLiderParis.IntegrationTests/PostgresMinistryTests.cs"],
+                         "verified": true,
+                         "evidence": "2026-11-06: cookies previas reciben 401 tras cambiar/retirar persona, sustituir concesiones, trasladar/desactivar persona y revocar explícitamente. Rechazo de escalada y cambio de vínculo fuera de sede. Permisos explícitos sustituidos persistidos y aplicados por sede."
+                     },
+                     {
+                         "id": "AC-024",
+                         "implementation": ["src/MisionLiderParis.Infrastructure/Access/AccountAccessValidator.cs", "src/MisionLiderParis.Infrastructure/Users/UserAdministration.cs"],
+                         "verification": ["specs/001-ministry-backend/validation.md"],
+                         "verified": true,
+                         "evidence": "2026-11-06: restore locked, compilación Release y suite completa: 50 unitarias + 34 integraciones = 84 correctas, cero fallidas/omitidas, con PostgreSQL nuevo de loopback y base _tests. Build Angular correcto. Sin cambios SQL, HTTP, UI ni acceso a Supabase."
+                     },
+{
+    "id": "AC-025",
+    "implementation": [
+        "src/MisionLiderParis.Infrastructure/Ministry/ActorProof.cs",
+        "sql/100-signed-actor-context.sql"
+    ],
+    "verification": [
+        "tests/MisionLiderParis.IntegrationTests/SignedActorTests.cs",
+        "tests/MisionLiderParis.UnitTests/ActorProofTests.cs"
+    ],
+    "verified": true,
+    "evidence": "2026-11-07: dos regresiones fallaron antes de corregir; tras el cambio se rechazan UUID sin firma, prueba manipulada, expirada, de otro PID/transaccion e intencion no firmada. 103 pruebas correctas en loopback."
+},
+{
+    "id": "AC-026",
+    "implementation": [
+        "src/MisionLiderParis.Infrastructure/Ministry/ActorTransactionContext.cs",
+        "src/MisionLiderParis.Infrastructure/Ministry/ActorTransactionInterceptor.cs",
+        "src/MisionLiderParis.Infrastructure/Ministry/ActorCommandInterceptor.cs",
+        "src/MisionLiderParis.Infrastructure/Ministry/TransactionReader.cs",
+        "src/MisionLiderParis.Infrastructure/Ministry/MinistryDbContext.cs"
+    ],
+    "verification": [
+        "tests/MisionLiderParis.IntegrationTests/SignedActorTests.cs",
+        "tests/MisionLiderParis.IntegrationTests/BranchIsolationTests.cs"
+    ],
+    "verified": true,
+    "evidence": "2026-11-07: commit, rollback, replay, mismo PID reutilizado, excepcion, cancelacion y ocho rondas concurrentes de accesos propios/ajenos A/B correctos en PostgreSQL aislado."
+},
+{
+    "id": "AC-027",
+    "implementation": [
+        "src/MisionLiderParis.Infrastructure/DependencyInjection.cs",
+        "src/MisionLiderParis.Infrastructure/Database/IdentityDatabaseSafety.cs",
+        "src/MisionLiderParis.Application/Access/ActorContext.cs",
+        "src/MisionLiderParis.Api/Controllers/AuthController.cs",
+        "src/MisionLiderParis.Api/Program.cs",
+        "src/MisionLiderParis.Infrastructure/Ministry/PeopleService.cs",
+        "sql/100-signed-actor-context.sql"
+    ],
+    "verification": [
+        "tests/MisionLiderParis.IntegrationTests/PostgresIdentityTests.cs",
+        "tests/MisionLiderParis.IntegrationTests/SignedActorTests.cs",
+        "tests/MisionLiderParis.IntegrationTests/UserAccountScopeTests.cs",
+        "tests/MisionLiderParis.UnitTests/ActorContextTests.cs"
+    ],
+    "verified": true,
+    "evidence": "2026-11-07: conexiones independientes, runtime y login Identity sin acceso a claves, ministerial sin Identity (42501), cookie ligada al stamp y revocaciones verificadas. Administrador de sede no revoca cuenta global vinculada."
+},
+{
+    "id": "AC-028",
+    "implementation": [
+        "sql/100-signed-actor-context.sql",
+        "sql/101-suspend-signed-context.sql",
+        "sql/102-verify-signed-context-readonly.sql",
+        "docs/signed-actor-rollout.md"
+    ],
+    "verification": [
+        "specs/001-ministry-backend/validation.md"
+    ],
+    "verified": true,
+    "evidence": "2026-11-07: restore locked y compilacion Release correctos; 58 unitarias y 45 integraciones correctas, excluida activacion historica con bootstrap/migraciones. SQL PostgreSQL 17 validado, contencion ensayada con ROLLBACK y ACL verificadas. Sin Supabase; aceptacion remota pendiente de autorizacion."
+}
+,
+{
+    "id": "AC-029",
+    "implementation": [
+        "src/MisionLiderParis.Infrastructure/Access/MinistryDirectory.cs",
+        "src/MisionLiderParis.Infrastructure/Ministry/ActorTransactionContext.cs",
+        "src/MisionLiderParis.Infrastructure/Ministry/BranchService.cs",
+        "src/MisionLiderParis.Infrastructure/Ministry/PeopleService.cs",
+        "src/MisionLiderParis.Infrastructure/Ministry/ProcessCatalogService.cs",
+        "src/MisionLiderParis.Infrastructure/Ministry/AssignmentService.cs",
+        "docs/performance-and-local-development.md"
+    ],
+    "verification": [
+        "tests/MisionLiderParis.IntegrationTests/AuthorizationPerformanceTests.cs",
+        "specs/001-ministry-backend/validation.md"
+    ],
+    "verified": true,
+    "evidence": "2026-11-09:37 integraciones y36 unitarias previas. Continuacion2026-11-10:16 integraciones focalizadas aprobadas en loopback preaprovisionado. Administradores de sede usa2 transacciones ministeriales frente a3, conserva respuesta,404,autorizacion global y transaccion externa;Identity y contexto firmado verificados. Benchmark HTTP autenticado Supabase pendiente;no se afirma mejora de segundos."
+}
+]
+}

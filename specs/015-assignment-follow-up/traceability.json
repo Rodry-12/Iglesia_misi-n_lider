@@ -1,0 +1,53 @@
+{
+    "criteria":  [
+                     {
+                         "id": "AC-007",
+                         "implementation": ["frontend/src/app/features/training/assignment.store.ts"],
+                         "verification": ["frontend/src/app/features/training/assignment-follow-up.spec.ts", "specs/015-assignment-follow-up/validation.md"],
+                         "verified": true,
+                         "evidence": "2026-11-23: 26 focused Angular tests and 20 controlled desktop/mobile browser flows passed; first load, pagination, expiry, forced refresh and session invalidation verified. User-driven HTTP followup2505-4425ms observed afterward; equivalent HTTP baseline and P95 pending."
+                     },
+                     {
+                         "verified":  true,
+                         "evidence":  "2026-11-07: 25 focused Angular units, 28 controlled E2E, 15 PostgreSQL integrations and one browser fixture with2 real desktop/mobile flows passed; builds/checks passed. See validation.md for separate runs and resolved failures. Supabase untouched; no images.",
+                         "id":  "AC-001",
+                         "verification":  [
+                                              "backend/tests/MisionLiderParis.IntegrationTests/AssignmentQueryTests.cs"
+                                          ],
+                         "implementation":  [
+                                                "backend/src/MisionLiderParis.Infrastructure/Ministry/AssignmentService.cs",
+                                                "backend/src/MisionLiderParis.Application/Ministry/Contracts.cs",
+                                                "backend/src/MisionLiderParis.Api/Controllers/MinistryControllers.cs"
+                                            ]
+                     },
+                     {
+                         "verified":  true,
+                         "evidence":  "2026-11-07: 25 focused Angular units, 28 controlled E2E, 15 PostgreSQL integrations and one browser fixture with2 real desktop/mobile flows passed; builds/checks passed. See validation.md for separate runs and resolved failures. Supabase untouched; no images.",
+                         "id":  "AC-002",
+                         "verification":  [
+                                              "frontend/src/app/features/training/assignment-follow-up.spec.ts",
+                                              "frontend/e2e/assignment-follow-up.spec.ts"
+                                          ],
+                         "implementation":  [
+                                                "frontend/src/app/features/training/assignment-list-page.ts",
+                                                "frontend/src/app/features/training/assignment-list-page.html",
+                                                "frontend/src/app/features/training/assignment.store.ts",
+                                                "frontend/src/app/features/training/assignment-page.html"
+                                            ]
+                     },
+                     {
+                         "verified":  true,
+                         "evidence":  "2026-11-07: 25 focused Angular units, 28 controlled E2E, 15 PostgreSQL integrations and one browser fixture with2 real desktop/mobile flows passed; builds/checks passed. See validation.md for separate runs and resolved failures. Supabase untouched; no images.",
+                         "id":  "AC-003",
+                         "verification":  [
+                                              "backend/tests/MisionLiderParis.IntegrationTests/PeopleBrowserFixtureTests.cs",
+                                              "frontend/e2e/people-registration-real.spec.ts",
+                                              "specs/015-assignment-follow-up/validation.md"
+                                          ],
+                         "implementation":  [
+                                                "frontend/src/app/features/administration/admin.routes.ts"
+                                            ]
+                     }
+                 ],
+    "status":  "verified"
+}

@@ -1,0 +1,675 @@
+@if (!member()) {
+  <app-page-heading
+    [title]="id ? 'Detalle de asignación' : 'Asignar proceso'"
+    [description]="
+      id
+        ? 'Consulta del participante, proceso, responsable actual, sede y fechas.'
+        : 'Selecciona al participante, el proceso y un responsable de la misma sede.'
+    "
+  />
+}
+<p-confirmdialog />
+<ng-template #assignmentContent>
+  @if (id) {
+    @if (store.stateNotice(); as notice) {
+      <app-toast-feedback severity="success" [message]="notice" />
+    }
+    @if (store.loading().detail) {
+      <p role="status">Cargando asignación…</p>
+    }
+    @if (store.errors().detail; as error) {
+      <app-toast-feedback severity="error" [message]="error" />
+      <button pButton type="button" (click)="store.loadDetail(id!)">Reintentar detalle</button>
+    }
+    @if (store.detail(); as assignment) {
+      <section class="catalog-panel" aria-label="Asignación confirmada">
+        <h2>Asignación confirmada</h2>
+        <dl>
+          <dt>Participante</dt>
+          <dd>{{ assignment.personName ?? 'Participante no visible' }}</dd>
+          <dt>Documento vigente</dt>
+          <dd>
+            {{
+              assignment.documentNumber
+                ? assignment.documentType + ' ' + assignment.documentNumber
+                : 'Sin documento vigente visible'
+            }}
+          </dd>
+          <dt>Sede de asignación</dt>
+          <dd>{{ assignment.branchName ?? 'Sede no disponible' }}</dd>
+          <dt>Categoría</dt>
+          <dd>{{ assignment.categoryName ?? 'Categoría no disponible' }}</dd>
+          <dt>Proceso</dt>
+          <dd>{{ assignment.processName ?? 'Proceso no disponible' }}</dd>
+          @if (assignment.processDescription) {
+            <dt>Descripción</dt>
+            <dd class="description">{{ assignment.processDescription }}</dd>
+          }
+          <dt>Responsable actual</dt>
+          <dd>{{ assignment.responsibleName ?? 'Responsable no visible' }}</dd>
+          <dt>Estado</dt>
+          <dd>{{ assignment.stateName ?? assignment.stateCode }} ({{ assignment.stateCode }})</dd>
+          <dt>Fecha de asignación</dt>
+          <dd>{{ date(assignment.assignedAt) }}</dd>
+          <dt>Inicio</dt>
+          <dd>{{ assignment.startedAt ? date(assignment.startedAt!) : 'Sin iniciar' }}</dd>
+          <dt>Finalización</dt>
+          <dd>{{ assignment.finishedAt ? date(assignment.finishedAt!) : 'Sin finalizar' }}</dd>
+        </dl>
+        <details>
+          <summary>Información técnica</summary>
+          <dl>
+            <dt>Identificador de asignación</dt>
+            <dd>{{ assignment.id }}</dd>
+            <dt>Identificador de participante</dt>
+            <dd>{{ assignment.personId }}</dd>
+            <dt>Identificador de proceso</dt>
+            <dd>{{ assignment.processId }}</dd>
+            <dt>Identificador de responsable</dt>
+            <dd>{{ assignment.responsiblePersonId }}</dd>
+            <dt>Identificador de sede</dt>
+            <dd>{{ assignment.branchId }}</dd>
+          </dl>
+        </details>
+        @if (canChangeResponsible()) {
+          <section aria-labelledby="replacement-heading">
+            <h2 id="replacement-heading">Cambiar responsable</h2>
+            <p>Responsable actual: {{ assignment.responsibleName ?? 'Responsable no visible' }}.</p>
+            <label for="replacement-search">Buscar nuevo responsable</label>
+            <input
+              pInputText
+              id="replacement-search"
+              [formControl]="replacementSearch"
+              maxlength="150"
+              placeholder="Nombre, apellidos o documento"
+              [readonly]="store.busy() || confirmingResponsible()"
+            />
+            @if (store.loading().responsible) {
+              <p role="status">Buscando responsables…</p>
+            }
+            @if (store.errors().responsible; as error) {
+              <app-toast-feedback severity="error" [message]="error" />
+              <button pButton type="button" [disabled]="store.busy()" (click)="searchReplacement()">
+                Reintentar responsables
+              </button>
+            }
+            @if (store.responsible(); as page) {
+              <label id="replacement-label" for="replacement">Nuevo responsable *</label>
+              <p-select
+                inputId="replacement"
+                ariaLabelledBy="replacement-label"
+                [formControl]="replacementId"
+                [options]="page.items"
+                optionLabel="name"
+                optionValue="id"
+                [fluid]="true"
+                appendTo="body"
+                placeholder="Seleccionar nuevo responsable"
+                [readonly]="store.busy() || confirmingResponsible()"
+              >
+                <ng-template #item let-person
+                  ><div>
+                    {{ person.name }}<br /><small
+                      >{{ person.documentType }} {{ person.documentNumber }} ·
+                      {{ person.branchName }}</small
+                    >
+                  </div></ng-template
+                >
+              </p-select>
+              @if (!page.items.length) {
+                <p role="status">No hay nuevos responsables elegibles para esta búsqueda.</p>
+              }
+              <div class="catalog-actions">
+                <button
+                  pButton
+                  type="button"
+                  [disabled]="page.pageNumber <= 1 || store.busy()"
+                  (click)="searchReplacement(page.pageNumber - 1)"
+                >
+                  Responsables anteriores
+                </button>
+                <span>Página {{ page.pageNumber }} · {{ page.totalCount }} resultados</span>
+                <button
+                  pButton
+                  type="button"
+                  [disabled]="page.pageNumber * page.pageSize >= page.totalCount || store.busy()"
+                  (click)="searchReplacement(page.pageNumber + 1)"
+                >
+                  Más responsables
+                </button>
+              </div>
+            }
+            @if (replacement(); as candidate) {
+              <p>
+                Nuevo responsable: {{ candidate.name }} · {{ candidate.documentType }}
+                {{ candidate.documentNumber }} · {{ candidate.branchName }}
+              </p>
+              <div class="catalog-actions">
+                <button
+                  pButton
+                  type="button"
+                  [loading]="store.busy()"
+                  [disabled]="store.busy() || confirmingResponsible() || confirmingState()"
+                  (click)="changeResponsible()"
+                >
+                  Guardar responsable
+                </button>
+                <button
+                  pButton
+                  type="button"
+                  [outlined]="true"
+                  [disabled]="store.busy() || confirmingResponsible()"
+                  (click)="resetReplacement()"
+                >
+                  Cancelar selección
+                </button>
+              </div>
+            }
+            @if (store.errors().command; as error) {
+              <app-toast-feedback severity="error" [message]="error" />
+              <button pButton type="button" [disabled]="store.busy()" (click)="refreshDetail()">
+                Actualizar responsable actual
+              </button>
+            }
+          </section>
+        }
+        @if (canChangeState()) {
+          <section aria-labelledby="assignment-state-heading">
+            <h2 id="assignment-state-heading">Cambiar estado</h2>
+            @if (store.loading().transitions) {
+              <p role="status">Consultando cambios permitidos…</p>
+            }
+            @if (store.errors().transitions; as error) {
+              <app-toast-feedback severity="error" [message]="error" /><button
+                pButton
+                type="button"
+                (click)="store.loadTransitions(assignment.id)"
+              >
+                Reintentar estados
+              </button>
+            }
+            @if (store.transitions(); as transitions) {
+              @if (transitions.length) {
+                <form [formGroup]="stateForm" (ngSubmit)="changeState()">
+                  <p>
+                    Estado actual: {{ assignment.stateName ?? assignment.stateCode }}. Selecciona un
+                    cambio permitido.
+                  </p>
+                  <label id="assignment-target-label" for="assignment-target">Nuevo estado *</label>
+                  <p-select
+                    inputId="assignment-target"
+                    ariaLabelledBy="assignment-target-label"
+                    formControlName="stateCode"
+                    [options]="transitions"
+                    optionLabel="name"
+                    optionValue="code"
+                    placeholder="Seleccionar estado"
+                    appendTo="body"
+                  />
+                  @if (stateForm.touched && stateForm.invalid) {
+                    <app-toast-feedback
+                      severity="error"
+                      [message]="'Selecciona un estado permitido.'"
+                    />
+                  }
+                  <div class="catalog-actions">
+                    <button
+                      pButton
+                      type="submit"
+                      [loading]="store.busy()"
+                      [disabled]="
+                        store.busy() ||
+                        confirmingState() ||
+                        confirmingResponsible() ||
+                        !!replacement()
+                      "
+                    >
+                      Guardar estado
+                    </button>
+                  </div>
+                </form>
+              } @else {
+                <p>No hay cambios de estado disponibles para esta asignación.</p>
+              }
+            }
+            @if (store.errors().command; as error) {
+              <app-toast-feedback severity="error" [message]="error" /><button
+                pButton
+                type="button"
+                [disabled]="store.busy()"
+                (click)="refreshDetail()"
+              >
+                Actualizar asignación
+              </button>
+            }
+          </section>
+        }
+      </section>
+    }
+    <div class="catalog-actions">
+      <a
+        pButton
+        [outlined]="true"
+        routerLink="/gestion/formacion/asignaciones"
+        queryParamsHandling="preserve"
+        >Volver al seguimiento</a
+      >
+    </div>
+  } @else if (store.saved(); as saved) {
+    <section class="catalog-panel" aria-label="Resultado de asignación">
+      <app-toast-feedback severity="success" [message]="'Asignación guardada correctamente.'" />
+      <dl>
+        <dt>Participante</dt>
+        <dd>{{ participant()?.name }}</dd>
+        <dt>Proceso</dt>
+        <dd>
+          @for (process of processes(); track process.id) {
+            @if (process.id === saved.processId) {
+              {{ process.name }}
+            }
+          }
+        </dd>
+        <dt>Responsable</dt>
+        <dd>{{ responsible()?.name }}</dd>
+        <dt>Sede</dt>
+        <dd>{{ participant()?.branchName }}</dd>
+        <dt>Estado confirmado</dt>
+        <dd>{{ saved.stateCode }}</dd>
+        <dt>Fecha de asignación</dt>
+        <dd>{{ date(saved.assignedAt) }}</dd>
+        <dt>Inicio</dt>
+        <dd>{{ saved.startedAt ? date(saved.startedAt!) : 'Sin iniciar' }}</dd>
+        <dt>Finalización</dt>
+        <dd>{{ saved.finishedAt ? date(saved.finishedAt!) : 'Sin finalizar' }}</dd>
+      </dl>
+      @if (access.can('PROCESS_VIEW', saved.branchId)) {
+        <a pButton [outlined]="true" [routerLink]="['/gestion/formacion/asignaciones', saved.id]"
+          >Consultar asignación</a
+        >
+      }
+      @if (!access.can('PROCESS_VIEW', saved.branchId)) {
+        <p>
+          La asignación está confirmada. Tu acceso no incluye la consulta posterior de asignaciones.
+        </p>
+      }
+      <div class="catalog-actions">
+        <a pButton [outlined]="true" routerLink="/gestion/formacion">Volver a formación</a>
+      </div>
+    </section>
+  } @else {
+    @if (store.errors().options; as error) {
+      <app-toast-feedback severity="error" [message]="error" />
+      <button pButton type="button" [outlined]="true" (click)="store.loadOptions()">
+        Reintentar catálogo
+      </button>
+    }
+    <form
+      id="assignment-create-form"
+      class="assignment-form"
+      [class.assignment-member]="!!member()"
+      [formGroup]="form"
+      (ngSubmit)="submit()"
+      [attr.aria-busy]="store.busy()"
+      novalidate
+    >
+      <div class="assignment-grid">
+        @if (member(); as person) {
+          <section
+            class="assignment-selection assignment-member-summary"
+            aria-label="Miembro seleccionado"
+          >
+            <strong>{{ person.firstNames }} {{ person.lastNames }}</strong>
+            <p>
+              {{ participant()?.documentType }} {{ participant()?.documentNumber }} ·
+              {{ person.branchName }}
+            </p>
+          </section>
+        } @else {
+          <section class="catalog-panel assignment-step" aria-labelledby="participant-heading">
+            <header>
+              <span class="step-number" aria-hidden="true">1</span>
+              <div>
+                <h2 id="participant-heading">Participante</h2>
+                <p>Elige la persona que realizará el proceso.</p>
+              </div>
+            </header>
+            <label for="participant-search">Buscar participante</label>
+            <div class="assignment-search">
+              <svg lucideSearch [size]="18" aria-hidden="true"></svg>
+              <input
+                pInputText
+                id="participant-search"
+                [formControl]="searches.controls.participant"
+                maxlength="150"
+                placeholder="Nombre, apellidos o documento"
+                [readonly]="store.busy()"
+              />
+              @if (searches.controls.participant.value) {
+                <button
+                  pButton
+                  type="button"
+                  [text]="true"
+                  aria-label="Limpiar búsqueda de participante"
+                  [disabled]="store.busy()"
+                  (click)="searches.controls.participant.setValue('')"
+                >
+                  <svg lucideX [size]="16" aria-hidden="true"></svg>
+                </button>
+              }
+            </div>
+            @if (store.errors().participant; as error) {
+              <app-toast-feedback severity="error" [message]="error" />
+              <button pButton type="button" [text]="true" (click)="search('participant')">
+                Reintentar participantes
+              </button>
+            }
+            @if (store.participant(); as page) {
+              <label id="participant-label" for="participant">Participante *</label>
+              <p-select
+                inputId="participant"
+                ariaLabelledBy="participant-label"
+                formControlName="personId"
+                [options]="page.items"
+                optionLabel="name"
+                optionValue="id"
+                placeholder="Seleccionar participante"
+                appendTo="body"
+                [showClear]="!!form.controls.personId.value"
+                [readonly]="store.busy() || !!store.loading().participant"
+              >
+                <ng-template #item let-person
+                  ><div>
+                    {{ person.name }}<br /><small
+                      >{{ person.documentType }} {{ person.documentNumber }} ·
+                      {{ person.branchName }}</small
+                    >
+                  </div></ng-template
+                >
+              </p-select>
+              @if (!page.items.length && !store.loading().participant) {
+                <p class="catalog-caption">No hay participantes elegibles para esta búsqueda.</p>
+              }
+              @if (page.totalCount > 10) {
+                <app-table-pagination
+                  ariaLabel="Paginación de participantes"
+                  [first]="(page.pageNumber - 1) * page.pageSize"
+                  [rows]="page.pageSize"
+                  [totalRecords]="page.totalCount"
+                  noun="participantes"
+                  [disabled]="store.busy() || !!store.loading().participant"
+                  (onPageChange)="peoplePageChanged('participant', $event)"
+                />
+              }
+            }
+            @if (participant(); as person) {
+              <dl class="assignment-selection">
+                <div>
+                  <dt>Participante seleccionado</dt>
+                  <dd>{{ person.name }}</dd>
+                </div>
+                <div>
+                  <dt>Documento vigente</dt>
+                  <dd>{{ person.documentType }} {{ person.documentNumber }}</dd>
+                </div>
+                <div>
+                  <dt>Sede vigente</dt>
+                  <dd>{{ person.branchName }}</dd>
+                </div>
+              </dl>
+            }
+            <p class="catalog-caption">
+              Personas activas, con documento vigente, de tus sedes autorizadas.
+            </p>
+          </section>
+        }
+        <section class="catalog-panel assignment-step" aria-labelledby="process-heading">
+          <header>
+            <span class="step-number" aria-hidden="true">{{ member() ? 1 : 2 }}</span>
+            <div>
+              <h2 id="process-heading">Proceso</h2>
+              <p>Selecciona una categoría y su proceso activo.</p>
+            </div>
+          </header>
+          <label id="assignment-category-label" for="assignment-category">Categoría *</label>
+          <p-select
+            inputId="assignment-category"
+            ariaLabelledBy="assignment-category-label"
+            formControlName="categoryId"
+            [options]="store.options()?.categories ?? []"
+            optionLabel="name"
+            optionValue="id"
+            placeholder="Seleccionar categoría"
+            appendTo="body"
+            [showClear]="!!form.controls.categoryId.value"
+            [readonly]="store.busy() || !!store.loading().options"
+          />
+          <label id="assignment-process-label" for="assignment-process">Proceso *</label>
+          <p-select
+            inputId="assignment-process"
+            ariaLabelledBy="assignment-process-label"
+            formControlName="processId"
+            [options]="processes()"
+            optionLabel="name"
+            optionValue="id"
+            placeholder="Seleccionar proceso"
+            appendTo="body"
+            [showClear]="!!form.controls.processId.value"
+            [readonly]="!categoryId() || store.busy() || !!store.loading().options"
+          />
+          @if (categoryId() && store.options() && !store.loading().options && !processes().length) {
+            <p class="catalog-caption">Esta categoría no tiene procesos activos disponibles.</p>
+          }
+          @for (process of processes(); track process.id) {
+            @if (process.id === form.controls.processId.value && process.description) {
+              <p class="assignment-description description">{{ process.description }}</p>
+            }
+          }
+        </section>
+        <section
+          class="catalog-panel assignment-step assignment-responsible"
+          aria-labelledby="responsible-heading"
+        >
+          <header>
+            <span class="step-number" aria-hidden="true">{{ member() ? 2 : 3 }}</span>
+            <div>
+              <h2 id="responsible-heading">Responsable</h2>
+              <p>Debe ser otra persona activa de la misma sede del participante.</p>
+            </div>
+          </header>
+          @if (!participant()) {
+            <p class="catalog-caption">
+              Selecciona primero al participante para consultar los responsables de su sede.
+            </p>
+          }
+          <div class="assignment-responsible-grid">
+            <div>
+              @if (store.errors().responsible; as error) {
+                <app-toast-feedback severity="error" [message]="error" /><button
+                  pButton
+                  type="button"
+                  [text]="true"
+                  (click)="search('responsible')"
+                >
+                  Reintentar responsables
+                </button>
+              }
+              @if (store.responsible(); as page) {
+                <label id="responsible-label" for="responsible">Responsable *</label>
+                <p-select
+                  inputId="responsible"
+                  ariaLabelledBy="responsible-label"
+                  formControlName="responsiblePersonId"
+                  [options]="page.items"
+                  optionLabel="name"
+                  optionValue="id"
+                  placeholder="Seleccionar responsable"
+                  appendTo="body"
+                  [filter]="true"
+                  [resetFilterOnHide]="false"
+                  [showClear]="!!form.controls.responsiblePersonId.value"
+                  [readonly]="store.busy()"
+                >
+                  <ng-template #filter>
+                    <div class="assignment-search">
+                      <svg lucideSearch [size]="18" aria-hidden="true"></svg>
+                      <input
+                        pInputText
+                        type="text"
+                        aria-label="Buscar responsable"
+                        [formControl]="searches.controls.responsible"
+                        maxlength="150"
+                        placeholder="Nombre, apellidos o documento"
+                        [readonly]="store.busy()"
+                        (keydown.space)="$event.stopPropagation()"
+                      />
+                      @if (searches.controls.responsible.value) {
+                        <button
+                          pButton
+                          type="button"
+                          [text]="true"
+                          aria-label="Limpiar búsqueda de responsable"
+                          [disabled]="store.busy()"
+                          (click)="searches.controls.responsible.setValue('')"
+                        >
+                          <svg lucideX [size]="16" aria-hidden="true"></svg>
+                        </button>
+                      }
+                    </div>
+                  </ng-template>
+                  <ng-template #item let-person
+                    ><div>
+                      {{ person.name }}<br /><small
+                        >{{ person.documentType }} {{ person.documentNumber }} ·
+                        {{ person.branchName }}</small
+                      >
+                    </div></ng-template
+                  >
+                </p-select>
+                @if (!page.items.length && !store.loading().responsible) {
+                  <p class="catalog-caption">No hay responsables elegibles para esta búsqueda.</p>
+                }
+                @if (page.totalCount > 10) {
+                  <app-table-pagination
+                    ariaLabel="Paginación de responsables"
+                    [first]="(page.pageNumber - 1) * page.pageSize"
+                    [rows]="page.pageSize"
+                    [totalRecords]="page.totalCount"
+                    noun="responsables"
+                    [disabled]="store.busy() || !!store.loading().responsible"
+                    (onPageChange)="peoplePageChanged('responsible', $event)"
+                  />
+                }
+              }
+            </div>
+            @if (responsible(); as person) {
+              <dl class="assignment-selection">
+                <div>
+                  <dt>Responsable seleccionado</dt>
+                  <dd>{{ person.name }}</dd>
+                </div>
+                <div>
+                  <dt>Documento vigente del responsable</dt>
+                  <dd>{{ person.documentType }} {{ person.documentNumber }}</dd>
+                </div>
+                <div>
+                  <dt>Sede del responsable</dt>
+                  <dd>{{ person.branchName }}</dd>
+                </div>
+              </dl>
+            }
+          </div>
+        </section>
+      </div>
+      @if (form.touched && form.invalid) {
+        <app-toast-feedback
+          severity="error"
+          [message]="'Selecciona participante, categoría, proceso y responsable.'"
+        />
+      }
+      @if (store.errors().command; as error) {
+        <app-toast-feedback severity="error" [message]="error" />
+      }
+      @if (!member()) {
+        <footer class="assignment-footer">
+          <p class="catalog-caption">Revisa los datos antes de confirmar la asignación.</p>
+          <div>
+            <button
+              pButton
+              type="button"
+              [outlined]="true"
+              [disabled]="store.busy()"
+              (click)="cancel()"
+            >
+              Cancelar</button
+            ><button
+              pButton
+              type="submit"
+              [loading]="store.busy()"
+              [disabled]="
+                store.busy() ||
+                !store.options() ||
+                !!store.loading().participant ||
+                !!store.loading().responsible
+              "
+            >
+              Guardar asignación
+            </button>
+          </div>
+        </footer>
+      }
+    </form>
+  }
+</ng-template>
+@if (member()) {
+  @if (!store.options() && store.errors().options; as error) {
+    <app-toast-feedback severity="error" [message]="error" />
+  }
+  @if (!store.responsible() && store.errors().responsible; as error) {
+    <app-toast-feedback severity="error" [message]="error" />
+  }
+  @if (
+    (!store.options() && store.errors().options) ||
+    (!store.responsible() && store.errors().responsible)
+  ) {
+    <button
+      pButton
+      type="button"
+      [outlined]="true"
+      (click)="store.loadOptions(); search('responsible')"
+    >
+      Reintentar opciones
+    </button>
+    <button pButton type="button" [outlined]="true" (click)="cancel()">Cancelar</button>
+  }
+  <p-dialog
+    header="Asignar proceso"
+    [visible]="
+      !!participant() && !!store.options() && !!store.responsible() && !store.loading().options
+    "
+    [modal]="true"
+    [closable]="false"
+    [closeOnEscape]="false"
+    [draggable]="false"
+    [resizable]="false"
+    [style]="{ width: '46rem', maxWidth: 'calc(100vw - 2rem)' }"
+    (keydown.escape)="cancel()"
+  >
+    <ng-container [ngTemplateOutlet]="assignmentContent" />
+    <ng-template #footer>
+      <button pButton type="button" [outlined]="true" [disabled]="store.busy()" (click)="cancel()">
+        Cancelar
+      </button>
+      <button
+        pButton
+        type="submit"
+        form="assignment-create-form"
+        [loading]="store.busy()"
+        [disabled]="form.invalid || store.busy() || !!store.loading().responsible"
+      >
+        Guardar asignación
+      </button>
+    </ng-template>
+  </p-dialog>
+} @else {
+  <ng-container [ngTemplateOutlet]="assignmentContent" />
+}

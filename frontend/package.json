@@ -5,7 +5,7 @@
     "ng": "ng",
     "prestart": "node ../scripts/check-assets.mjs",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "node ../scripts/build-frontend.mjs",
     "prebuild": "node ../scripts/check-assets.mjs",
     "postbuild": "node ../scripts/prepare-ui-notices.mjs",
     "prewatch": "node ../scripts/check-assets.mjs",

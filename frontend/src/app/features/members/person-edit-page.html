@@ -1,0 +1,211 @@
+<p-confirmdialog [closable]="false" />
+<p-dialog
+  header="Editar persona"
+  [visible]="!!original() && !store.detailLoading() && allowed()"
+  [modal]="true"
+  [closable]="false"
+  [closeOnEscape]="false"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{ width: '48rem', maxWidth: 'calc(100vw - 2rem)' }"
+  (keydown.escape)="cancel()"
+>
+  @if (original(); as person) {
+    <div class="person-summary">
+      <span class="person-avatar" aria-hidden="true"
+        >{{ person.firstNames.slice(0, 1) }}{{ person.lastNames.slice(0, 1) }}</span
+      >
+      <div>
+        <p class="person-detail-name">{{ person.firstNames }} {{ person.lastNames }}</p>
+        <span class="person-caption">Actualiza sus datos personales y de contacto.</span>
+      </div>
+    </div>
+    @if (store.updateError(); as error) {
+      <app-toast-feedback
+        severity="error"
+        [message]="
+          error === 'conflict'
+            ? 'La persona cambió desde que abriste el formulario. Recarga los datos antes de editar nuevamente.'
+            : error === 'invalid'
+              ? 'Revisa los datos; la API no aceptó la información.'
+              : error === 'forbidden'
+                ? 'No tienes permiso para actualizar esta persona.'
+                : error === 'not-found'
+                  ? 'La persona ya no está disponible en tu ámbito.'
+                  : 'No se pudo confirmar la actualización. Consulta los datos actuales antes de volver a guardar.'
+        "
+      />
+      @if (error === 'conflict' || error === 'unconfirmed') {
+        <button pButton type="button" [text]="true" (click)="reloadConfirmed()">
+          Recargar datos actuales
+        </button>
+      }
+    }
+
+    <form
+      id="person-edit-form"
+      [formGroup]="form"
+      (ngSubmit)="submit()"
+      [attr.aria-busy]="store.updating()"
+      novalidate
+    >
+      <fieldset>
+        <legend>Información personal</legend>
+        @for (document of person.documents; track document.id) {
+          @if (document.isCurrent) {
+            <dl class="person-facts person-document-facts">
+              <div>
+                <dt>Tipo de documento</dt>
+                <dd>{{ document.documentType }}</dd>
+              </div>
+              <div>
+                <dt>Número de documento</dt>
+                <dd>{{ document.documentNumber }}</dd>
+              </div>
+            </dl>
+          }
+        }
+        @if (!person.documents.some(isCurrentDocument)) {
+          <p>{{ identification(person) }}</p>
+        }
+
+        <p class="person-caption">Los campos marcados con * son obligatorios.</p>
+        <div class="registration-grid">
+          <div>
+            <label for="edit-first">Nombres *</label
+            ><input
+              pInputText
+              id="edit-first"
+              formControlName="firstNames"
+              maxlength="150"
+              autocomplete="given-name"
+              [attr.aria-invalid]="invalid('firstNames')"
+            />
+            @if (invalid('firstNames')) {
+              <p class="field-error" role="alert">
+                Escribe nombres válidos, máximo 150 caracteres.
+              </p>
+            }
+          </div>
+          <div>
+            <label for="edit-last">Apellidos *</label
+            ><input
+              pInputText
+              id="edit-last"
+              formControlName="lastNames"
+              maxlength="150"
+              autocomplete="family-name"
+              [attr.aria-invalid]="invalid('lastNames')"
+            />
+            @if (invalid('lastNames')) {
+              <p class="field-error" role="alert">
+                Escribe apellidos válidos, máximo 150 caracteres.
+              </p>
+            }
+          </div>
+          <div>
+            <label for="edit-phone">Teléfono</label
+            ><input
+              pInputText
+              id="edit-phone"
+              formControlName="phone"
+              maxlength="30"
+              type="tel"
+              autocomplete="tel"
+              [attr.aria-invalid]="invalid('phone')"
+            />
+            @if (invalid('phone')) {
+              <p class="field-error" role="alert">Máximo 30 caracteres.</p>
+            }
+          </div>
+          <div>
+            <label for="edit-email">Correo electrónico</label
+            ><input
+              pInputText
+              id="edit-email"
+              formControlName="email"
+              maxlength="255"
+              type="email"
+              autocomplete="email"
+              [attr.aria-invalid]="invalid('email')"
+            />
+            @if (invalid('email')) {
+              <p class="field-error" role="alert">
+                Escribe un correo válido, máximo 255 caracteres.
+              </p>
+            }
+          </div>
+          <div>
+            <label id="edit-birth-label" for="edit-birth">Fecha de nacimiento</label>
+            <p-datepicker
+              appendTo="body"
+              inputId="edit-birth"
+              ariaLabelledBy="edit-birth-label"
+              formControlName="birthDate"
+              dateFormat="dd/mm/yy"
+              [maxDate]="maxDate"
+              [showClear]="!!form.controls.birthDate.value"
+              [showIcon]="true"
+              [readonlyInput]="true"
+              [invalid]="invalid('birthDate')"
+            />
+            @if (invalid('birthDate')) {
+              <p class="field-error" role="alert">
+                La fecha debe ser válida y no puede ser futura.
+              </p>
+            }
+          </div>
+        </div>
+      </fieldset>
+      <div class="person-sections">
+        <section class="person-card" aria-labelledby="edit-ministry-title">
+          <h2 id="edit-ministry-title">Información ministerial</h2>
+          <p class="person-caption">Solo lectura</p>
+          <dl class="person-facts person-ministry-facts">
+            <div>
+              <dt>Sede vigente</dt>
+              <dd>{{ person.branchName ?? 'Sin sede vigente' }}</dd>
+            </div>
+            <div>
+              <dt>Estado</dt>
+              <dd>
+                <span class="person-status" [class.is-active]="person.isActive">{{
+                  person.isActive ? 'Activo' : 'Inactivo'
+                }}</span>
+              </dd>
+            </div>
+          </dl>
+        </section>
+      </div>
+    </form>
+  }
+  <ng-template #footer
+    ><div class="person-dialog-actions">
+      <button
+        pButton
+        type="button"
+        [outlined]="true"
+        [disabled]="store.updating()"
+        (click)="cancel()"
+      >
+        Cancelar
+      </button>
+      <button
+        pButton
+        type="submit"
+        form="person-edit-form"
+        [disabled]="
+          !allowed() ||
+          form.invalid ||
+          !changed() ||
+          store.updating() ||
+          saved() ||
+          store.updateError() === 'conflict'
+        "
+        [loading]="store.updating()"
+      >
+        Guardar cambios
+      </button>
+    </div></ng-template
+  >
+</p-dialog>

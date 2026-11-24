@@ -7,6 +7,12 @@ node_modules/
 .env.*
 !.env.example
 
+# Certificados y claves privadas locales
+*.pfx
+*.p12
+*.pem
+*.key
+
 # Firebase local
 .firebase/
 

@@ -1,0 +1,46 @@
+{
+    "criteria":  [
+                     {
+                         "verified":  true,
+                         "evidence":  "2026-11-07: 71 focused Angular units, 36 controlled E2E, 16 distinct PostgreSQL integration cases across targeted runs including one fixture with2 real desktop/mobile flows passed. Responsive long-name regression repeated successfully; builds/checks passed. See validation.md for initial failures and evidence. Supabase untouched; no images.",
+                         "id":  "AC-001",
+                         "verification":  [
+                                              "backend/tests/MisionLiderParis.IntegrationTests/AssignmentStateTests.cs"
+                                          ],
+                         "implementation":  [
+                                                "backend/src/MisionLiderParis.Infrastructure/Ministry/AssignmentService.cs",
+                                                "backend/src/MisionLiderParis.Application/Ministry/Contracts.cs",
+                                                "backend/src/MisionLiderParis.Api/Controllers/MinistryControllers.cs"
+                                            ]
+                     },
+                     {
+                         "verified":  true,
+                         "evidence":  "2026-11-07: 71 focused Angular units, 36 controlled E2E, 16 distinct PostgreSQL integration cases across targeted runs including one fixture with2 real desktop/mobile flows passed. Responsive long-name regression repeated successfully; builds/checks passed. See validation.md for initial failures and evidence. Supabase untouched; no images.",
+                         "id":  "AC-002",
+                         "verification":  [
+                                              "frontend/src/app/features/training/assignment-state.spec.ts",
+                                              "frontend/e2e/assignment-state.spec.ts"
+                                          ],
+                         "implementation":  [
+                                                "frontend/src/app/features/training/assignment-page.ts",
+                                                "frontend/src/app/features/training/assignment-page.html",
+                                                "frontend/src/app/features/training/assignment.store.ts",
+                                                "frontend/src/app/core/auth/access-context.ts"
+                                            ]
+                     },
+                     {
+                         "verified":  true,
+                         "evidence":  "2026-11-07: 71 focused Angular units, 36 controlled E2E, 16 distinct PostgreSQL integration cases across targeted runs including one fixture with2 real desktop/mobile flows passed. Responsive long-name regression repeated successfully; builds/checks passed. See validation.md for initial failures and evidence. Supabase untouched; no images.",
+                         "id":  "AC-003",
+                         "verification":  [
+                                              "backend/tests/MisionLiderParis.IntegrationTests/PeopleBrowserFixtureTests.cs",
+                                              "frontend/e2e/people-registration-real.spec.ts",
+                                              "specs/016-assignment-state/validation.md"
+                                          ],
+                         "implementation":  [
+                                                "frontend/src/app/features/administration/admin.routes.ts"
+                                            ]
+                     }
+                 ],
+    "status":  "verified"
+}

@@ -1,26 +1,28 @@
-<a class="skip-link" href="#gestion-contenido">Saltar al contenido</a>
-<div class="admin-frame min-h-dvh bg-canvas text-content">
-  <header
-    class="flex flex-wrap items-center justify-between gap-4 border-b border-outline bg-panel px-4 py-3"
-  >
-    <div class="flex items-center gap-3">
+﻿<a class="skip-link" href="#gestion-contenido">Saltar al contenido</a>
+<div class="admin-frame" [class.sidebar-collapsed]="!menuOpen()">
+  <header class="admin-header">
+    <div class="header-title">
       <button
+        #menuButton
         pButton
         [text]="true"
         class="admin-menu-button"
         type="button"
         aria-controls="admin-navigation"
         [attr.aria-expanded]="menuOpen()"
+        [title]="menuOpen() ? 'Ocultar menú lateral' : 'Mostrar menú lateral'"
         (click)="menuOpen.set(!menuOpen())"
       >
-        <svg lucidePanelLeft aria-hidden="true" [size]="20"></svg> Menú
+        <svg lucidePanelLeft aria-hidden="true" [size]="20"></svg><span class="sr-only">Menú</span>
       </button>
-      <a routerLink="/gestion" class="font-semibold text-brand">Misión Líder París · Gestión</a>
+      <a routerLink="/gestion" class="application-name">{{ branchLabel() }}</a>
     </div>
-    <div class="flex flex-wrap items-center gap-3">
-      <span class="text-sm text-muted">{{ access.principal()?.displayName }}</span>
-      <app-theme-toggle />
-      <a pButton [text]="true" routerLink="/">Sitio público</a>
+    <div class="header-account">
+      <app-theme-toggle [compact]="true" />
+      <app-account-menu
+        [displayName]="access.principal()?.displayName ?? ''"
+        [roles]="roleLabels()"
+      />
     </div>
   </header>
   <div class="admin-body">
@@ -28,29 +30,97 @@
       id="admin-navigation"
       aria-label="Administración"
       [class.is-open]="menuOpen()"
-      class="border-r border-outline bg-panel p-4"
+      (keydown.escape)="closeMenu(true)"
     >
-      <p class="mb-4 flex items-center gap-2 text-sm font-semibold text-muted">
-        <svg lucideShieldCheck aria-hidden="true" [size]="18"></svg> Área de gestión
-      </p>
+      <a class="sidebar-brand" routerLink="/gestion" (click)="closeMenu()">
+        <span>Panel de gestión</span>
+      </a>
+      <p class="navigation-label">Espacio de trabajo</p>
       <a
+        class="navigation-link"
         routerLink="/gestion"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"
         ariaCurrentWhenActive="page"
-        (click)="menuOpen.set(false)"
-        >Resumen</a
+        (click)="closeMenu()"
       >
+        <app-management-icon /> Resumen
+      </a>
       @for (item of navigation(); track item.path) {
-        <a
-          [routerLink]="item.path"
-          routerLinkActive="active"
-          ariaCurrentWhenActive="page"
-          (click)="menuOpen.set(false)"
-          >{{ item.title }}</a
-        >
+        @if (item.children?.length) {
+          <div class="navigation-group">
+            <div class="navigation-group-heading">
+              <a
+                class="navigation-link"
+                [routerLink]="item.path"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                ariaCurrentWhenActive="page"
+                (click)="closeMenu()"
+              >
+                <app-management-icon [path]="item.path" /> {{ item.title }}
+              </a>
+              <button
+                pButton
+                [text]="true"
+                type="button"
+                class="navigation-expand"
+                aria-controls="training-navigation"
+                [attr.aria-expanded]="trainingExpanded()"
+                [attr.aria-label]="
+                  trainingExpanded()
+                    ? 'Ocultar opciones de Formación'
+                    : 'Mostrar opciones de Formación'
+                "
+                (click)="trainingExpanded.set(!trainingExpanded())"
+              >
+                <svg
+                  lucideChevronDown
+                  [size]="18"
+                  aria-hidden="true"
+                  [class.expanded]="trainingExpanded()"
+                ></svg>
+              </button>
+            </div>
+            <ul
+              id="training-navigation"
+              class="navigation-submenu"
+              [hidden]="!trainingExpanded()"
+              aria-label="Opciones de Formación"
+            >
+              @for (child of item.children; track child.path) {
+                <li>
+                  <a
+                    class="navigation-link"
+                    [routerLink]="child.path"
+                    routerLinkActive="active"
+                    ariaCurrentWhenActive="page"
+                    (click)="closeMenu()"
+                    >{{ child.title }}</a
+                  >
+                </li>
+              }
+            </ul>
+          </div>
+        } @else {
+          <a
+            class="navigation-link"
+            [routerLink]="item.path"
+            routerLinkActive="active"
+            ariaCurrentWhenActive="page"
+            (click)="closeMenu()"
+          >
+            <app-management-icon [path]="item.path" /> {{ item.title }}
+          </a>
+        }
       }
+      <p class="sidebar-note">
+        <svg lucideShieldCheck [size]="18" aria-hidden="true"></svg> Acceso según tu cuenta y tus
+        sedes
+      </p>
     </nav>
-    <main id="gestion-contenido" tabindex="-1" class="min-w-0 p-4 md:p-8"><router-outlet /></main>
+    <main id="gestion-contenido" tabindex="-1">
+      <router-outlet />
+    </main>
   </div>
 </div>

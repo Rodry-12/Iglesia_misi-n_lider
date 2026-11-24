@@ -50,7 +50,7 @@
         "scripts/check-assets.mjs",
         "docs/reference/legacy-manifest.json",
         "docs/reference/assets-migration.json",
-        "backend/.gitkeep",
+        "docs/adr/0004-single-angular-workspace.md",
         "frontend/package.json"
       ],
       "verification": [
@@ -58,7 +58,7 @@
         "scripts/check-assets.mjs"
       ],
       "verified": true,
-      "evidence": "98 entradas ZIP verificadas SHA-256, 33 recursos/licencias trasladados sin diferencias. Build/start correctos tras retirar fuentes antiguas. Backend solo .gitkeep."
+      "evidence": "Evidencia histórica 2026-10-19: 98 entradas ZIP verificadas SHA-256 y 33 recursos/licencias sin diferencias; build/start correctos y backend solo .gitkeep según ADR 0004. El incremento backend del 2026-10-23 (ADR 0005) sustituye posteriormente esa reserva; se conserva la evidencia mediante ADR 0004."
     },
     {
       "id": "AC-005",

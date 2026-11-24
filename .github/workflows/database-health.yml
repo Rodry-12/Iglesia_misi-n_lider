@@ -1,0 +1,66 @@
+name: PostgreSQL availability monitor
+
+on:
+  schedule:
+    - cron: "17 */12 * * *"
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: database-health-monitor
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Check protected PostgreSQL health endpoint
+        env:
+          MLP_HEALTH_URL: ${{ vars.MLP_HEALTH_URL }}
+          MLP_HEALTH_TOKEN: ${{ secrets.MLP_HEALTH_TOKEN }}
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import re
+          import sys
+          import urllib.error
+          import urllib.parse
+          import urllib.request
+
+          token = os.environ.get('MLP_HEALTH_TOKEN', '')
+          url = os.environ.get('MLP_HEALTH_URL', '')
+          try:
+              parsed = urllib.parse.urlsplit(url)
+              valid_url = (parsed.scheme == 'https' and parsed.hostname
+                           and not parsed.username and not parsed.password
+                           and parsed.path == '/api/v1/health/database'
+                           and not parsed.query and not parsed.fragment)
+          except ValueError:
+              valid_url = False
+          if not valid_url or not re.fullmatch(r'[0-9a-fA-F]{64}', token):
+              sys.exit('Monitor configuration missing or invalid.')
+
+          class NoRedirect(urllib.request.HTTPRedirectHandler):
+              def redirect_request(self, req, fp, code, msg, headers, newurl):
+                  return None
+
+          request = urllib.request.Request(url, headers={
+              'Authorization': 'Bearer ' + token,
+              'Accept': 'application/json',
+          })
+          try:
+              with urllib.request.build_opener(NoRedirect()).open(request, timeout=10) as response:
+                  payload = response.read(1025)
+                  if (response.status != 200 or len(payload) > 1024
+                          or json.loads(payload) != {'status': 'healthy'}):
+                      sys.exit('Database monitor did not return a healthy status.')
+          except urllib.error.HTTPError as error:
+              sys.exit('Database monitor failed: HTTP ' + str(error.code))
+          except (urllib.error.URLError, OSError, ValueError):
+              sys.exit('Database monitor failed: connection, timeout or invalid response.')
+          print('PostgreSQL connectivity: healthy.')
+          PY

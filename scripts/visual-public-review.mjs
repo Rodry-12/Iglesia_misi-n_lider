@@ -19,12 +19,13 @@ try {
     ["mobile", { width: 390, height: 844 }],
   ]) {
     const context = await browser.newContext({
+      ignoreHTTPSErrors: true,
       viewport,
       reducedMotion: "reduce",
     });
     await context.route("**/*", (route) => {
       const url = route.request().url();
-      return /^http:\/\/(localhost:4200|127\.0\.0\.1:4301)/.test(url)
+      return /^https?:\/\/(localhost:4200|127\.0\.0\.1:4301)/.test(url)
         ? route.continue()
         : route.abort();
     });
@@ -35,11 +36,11 @@ try {
     });
     for (const [label, url] of [
       ["original", "http://127.0.0.1:4301/"],
-      ["angular", "http://localhost:4200/"],
-      ["donations", "http://localhost:4200/donar"],
-      ["design", "http://localhost:4200/diseno"],
-      ["access", "http://localhost:4200/acceso"],
-      ["not-found", "http://localhost:4200/pagina-inexistente"],
+      ["angular", "https://localhost:4200/"],
+      ["donations", "https://localhost:4200/donar"],
+      ["design", "https://localhost:4200/diseno"],
+      ["access", "https://localhost:4200/acceso"],
+      ["not-found", "https://localhost:4200/pagina-inexistente"],
       ["original-404", "http://127.0.0.1:4301/404.html"],
     ]) {
       const page = await context.newPage();

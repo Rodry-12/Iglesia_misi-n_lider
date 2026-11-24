@@ -1,0 +1,58 @@
+{
+  "status": "verified",
+  "criteria": [
+    {
+      "id": "AC-001",
+      "implementation": [
+        "backend/src/MisionLiderParis.Infrastructure/Ministry/PeopleService.cs",
+        "backend/src/MisionLiderParis.Application/Ministry/Contracts.cs",
+        "backend/src/MisionLiderParis.Api/Controllers/MinistryControllers.cs"
+      ],
+      "verification": [
+        "backend/tests/MisionLiderParis.IntegrationTests/PeopleRegistrationTests.cs"
+      ],
+      "verified": true,
+      "evidence": "2026-11-07: cinco escenarios nuevos correctos; registro completo/activo, permisos diferenciados, metadatos, rechazo de invalidos, duplicados 409 uniformes, rollback y concurrencia en PostgreSQL aislado. 58 unitarias y 54 integraciones correctas."
+    },
+    {
+      "id": "AC-002",
+      "implementation": [
+        "frontend/src/app/features/members/person-registration-page.ts",
+        "frontend/src/app/features/members/person-registration-page.html",
+        "frontend/src/app/features/members/registration-draft.guard.ts",
+        "frontend/src/app/core/auth/access-guards.ts"
+      ],
+      "verification": [
+        "frontend/src/app/features/members/person-registration-page.spec.ts",
+        "frontend/e2e/people-registration.spec.ts"
+      ],
+      "verified": true,
+      "evidence": "2026-11-07: formulario y permiso de registro sin BRANCH_VIEW, sede unica/multiple, normalizacion, validacion, cancelacion confirmada y creacion sin otorgar lectura; 77 unitarias Angular y 38 E2E ordinarios correctos."
+    },
+    {
+      "id": "AC-003",
+      "implementation": [
+        "frontend/src/app/features/members/members.store.ts",
+        "frontend/src/app/features/administration/admin.routes.ts"
+      ],
+      "verification": [
+        "frontend/src/app/features/members/members.store.spec.ts",
+        "backend/tests/MisionLiderParis.IntegrationTests/PeopleBrowserFixtureTests.cs",
+        "frontend/e2e/people-registration-real.spec.ts"
+      ],
+      "verified": true,
+      "evidence": "2026-11-07: doble envio, errores, invalidacion/limpieza verificados. Dos recorridos reales desktop/mobile navegador/Angular/API HTTPS/PostgreSQL aislados: login, alta201, detalle/recarga/listado/logout. Sin mocks de red en esos dos casos."
+    },
+    {
+      "id": "AC-004",
+      "implementation": [
+        "docs/person-registration.md"
+      ],
+      "verification": [
+        "specs/010-person-registration/validation.md"
+      ],
+      "verified": true,
+      "evidence": "2026-11-07: compilaciones .NET y Angular correctas, SDD/design/format/deps/skills correctos, evidencia e inventario documentados. Sin Supabase, DDL, migraciones/bootstrap ni cambios de contexto firmado. Limites de historicos y 409 documentados."
+    }
+  ]
+}

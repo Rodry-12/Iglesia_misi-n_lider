@@ -1,0 +1,154 @@
+<app-page-heading
+  class="branch-list-heading"
+  title="Administración de sedes"
+  description="Organización, estado operativo y administración por sedes."
+/>
+<div class="branch-list">
+  <section class="branch-filters-panel" aria-label="Filtros de sedes">
+    @if (global()) {
+      <div class="branch-toolbar">
+        <a
+          pButton
+          href="/gestion/sedes/crear"
+          (click)="open($event, 'create')"
+          class="branch-create"
+        >
+          <svg lucidePlus [size]="20" aria-hidden="true"></svg> Nueva sede
+        </a>
+      </div>
+    }
+    <form class="catalog-filters branch-filters" [formGroup]="filters" (ngSubmit)="search(1, true)">
+      <div>
+        <label for="branch-search">Buscar por nombre o código</label>
+        <div class="branch-search-field">
+          <svg lucideSearch [size]="20" aria-hidden="true"></svg>
+          <input
+            pInputText
+            id="branch-search"
+            formControlName="search"
+            maxlength="150"
+            placeholder="Buscar por nombre o código..."
+          />
+        </div>
+      </div>
+      <div>
+        <label id="branch-active-label" for="branch-active">Estado</label>
+        <p-select
+          inputId="branch-active"
+          ariaLabelledBy="branch-active-label"
+          formControlName="active"
+          [options]="states"
+          optionLabel="name"
+          optionValue="value"
+        />
+      </div>
+    </form>
+  </section>
+
+  <section
+    class="branch-results-panel"
+    aria-label="Listado de sedes"
+    [attr.aria-busy]="store.loading().list ? 'true' : 'false'"
+  >
+    @if (store.errors().list; as error) {
+      <div class="branch-error">
+        <app-toast-feedback severity="error" [message]="error" />
+        <button pButton [outlined]="true" type="button" (click)="reload()">Reintentar</button>
+      </div>
+    }
+    @if (store.list(); as result) {
+      <p class="branch-table-hint" id="branch-table-hint">
+        Desliza la tabla para ver todas las columnas.
+      </p>
+      <div
+        class="branch-table-region"
+        role="region"
+        aria-label="Tabla de sedes"
+        tabindex="0"
+        aria-describedby="branch-table-hint"
+      >
+        <p-table
+          [scrollable]="true"
+          scrollHeight="min(55vh, 32rem)"
+          [value]="result.items"
+          dataKey="id"
+          [tableStyle]="{ 'min-width': '32rem' }"
+        >
+          <ng-template #header>
+            <tr>
+              <th scope="col" class="branch-code">Código</th>
+              <th scope="col">Nombre</th>
+              <th scope="col" class="branch-state">Estado</th>
+              <th scope="col" class="branch-actions-column">Acciones</th>
+            </tr>
+          </ng-template>
+          <ng-template #body let-branch>
+            <tr class="branch-row">
+              <td class="branch-code">{{ branch.code }}</td>
+              <td class="branch-name">{{ branch.name }}</td>
+              <td>
+                <span class="branch-status" [class.is-active]="branch.isActive">
+                  {{ branch.isActive ? 'Activa' : 'Inactiva' }}
+                </span>
+              </td>
+              <td>
+                <div class="branch-row-actions">
+                  <a
+                    pButton
+                    [text]="true"
+                    class="branch-icon-action"
+                    [attr.href]="'/gestion/sedes/' + branch.id"
+                    (click)="open($event, 'detail', branch.id)"
+                    [attr.aria-label]="'Consultar ' + branch.name"
+                    [title]="'Consultar ' + branch.name"
+                  >
+                    <svg lucideEye [size]="20" aria-hidden="true"></svg>
+                  </a>
+                  @if (global()) {
+                    <a
+                      pButton
+                      [text]="true"
+                      class="branch-icon-action"
+                      [attr.href]="'/gestion/sedes/' + branch.id + '/editar'"
+                      (click)="open($event, 'edit', branch.id)"
+                      [attr.aria-label]="'Editar ' + branch.name"
+                      [title]="'Editar ' + branch.name"
+                    >
+                      <svg lucidePencil [size]="20" aria-hidden="true"></svg>
+                    </a>
+                  }
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template #emptymessage>
+            <tr>
+              <td colspan="4" class="branch-empty">No hay sedes para estos filtros.</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+      <app-table-pagination
+        ariaLabel="Páginas de sedes"
+        noun="sedes"
+        [first]="(result.pageNumber - 1) * result.pageSize"
+        [rows]="result.pageSize"
+        [totalRecords]="result.totalCount"
+        (onPageChange)="paginationChanged($event)"
+      />
+    }
+  </section>
+</div>
+@if (dialog(); as selected) {
+  @switch (selected.mode) {
+    @case ('create') {
+      <app-branch-create-dialog (closed)="close()" (saved)="close(true)" />
+    }
+    @case ('edit') {
+      <app-branch-edit-dialog [branchId]="selected.id!" (closed)="close()" (saved)="close(true)" />
+    }
+    @case ('detail') {
+      <app-branch-detail-dialog [branchId]="selected.id!" (closed)="close()" />
+    }
+  }
+}

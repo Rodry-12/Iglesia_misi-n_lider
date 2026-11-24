@@ -4,10 +4,11 @@ import { CONTACT_GATEWAY } from '../data-access/contact-gateway';
 import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import { ButtonModule } from 'primeng/button';
+import { ToastFeedback } from '../../../../shared/ui/toast-feedback';
 
 @Component({
   selector: 'app-contact-section',
-  imports: [ReactiveFormsModule, InputTextModule, TextareaModule, ButtonModule],
+  imports: [ReactiveFormsModule, InputTextModule, TextareaModule, ButtonModule, ToastFeedback],
   templateUrl: './contact-section.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

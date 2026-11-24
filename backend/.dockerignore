@@ -1,0 +1,47 @@
+# Deny by default: only the production API source/dependencies enter the context.
+**
+!Dockerfile
+!.dockerignore
+!global.json
+!Directory.Build.props
+!Directory.Packages.props
+!NuGet.Config
+!src/MisionLiderParis.Domain/**
+!src/MisionLiderParis.Application/**
+!src/MisionLiderParis.Infrastructure/**
+!src/MisionLiderParis.Api/**
+!docs/reference/ministerial-reconstruction.sql.reference.txt
+
+# Re-exclude generated C# and any private content, even under allowed directories.
+**/bin/**
+**/obj/**
+**/.git/**
+**/.vs/**
+**/.vscode/**
+**/node_modules/**
+**/.local/**
+**/artifacts/**
+**/TestResults/**
+**/coverage/**
+**/Properties/**
+# Project exceptions above permit source traversal. Deny all JSON/text payloads again,
+# then allow only the public settings/locks and the required build reference.
+**/*.json
+!src/**/packages.lock.json
+!src/MisionLiderParis.Api/appsettings.json
+**/*.txt
+!docs/reference/ministerial-reconstruction.sql.reference.txt
+**/secrets/**
+**/.secrets/**
+**/.env
+**/.env.*
+**/appsettings.*.json
+**/*.pfx
+**/*.p12
+**/*.key
+**/*.pem
+**/*.credential
+**/credential.bin
+**/secrets.json
+**/*token*.json
+**/*oauth*.json

@@ -1,0 +1,158 @@
+<app-page-heading
+  title="Usuarios"
+  description="Cuentas de acceso, permisos efectivos y sedes autorizadas."
+/>
+<div class="users-list">
+  @if (store.errors().options) {
+    <button pButton type="button" [outlined]="true" (click)="store.loadOptions('USER_VIEW')">
+      Reintentar opciones
+    </button>
+  }
+  <section class="users-filters-panel" aria-label="Filtros de usuarios">
+    @if (allowed('USER_CREATE')) {
+      <div class="users-toolbar">
+        <a
+          pButton
+          href="/gestion/usuarios/invitar"
+          (click)="open($event, 'invite')"
+          class="users-invite"
+          ><svg lucideUserPlus [size]="20" aria-hidden="true"></svg><span>Invitar usuario</span></a
+        >
+      </div>
+    }
+    <form class="catalog-filters users-filters" [formGroup]="filters">
+      <div>
+        <label for="users-search">Buscar cuentas</label
+        ><input pInputText id="users-search" formControlName="search" maxlength="150" />
+      </div>
+      <div>
+        <label for="users-branch">Sede</label
+        ><p-select
+          inputId="users-branch"
+          ariaLabel="Sede"
+          formControlName="branchId"
+          [options]="store.options()?.branches ?? []"
+          optionLabel="name"
+          optionValue="id"
+          [showClear]="!!filters.controls.branchId.value"
+          placeholder="Todas las sedes"
+          [fluid]="true"
+        />
+      </div>
+      <div>
+        <label for="users-active">Estado de cuenta</label
+        ><p-select
+          inputId="users-active"
+          ariaLabel="Estado de cuenta"
+          formControlName="isActive"
+          [options]="activeOptions"
+          optionLabel="name"
+          optionValue="value"
+          [fluid]="true"
+        />
+      </div>
+    </form>
+  </section>
+  <section
+    class="users-results-panel"
+    aria-label="Listado de usuarios"
+    [attr.aria-busy]="!!store.loading().list"
+  >
+    @if (store.errors().list) {
+      <button pButton type="button" (click)="store.loadList(filterValue())">
+        Reintentar listado
+      </button>
+    }
+    @if (store.list(); as list) {
+      <div class="catalog-table" role="region" aria-label="Tabla de usuarios" tabindex="0">
+        <p-table scrollHeight="min(55vh, 32rem)" [value]="list.items" [scrollable]="true"
+          ><ng-template #header
+            ><tr>
+              <th>Usuario</th>
+              <th>Correo</th>
+              <th>Persona asociada</th>
+              <th>Rol y sede</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr></ng-template
+          ><ng-template #body let-user
+            ><tr>
+              <td>{{ user.displayName }}</td>
+              <td>{{ user.email }}</td>
+              <td
+                [attr.title]="
+                  !user.personId
+                    ? 'Cuenta de acceso sin una persona del registro ministerial asociada.'
+                    : null
+                "
+              >
+                {{
+                  user.personName ??
+                    (user.personId ? 'Persona fuera del ámbito visible' : 'Sin persona asociada')
+                }}
+              </td>
+              <td>
+                @for (grant of user.grants; track $index) {
+                  <p>{{ displayRole(grant.roleId) }} · {{ branch(grant.branchId) }}</p>
+                }
+              </td>
+              <td>
+                <span class="users-status" [class.is-active]="status(user) === 'Activa'">{{
+                  status(user)
+                }}</span>
+              </td>
+              <td>
+                <a
+                  pButton
+                  [text]="true"
+                  [attr.href]="'/gestion/usuarios/' + user.id"
+                  (click)="open($event, 'view', user.id)"
+                  class="users-icon-action"
+                  [attr.aria-label]="'Ver cuenta de ' + user.displayName"
+                  [title]="'Ver cuenta de ' + user.displayName"
+                  ><svg lucideEye [size]="20" aria-hidden="true"></svg
+                ></a>
+                @if (canEdit(user)) {
+                  <a
+                    pButton
+                    [text]="true"
+                    class="users-icon-action"
+                    [attr.href]="'/gestion/usuarios/' + user.id + '/editar'"
+                    (click)="open($event, 'edit', user.id)"
+                    [attr.aria-label]="'Editar cuenta de ' + user.displayName"
+                    [title]="'Editar cuenta de ' + user.displayName"
+                    ><svg lucidePencil [size]="20" aria-hidden="true"></svg
+                  ></a>
+                }
+              </td></tr></ng-template
+          ><ng-template #emptymessage
+            ><tr>
+              <td colspan="6" class="users-empty">No hay cuentas para estos filtros.</td>
+            </tr></ng-template
+          ></p-table
+        >
+      </div>
+      <app-table-pagination
+        ariaLabel="Páginas de usuarios"
+        noun="cuentas"
+        [first]="(list.pageNumber - 1) * list.pageSize"
+        [rows]="list.pageSize"
+        [totalRecords]="list.totalCount"
+        (onPageChange)="paginationChanged($event)"
+      />
+    }
+  </section>
+</div>
+@if (dialog(); as selected) {
+  @switch (selected.mode) {
+    @case ('view') {
+      <app-user-view-dialog [userId]="selected.id!" (closed)="close()" />
+    }
+    @case ('edit') {
+      <app-user-edit-dialog [userId]="selected.id!" (closed)="close()" (saved)="close($event)" />
+    }
+    @case ('invite') {
+      <app-user-invite-dialog (closed)="close()" (saved)="close($event)" />
+    }
+  }
+}

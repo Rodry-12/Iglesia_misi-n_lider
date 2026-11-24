@@ -1,0 +1,75 @@
+{
+  "status": "in-progress",
+  "criteria": [
+    {
+      "id": "AC-009",
+      "implementation": ["frontend/src/app/features/sites/branch-create-dialog.ts", "frontend/src/app/features/sites/branch-detail-dialog.ts", "frontend/src/app/features/sites/branch-edit-dialog.ts", "frontend/src/app/features/sites/branch-draft.ts", "frontend/src/app/features/sites/branch-form-fields.ts", "frontend/src/app/features/sites/branch-dialog.scss", "frontend/src/app/features/sites/sites-page.ts", "frontend/src/app/features/sites/sites-page.html", "frontend/src/app/features/administration/admin.routes.ts"],
+      "verification": ["frontend/src/app/features/sites/branches.spec.ts", "frontend/e2e/branch-dialogs.spec.ts", "specs/019-branch-administration/validation.md"],
+      "verified": true,
+      "evidence": "2026-11-21:correccion final consulta solo lectura ysin controles de gestion. Apertura trasdetalle/admin,lista compacta sinpaginador,Ver mas solo siprocede;estado enedicion.17 unitarias y20 recorridos interceptados aprobados. Build correcto;advertencia583,72kB. Sin escrituras reales;validation.md."
+    },
+    {
+      "id": "AC-010",
+      "implementation": ["frontend/src/app/core/notifications/notifications.ts", "frontend/src/app/app.config.ts", "frontend/src/app/app.ts", "frontend/src/app/app.html", "frontend/src/app/core/theme/primeng-preset.ts", "frontend/src/styles/tokens.css", "frontend/src/app/features/sites/branches.store.ts", "frontend/src/app/features/users/users.store.ts"],
+      "verification": ["frontend/src/app/core/notifications/notifications.spec.ts", "frontend/src/app/features/users/users.spec.ts", "frontend/e2e/branch-dialogs.spec.ts", "specs/019-branch-administration/validation.md"],
+      "verified": true,
+      "evidence": "2026-11-21:30 unitarias y26 recorridos interceptados aprobados. Modales independientes,version409,borradores,foco,roles,paginacion,Toast compartido Sedes/Usuarios,temas yviewport movil. Build/checks correctos;advertencia inicial~584kB/500kB. Sin escrituras reales;aceptacion operativa pendiente. Detalle y archivos en validation.md."
+    },
+    {
+      "id": "AC-008",
+      "implementation": ["frontend/src/app/shared/ui/loading-overlay.ts", "frontend/src/app/features/sites/sites-page.ts", "frontend/src/app/features/sites/sites-page.html"],
+      "verification": ["frontend/e2e/loading.spec.ts", "specs/019-branch-administration/validation.md"],
+      "verified": true,
+      "evidence": "2026-11-21:correccion final global fullscreen en App,centrado y sin textos duplicados en Sedes.9 unitarias y18 recorridos interceptados aprobados;inert,scroll,viewport,concurrencia,error y auth. Build correcto con advertencia521,70kB/500kB. Sin escrituras reales;validation.md conserva historia."
+    },
+    {
+      "id": "AC-001",
+      "implementation": ["backend/src/MisionLiderParis.Infrastructure/Ministry/BranchService.cs", "backend/src/MisionLiderParis.Application/Ministry/Contracts.cs"],
+      "verification": ["backend/tests/MisionLiderParis.UnitTests/BranchAuthorizationTests.cs", "backend/tests/MisionLiderParis.IntegrationTests/BranchAdministrationTests.cs"],
+      "verified": true,
+      "evidence": "2026-11-09: autorización global, CRUD, código único y consulta paginada aprobados en unitarias e integración aislada. validation.md."
+    },
+    {
+      "id": "AC-002",
+      "implementation": ["backend/src/MisionLiderParis.Infrastructure/Ministry/BranchService.cs", "backend/src/MisionLiderParis.Infrastructure/Ministry/MinistryLocks.cs", "backend/src/MisionLiderParis.Infrastructure/Users/UserAdministration.cs"],
+      "verification": ["backend/tests/MisionLiderParis.IntegrationTests/BranchAdministrationTests.cs", "backend/tests/MisionLiderParis.IntegrationTests/BranchIsolationTests.cs"],
+      "verified": true,
+      "evidence": "2026-11-09: dependencias y carreras en ambos sentidos, reemplazo de concesiones y dos ediciones con versión obsoleta aprobados con PostgreSQL/RLS firmada aislados."
+    },
+    {
+      "id": "AC-003",
+      "implementation": ["frontend/src/app/features/sites/sites-page.ts", "frontend/src/app/features/sites/sites-page.html", "frontend/src/app/features/sites/branches.store.ts", "frontend/src/app/features/administration/admin.routes.ts"],
+      "verification": ["frontend/src/app/features/sites/branches.spec.ts", "frontend/src/app/core/auth/access-context.spec.ts", "frontend/e2e/branches-real.spec.ts", "backend/tests/MisionLiderParis.IntegrationTests/BranchBrowserFixtureTests.cs"],
+      "verified": true,
+      "evidence": "2026-11-09: 37 unitarias Angular y dos recorridos reales HTTPS/PostgreSQL aislados (desktop/mobile) aprobados; sin correo externo."
+    },
+    {
+      "id": "AC-005",
+      "implementation": ["frontend/src/app/features/sites/sites-page.ts", "frontend/src/app/features/sites/sites-page.html", "frontend/src/app/features/sites/sites-list.scss"],
+      "verification": ["frontend/e2e/branches-list-visual.spec.ts", "frontend/e2e/management-layout.spec.ts", "specs/019-branch-administration/validation.md"],
+      "verified": true,
+      "evidence": "2026-11-11:11 recorridos interceptados aprobados,1 duplicado tablet omitido. Temas claro/oscuro,viewport1440/820/390,acciones por rol,rutas,carga/error/vacio,busqueda explicita y paginacion sin session redundante. Capturas inspeccionadas;contraste Nueva sede corregido localmente. Build correcto con advertencia inicial501,46kB previa. Revision estetica del usuario pendiente;sin escrituras reales."
+    },
+    {
+      "id": "AC-004",
+      "implementation": ["frontend/src/app/features/sites/sites-page.ts", "backend/src/MisionLiderParis.Infrastructure/Ministry/BranchService.cs"],
+      "verification": ["specs/019-branch-administration/validation.md"],
+      "verified": false,
+      "evidence": "Pendiente aceptación operativa específica; sin autorización de escrituras de prueba en Supabase."
+    },
+    {
+      "id": "AC-007",
+      "implementation": ["frontend/src/app/features/sites/sites-page.ts", "frontend/src/app/features/sites/sites-page.html", "frontend/src/app/features/sites/sites-list.scss"],
+      "verification": ["frontend/e2e/branches-list-visual.spec.ts", "frontend/e2e/management-layout.spec.ts", "specs/019-branch-administration/validation.md"],
+      "verified": true,
+      "evidence": "2026-11-21:6 recorridos focalizados aprobados en escritorio/movil con API interceptada. Texto300ms,estado inmediato,limpieza,pagina1,paginacion/recarga,errores/reintento y session no repetida. Select con ariaLabelledBy. Build501,86kB con advertencia inicial existente;Angular reiniciado para cargar plantilla actual. Sin modificaciones de Supabase."
+    },
+    {
+      "id": "AC-006",
+      "implementation": ["backend/src/MisionLiderParis.Infrastructure/Ministry/BranchService.cs", "backend/src/MisionLiderParis.Infrastructure/Ministry/MinistryDbContext.cs"],
+      "verification": ["backend/tests/MisionLiderParis.IntegrationTests/BranchSearchTests.cs", "specs/019-branch-administration/validation.md"],
+      "verified": true,
+      "evidence": "2026-11-11: dos pruebas reprodujeron el fallo;6 integraciones focalizadas aprobadas tras correccion en PostgreSQL aislado preaprovisionado. translate built-in y upper en servidor, antes de count/skip/take; Unicode combinado,acentos,mayusculas,codigo,estado,ambito y literales verificados. Build Release0 errores/advertencias. API reiniciada con ready200,Identity/firma/RLS/TLS verificados en solo lectura. Sin extensiones ni cambios Supabase;aceptacion autenticada del buscador pendiente del usuario."
+    }
+  ]
+}

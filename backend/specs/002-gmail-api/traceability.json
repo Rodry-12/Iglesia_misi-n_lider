@@ -1,0 +1,40 @@
+{
+  "status": "verified",
+  "criteria": [
+    {
+      "id": "AC-001",
+      "implementation": ["src/MisionLiderParis.Infrastructure/Email/GmailApiAccountEmailSender.cs", "src/MisionLiderParis.Infrastructure/DependencyInjection.cs"],
+      "verification": ["tests/MisionLiderParis.UnitTests/GmailEmailTests.cs"],
+      "verified": true,
+      "evidence": "90 unitarias aprobadas, incluidos selector de tres proveedores y las tres plantillas MIME. Sin envío real."
+    },
+    {
+      "id": "AC-002",
+      "implementation": ["src/MisionLiderParis.Infrastructure/Email/GmailOAuthState.cs", "src/MisionLiderParis.Api/Controllers/GoogleGmailController.cs"],
+      "verification": ["tests/MisionLiderParis.UnitTests/GmailEmailTests.cs", "tests/MisionLiderParis.IntegrationTests/GmailOAuthTests.cs"],
+      "verified": true,
+      "evidence": "PKCE, scope exclusivo, caducidad, consumo concurrente, permisos y CSRF verificados con Google simulado."
+    },
+    {
+      "id": "AC-003",
+      "implementation": ["src/MisionLiderParis.Api/Controllers/GoogleGmailController.cs"],
+      "verification": ["tests/MisionLiderParis.IntegrationTests/GmailOAuthTests.cs"],
+      "verified": true,
+      "evidence": "Cinco escenarios HTTP aprobados con Identity y PostgreSQL aislado: sin cookie Identity, replay, permisos y revocación antes/durante el intercambio."
+    },
+    {
+      "id": "AC-004",
+      "implementation": ["src/MisionLiderParis.Infrastructure/Email/ProtectedGmailCredentialStore.cs", "src/MisionLiderParis.Infrastructure/Email/GmailAccessTokens.cs"],
+      "verification": ["tests/MisionLiderParis.UnitTests/GmailEmailTests.cs"],
+      "verified": true,
+      "evidence": "Cifrado/ACL, manipulación del archivo, renovación concurrente, rotación y revocación sin fallback comprobados."
+    },
+    {
+      "id": "AC-005",
+      "implementation": ["docs/gmail-api.md"],
+      "verification": ["specs/002-gmail-api/validation.md", "tests/MisionLiderParis.IntegrationTests/GmailOAuthTests.cs"],
+      "verified": true,
+      "evidence": "90 unitarias y 18 integraciones aprobadas, una fixture browser omitida; Google y correo simulados. Autorización y entrega reales expresamente pendientes."
+    }
+  ]
+}

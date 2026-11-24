@@ -1,0 +1,46 @@
+{
+    "project":  "sneceodpvscrvjrlqwgw",
+    "status":  "prepared-not-executed",
+    "files":  [
+                  {
+                      "file":  "sql/001-auth-app.sql",
+                      "sha256":  "B50748F72562764DE89789D43E245F4557FCBC3C40B63FDEC966C1D4C94F2AC9"
+                  },
+                  {
+                      "file":  "sql/002-explicit-operator-permissions.sql",
+                      "sha256":  "E2702E7A875B0F78ED31BEC6670CF30DA44F859B518D03328A0FD1C5F13FB7F1"
+                  },
+                  {
+                      "file":  "sql/proposals/003-assignment-integrity.sql",
+                      "sha256":  "60CDEB82DE9F8AE6E49FB1BC6BB6D7DE4C6D99016812F55BDF685539BD988703"
+                  },
+                  {
+                      "file":  "sql/004-auth-ministry-references.sql",
+                      "sha256":  "A887DC401ABC278CF523C8409CCF3D0B9A2ADDBAA534E666C452C6449E8EAFC1"
+                  },
+                  {
+                      "file":  "sql/005-runtime-role-rls.sql",
+                      "sha256":  "4B915CCC5F9EB52C5BAEBBECAA3CCB65E80B3ADDBDBD6F4BA8019537C92A607C"
+                  },
+                  {
+                      "file":  "sql/activation/010-data-preflight-readonly.sql",
+                      "sha256":  "D582EBB0414C4CFB081EA53F47D7F7EF400182C9A53735049D988572E0152495"
+                  },
+                  {
+                      "file":  "sql/activation/011-content-fingerprints-readonly.sql",
+                      "sha256":  "238F43771675D81D2A98DF0A4E973931CF91E84DF1C06FDEF194839C485523B5"
+                  },
+                  {
+                      "file":  "sql/activation/020-provision-roles-and-ownership.sql",
+                      "sha256":  "5F7403DF5652ED5BB2082170F89372243096D165BC41175F996802A8003064AC"
+                  },
+                  {
+                      "file":  "sql/activation/030-create-runtime-login.sql",
+                      "sha256":  "477EDEB3B7A673F7669ABA26B6E03C8EDE635C87C760A0530AC811C8231051BB"
+                  },
+                  {
+                      "file":  "scripts/Backup-Supabase.ps1",
+                      "sha256":  "7FB4F1CAB25DF6243F09363811FF5A79E6436A3BC34473C343C1517FED386E37"
+                  }
+              ]
+}

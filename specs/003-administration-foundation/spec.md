@@ -2,6 +2,68 @@
 
 Estado: En curso.
 
+## Actividad HTTP general — 2026-11-21
+
+- FR-013/AC-010: un interceptor registra automáticamente peticiones de la API propia
+  con contador Signals y finalize. Corrección solicitada: overlay único a pantalla
+  completa, centrado, bloquea interacción durante peticiones. Éxito/error/cancelación/concurrencia
+  limpian el estado; excepciones optativas mediante HttpContextToken. Sin tracking
+  de EmailJS/external, logs de peticiones o nuevos estados de negocio.
+- Presentación reutilizable PrimeNG ProgressSpinner: aparición tras150ms solo si
+  sigue pendiente, tema claro/oscuro, movimiento reducido. Montaje único en App con
+  fondo surface60%,aria-busy,inert,restauración de foco y bloqueo de scroll.
+  Cubre navbar/sidebar y diálogos. Sin párrafos duplicados de carga en Sedes.
+
+## Nombre de sede y jerarquía de permisos — 2026-11-09
+
+- FR-012 / ampliación AC-009: sidebar «Panel de gestión», blanco y mayor tamaño,
+  sin nombre institucional. Navbar muestra nombres de sedes de las concesiones
+  efectivas: solo la primera sede en el orden de la sesión para BRANCH_ADMIN y
+  OPERATOR; SUPER_ADMIN global muestra «Todas las sedes».
+  Categorías en negrita y permisos como elementos separados. Sustituye el título
+  institucional anterior. BranchName es metadato opcional de sesión, nunca una
+  fuente de autorización. Sin consultas adicionales ni cambios SQL. PageHeading
+  no incluye eyebrow ni repite el nombre institucional sobre los títulos.
+
+## Corrección solicitada de presentación — 2026-11-09
+
+- FR-011: No mostrar ningún logo en el layout administrativo; navbar compacto,
+  sidebar ocultable/mostrable en todos los tamaños y opción logout centrada. Mostrar
+  permisos con nombres españoles, sin Detalle de acceso, UUID o códigos de permisos
+  y roles en el resumen. Conservar códigos/IDs, autorización y contratos internos.
+- AC-009: Navegador verifica ocultar/reabrir sidebar y expansión del contenido en
+  escritorio, móvil sin overflow, navbar compacto sticky y logout centrado. Resumen
+  presenta etiquetas legibles sin UUID/códigos; Usuarios muestra esas mismas etiquetas
+  manteniendo los IDs originales en solicitudes. Esto sustituye las decisiones
+  anteriores de logo lateral y panel de códigos técnicos visibles.
+
+## Ajuste vigente de navbar — 2026-11-09
+
+- FR-010: Header administrativo sticky con z-index compartido, título «Misión Líder
+  París · Gestión», tema y menú de cuenta. Sin logo ni Sitio público en el header.
+  Cierre de sesión existente dentro de Menu PrimeNG; sidebar en verde institucional
+  menos oscuro, scroll independiente solo si lo requiere su contenido. Sin tocar
+  módulos, rutas, guards o autenticación.
+- AC-008: Navegador verifica header visible al desplazar las cinco rutas de gestión,
+  menú emergente operable por encima del contenido y Escape/foco, sin overflow
+  horizontal en escritorio/móvil; regresiones de logout y permisos conservadas.
+
+## Incremento vigente — UX/UI administrativo, 2026-11-09
+
+El stack vigente es Angular21/PrimeNG21 (ADR0003); las referencias Material y módulos
+preparatorios siguientes son históricas. Se autoriza mejorar solo layout administrativo
+y resumen, conservando las rutas, sesión, permisos y formularios de negocio existentes.
+
+- FR-008: Sidebar verde oscuro con marca y navegación autorizada; header con usuario,
+  roles reales, tema, sitio público y logout. Móvil desplegable y operable con teclado.
+- FR-009: Dashboard con rol, ámbito, permisos únicos y nombre de la sesión; accesos a
+  módulos existentes y permisos técnicos agrupados en panel secundario. Sin estadísticas,
+  nombres de sedes ni fechas inventadas; UUID de sede cuando no hay nombre disponible.
+- AC-007: Presentación refleja concesiones múltiples sin duplicar el conteo; solo una
+  concesión SUPER_ADMIN global se etiqueta global. Menú/tarjetas mantienen filtro actual,
+  preservan entradas solo CREATE; tema y escritorio/móvil sin overflow. Sin nuevas
+  solicitudes HTTP, cambios de autorización, backend ni pantallas públicas.
+
 ## Necesidad y decisión de biblioteca
 
 El usuario pide orientar Angular a Finanzas, Miembros, Formación, Sedes y Usuarios, con componentes, utilidades responsive, SCSS, design tokens, Lucide, signals y Reactive Forms. Autoriza Angular Material como alternativa si PrimeNG no garantiza continuidad gratuita.

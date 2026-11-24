@@ -1,0 +1,88 @@
+<p-dialog
+  header="Ficha de persona"
+  [visible]="opened()"
+  [modal]="true"
+  [closable]="false"
+  [closeOnEscape]="false"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{ width: '48rem', maxWidth: 'calc(100vw - 2rem)' }"
+  (keydown.escape)="closed.emit()"
+>
+  @if (store.person(); as person) {
+    <div class="person-summary">
+      <span class="person-avatar" aria-hidden="true"
+        >{{ person.firstNames.slice(0, 1) }}{{ person.lastNames.slice(0, 1) }}</span
+      >
+      <div>
+        <p class="person-detail-name">{{ person.firstNames }} {{ person.lastNames }}</p>
+      </div>
+    </div>
+    <div class="person-sections">
+      <section class="person-card person-personal" aria-labelledby="personal-title">
+        <h2 id="personal-title">Información personal</h2>
+        @for (document of person.documents; track document.id) {
+          @if (document.isCurrent) {
+            <dl class="person-facts person-document-facts">
+              <div>
+                <dt>Tipo de documento</dt>
+                <dd>{{ document.documentType }}</dd>
+              </div>
+              <div>
+                <dt>Número de documento</dt>
+                <dd>{{ document.documentNumber }}</dd>
+              </div>
+            </dl>
+          }
+        }
+        @if (!person.documents.some(isCurrentDocument)) {
+          <p>{{ identification(person) }}</p>
+        }
+
+        <dl class="person-facts">
+          <div>
+            <dt>Nombres</dt>
+            <dd>{{ person.firstNames }}</dd>
+          </div>
+          <div>
+            <dt>Apellidos</dt>
+            <dd>{{ person.lastNames }}</dd>
+          </div>
+          <div>
+            <dt>Teléfono</dt>
+            <dd>{{ person.phone || 'No registrado' }}</dd>
+          </div>
+          <div>
+            <dt>Correo electrónico</dt>
+            <dd>{{ person.email || 'No registrado' }}</dd>
+          </div>
+          <div>
+            <dt>Fecha de nacimiento</dt>
+            <dd>{{ calendarDate(person.birthDate) }}</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="person-card" aria-labelledby="ministry-title">
+        <h2 id="ministry-title">Información ministerial</h2>
+        <dl class="person-facts person-ministry-facts">
+          <div>
+            <dt>Sede vigente</dt>
+            <dd>{{ person.branchName ?? 'Sin sede vigente' }}</dd>
+          </div>
+          <div>
+            <dt>Estado</dt>
+            <dd>
+              <span class="person-status" [class.is-active]="person.isActive">{{
+                person.isActive ? 'Activo' : 'Inactivo'
+              }}</span>
+            </dd>
+          </div>
+        </dl>
+      </section>
+    </div>
+  }
+  <ng-template #footer
+    ><button pButton type="button" (click)="closed.emit()">Cerrar</button></ng-template
+  >
+</p-dialog>

@@ -13,13 +13,19 @@ const repository = path.resolve(
   "..",
 );
 
-export function createSpec(slug, root = repository) {
+export function createSpec(slug, root = repository, scope = "root") {
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug ?? "") || slug.length > 64) {
     throw new Error(
       "Usa un nombre de hasta 64 caracteres: letras minúsculas, números y guiones.",
     );
   }
-  const specs = path.join(root, "specs");
+  if (!["root", "backend"].includes(scope))
+    throw new Error("Ámbito SDD inválido.");
+  const specs = path.join(
+    root,
+    scope === "backend" ? "backend/specs" : "specs",
+  );
+  mkdirSync(specs, { recursive: true });
   const directories = readdirSync(specs, { withFileTypes: true }).filter(
     (entry) => entry.isDirectory() && /^\d{3}-/.test(entry.name),
   );
@@ -42,7 +48,7 @@ export function createSpec(slug, root = repository) {
   // Leer todo antes de crear el directorio para fallar sin un scaffold parcial si faltan plantillas.
   const content = names.map((name) => [
     name,
-    readFileSync(path.join(specs, "templates", name), "utf8"),
+    readFileSync(path.join(root, "specs", "templates", name), "utf8"),
   ]);
   if (existsSync(destination))
     throw new Error("El directorio de destino ya existe.");
@@ -62,11 +68,11 @@ if (
   path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
 ) {
   if (process.argv[2] === "--help") {
-    console.log("Uso: npm run spec:new -- nombre-de-funcionalidad");
+    console.log("Uso: npm run spec:new -- nombre-de-funcionalidad [--backend]");
   } else {
     try {
       console.log(
-        `Especificación creada: ${path.relative(repository, createSpec(process.argv[2]))}`,
+        `Especificación creada: ${path.relative(repository, createSpec(process.argv[2], repository, process.argv.includes("--backend") ? "backend" : "root"))}`,
       );
     } catch (error) {
       console.error(error.message);

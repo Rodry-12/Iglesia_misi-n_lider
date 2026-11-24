@@ -2,6 +2,8 @@
 
 Estado: Verificada en el alcance autorizado: implementación, build, checks y revisión local. Pruebas unitarias diferidas.
 
+Nota histórica del 2026-10-23: la reserva de backend vacío de FR-005/AC-004 fue sustituida por el incremento autorizado en ADR 0005 y `backend/specs/001-ministry-backend/`. Esta spec conserva la evidencia del cierre público del 19 de octubre; no limita la nueva petición de backend.
+
 ## Problema y resultado esperado
 
 Restaurar el cambio de apariencia del header original al hacer scroll, recuperar la composición del 404 y retirar la aplicación HTML/Express activa tras independizar Angular. Dejar un repositorio claro con frontend, backend reservado, documentación y herramientas necesarias.

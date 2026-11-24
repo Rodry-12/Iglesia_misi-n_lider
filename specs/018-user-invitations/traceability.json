@@ -1,0 +1,54 @@
+{
+  "status": "in-progress",
+  "criteria": [
+    {
+      "id": "AC-007",
+      "implementation": ["backend/src/MisionLiderParis.Domain/Access/PermissionCodes.cs", "backend/src/MisionLiderParis.Domain/Access/AccessScope.cs", "backend/src/MisionLiderParis.Infrastructure/Users/UserAdministration.cs", "frontend/src/app/features/users/user-access.ts", "frontend/src/app/features/users/user-account-form.ts", "frontend/src/app/features/users/user-account-form.html"],
+      "verification": ["backend/tests/MisionLiderParis.UnitTests/UserAdministrationPolicyTests.cs", "backend/tests/MisionLiderParis.IntegrationTests/CustomUserAccessTests.cs", "frontend/src/app/features/users/user-access.spec.ts", "frontend/e2e/user-dialogs.spec.ts", "specs/018-user-invitations/validation.md"],
+      "verified": false,
+      "evidence": "2026-11-21: implementación y 36 unitarias .NET, 18 Angular y 26 recorridos interceptados aprobados. Dos integraciones nuevas compilan pero se omiten sin conexión aislada preparada. Pendiente aceptación HTTP/PostgreSQL y sesión real con la API reiniciada. No se modificó Supabase."
+    },
+    {
+      "id": "AC-006",
+      "implementation": ["frontend/src/app/features/users/users-page.ts", "frontend/src/app/features/users/users-page.html", "frontend/src/app/features/users/user-view-dialog.ts", "frontend/src/app/features/users/user-edit-dialog.ts", "frontend/src/app/features/users/user-invite-dialog.ts", "frontend/src/app/features/users/user-account-editor.ts", "frontend/src/app/features/users/user-account-form.ts", "frontend/src/app/features/users/user-account-form.html", "frontend/src/app/features/users/user-access.ts", "frontend/src/app/features/users/user-dialog-base.ts", "frontend/src/app/features/users/user-dialog.scss", "frontend/src/app/features/users/users-list.scss", "frontend/src/app/features/users/users.store.ts", "frontend/src/app/features/administration/admin.routes.ts"],
+      "verification": ["frontend/src/app/features/users/users.spec.ts", "frontend/src/app/features/users/user-access.spec.ts", "frontend/e2e/user-dialogs.spec.ts", "frontend/e2e/users.spec.ts", "frontend/e2e/users-list.spec.ts", "specs/018-user-invitations/validation.md"],
+      "verified": true,
+      "evidence": "2026-11-21:16 unitarias y24 recorridos interceptados aprobados. Tres modales,Ver readonly,Editar por permisos,perfil/concesiones/borradores/revocacion,soloCREATE,movil yregresiones. Backend/Supabase intactos;build advierte583,72kB/500kB. validation.md detalla limites."
+    },
+    {
+      "id": "AC-005",
+      "implementation": ["frontend/src/app/features/users/users-page.ts", "frontend/src/app/features/users/users-page.html", "frontend/src/app/features/users/users-list.scss"],
+      "verification": ["frontend/e2e/users-list.spec.ts", "frontend/e2e/users.spec.ts", "frontend/src/app/features/users/users.spec.ts", "specs/018-user-invitations/validation.md"],
+      "verified": true,
+      "evidence": "2026-11-21:13 unitarias y12 recorridos interceptados aprobados. Invitacion visible/derecha,Activa/Inactiva,persona asociada,roles legibles,paginacion Sedes,permisos,movil/oscuro. Sin cambios backend oSupabase;build advierte583,72kB/500kB."
+    },
+    {
+      "id": "AC-001",
+      "implementation": ["backend/src/MisionLiderParis.Infrastructure/Users/UserAdministration.cs", "backend/src/MisionLiderParis.Api/Controllers/UsersController.cs", "frontend/src/app/features/users/users-page.ts"],
+      "verification": ["backend/tests/MisionLiderParis.IntegrationTests/UserInvitationTests.cs", "backend/tests/MisionLiderParis.IntegrationTests/UserAccountScopeTests.cs"],
+      "verified": true,
+      "evidence": "2026-11-08: 91 distinct integration cases passed across final regression and targeted fixture/options runs; legacy password field no longer applied. See validation.md."
+    },
+    {
+      "id": "AC-002",
+      "implementation": ["backend/src/MisionLiderParis.Infrastructure/Users/AccountInvitations.cs", "backend/src/MisionLiderParis.Api/Controllers/AuthController.cs"],
+      "verification": ["backend/tests/MisionLiderParis.IntegrationTests/UserInvitationTests.cs"],
+      "verified": true,
+      "evidence": "2026-11-08: invitation activation/concurrency/expiration/revocation/throttle and recoverable delivery failure passed in isolated PostgreSQL."
+    },
+    {
+      "id": "AC-003",
+      "implementation": ["backend/src/MisionLiderParis.Infrastructure/Email/ResendAccountEmailSender.cs", "backend/src/MisionLiderParis.Infrastructure/Email/AccountEmailMessage.cs", "backend/src/MisionLiderParis.Infrastructure/DependencyInjection.cs"],
+      "verification": ["backend/tests/MisionLiderParis.UnitTests/AccountEmailTests.cs"],
+      "verified": true,
+      "evidence": "2026-11-08: 70 .NET unit tests passed, including12 account mail cases. No external provider calls or fallback. Resend replaces Gmail OAuth with explicit user approval."
+    },
+    {
+      "id": "AC-004",
+      "implementation": ["frontend/src/app/features/users/users.store.ts", "frontend/src/app/features/users/users-page.html", "frontend/src/app/features/access/account-action-page.ts", "frontend/src/app/features/access/account-action.store.ts", "frontend/src/app/features/administration/admin.routes.ts"],
+      "verification": ["frontend/src/app/features/users/users.spec.ts", "frontend/src/app/features/access/account-action.spec.ts", "frontend/e2e/users.spec.ts", "frontend/e2e/users-real.spec.ts", "backend/tests/MisionLiderParis.IntegrationTests/InvitationBrowserFixtureTests.cs"],
+      "verified": true,
+      "evidence": "2026-11-08:45 Angular unit tests and18 controlled E2E passed; real HTTPS admin/create/mailbox/recipient activation/login/logout passed on desktop and mobile. Builds passed; production email and Supabase acceptance pending."
+    }
+  ]
+}

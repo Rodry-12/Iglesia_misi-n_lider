@@ -1,0 +1,56 @@
+{
+  "status": "verified",
+  "criteria": [
+    {
+      "id": "AC-001",
+      "implementation": [
+        "backend/src/MisionLiderParis.Application/Ministry/Contracts.cs",
+        "backend/src/MisionLiderParis.Infrastructure/Ministry/PeopleService.cs",
+        "backend/src/MisionLiderParis.Api/Controllers/MinistryControllers.cs"
+      ],
+      "verification": [
+        "backend/tests/MisionLiderParis.IntegrationTests/PeopleQueryTests.cs"
+      ],
+      "verified": true,
+      "evidence": "2026-11-07: 58 unitarias y 48 integraciones correctas; tres nuevas prueban campos, filtros, PERSON_VIEW sin BRANCH_VIEW, sedes distintas, documentos antiguos y no-store. Sin SQL remoto."
+    },
+    {
+      "id": "AC-002",
+      "implementation": [
+        "frontend/src/app/features/members/members-page.ts",
+        "frontend/src/app/features/members/person-detail-dialog.ts",
+        "frontend/src/app/features/members/members.store.ts"
+      ],
+      "verification": [
+        "frontend/e2e/people.spec.ts",
+        "frontend/e2e/people-dialog.spec.ts"
+      ],
+      "verified": true,
+      "evidence": "2026-11-07: ocho E2E de Personas correctos en escritorio/movil, listado de cinco columnas, ficha directa/recarga/regreso, busqueda, filtros y paginacion. Capturas revisadas. HTTP de navegador controlado."
+    },
+    {
+      "id": "AC-003",
+      "implementation": [
+        "frontend/src/app/features/members/members.store.ts",
+        "frontend/src/app/features/members/members.models.ts"
+      ],
+      "verification": [
+        "frontend/src/app/features/members/members.store.spec.ts",
+        "frontend/e2e/people.spec.ts"
+      ],
+      "verified": true,
+      "evidence": "2026-11-07: 63 unitarias Angular y 30 E2E correctos; carreras, identidad, cancelacion, errores, fechas y estados documentales. Backend real aislado; no aceptacion Supabase."
+    },
+    {
+      "id": "AC-004",
+      "implementation": [
+        "docs/person-query.md"
+      ],
+      "verification": [
+        "specs/009-person-query/validation.md"
+      ],
+      "verified": true,
+      "evidence": "2026-11-07: builds .NET/Angular y checks spec/design/format/deps/skills correctos; limites, comandos e inventario documentados. Sin Supabase ni migraciones/bootstrap."
+    }
+  ]
+}

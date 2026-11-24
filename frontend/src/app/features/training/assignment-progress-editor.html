@@ -1,0 +1,200 @@
+<p-confirmDialog [style]="{ width: '28rem', maxWidth: 'calc(100vw - 2rem)' }" />
+<div class="progress-content">
+  @if (store.errors().detail; as error) {
+    <app-toast-feedback severity="error" [message]="error" />
+  }
+  @if (store.errors().command; as error) {
+    <app-toast-feedback severity="error" [message]="error" />
+  }
+  @if (store.detail(); as assignment) {
+    <section class="process-card progress-summary" aria-label="Proceso seleccionado">
+      <div class="progress-summary-heading">
+        <div>
+          <small>{{ assignment.categoryName }}</small>
+          <h3>{{ assignment.processName }}</h3>
+        </div>
+        <span
+          class="catalog-status"
+          [class.is-active]="assignment.stateCode === 'IN_PROGRESS'"
+          [attr.aria-label]="'Estado actual: ' + (assignment.stateName ?? assignment.stateCode)"
+          >{{ assignment.stateName ?? assignment.stateCode }}</span
+        >
+      </div>
+      <dl class="progress-summary-facts">
+        <div>
+          <dt>Sede</dt>
+          <dd>{{ assignment.branchName ?? 'No visible' }}</dd>
+        </div>
+        <div>
+          <dt>Responsable actual</dt>
+          <dd>{{ assignment.responsibleName ?? 'No visible' }}</dd>
+        </div>
+      </dl>
+    </section>
+    <section class="progress-operation" aria-label="Cambio del proceso">
+      <h3>¿Qué quieres actualizar?</h3>
+      <div class="progress-mode" role="group" aria-label="Tipo de cambio">
+        @if (canState()) {
+          <p-button
+            type="button"
+            label="Actualizar estado"
+            [outlined]="mode() !== 'state'"
+            [pt]="{ root: { 'aria-pressed': mode() === 'state' } }"
+            [fluid]="true"
+            [disabled]="store.busy() || confirming()"
+            (onClick)="setMode('state')"
+          />
+        }
+        @if (canResponsible()) {
+          <p-button
+            type="button"
+            label="Cambiar responsable"
+            [outlined]="mode() !== 'responsible'"
+            [pt]="{ root: { 'aria-pressed': mode() === 'responsible' } }"
+            [fluid]="true"
+            [disabled]="store.busy() || confirming()"
+            (onClick)="setMode('responsible')"
+          />
+        }
+      </div>
+      @if (mode() === 'state' && canState()) {
+        <p class="catalog-caption" id="progress-state-help">
+          Selecciona el avance que corresponde a este proceso.
+        </p>
+        @if (store.errors().transitions; as error) {
+          <app-toast-feedback severity="error" [message]="error" />
+        }
+        @if (store.transitions(); as states) {
+          @if (states.length) {
+            <label for="progress-state">Nuevo estado</label>
+            <p-select
+              inputId="progress-state"
+              ariaLabel="Nuevo estado"
+              ariaDescribedBy="progress-state-help"
+              [formControl]="state"
+              [options]="states"
+              optionLabel="name"
+              optionValue="code"
+              placeholder="Selecciona el nuevo estado"
+              [showClear]="!!state.value"
+              [fluid]="true"
+              appendTo="body"
+              [readonly]="store.busy() || confirming()"
+            />
+            @if (selectedState(); as target) {
+              <div class="progress-preview" role="status" aria-live="polite">
+                <span>Estado al guardar</span>
+                <strong
+                  >{{ assignment.stateName ?? assignment.stateCode }} → {{ target.name }}</strong
+                >
+                @if (target.isFinal) {
+                  <p>Se registrará la finalización. Este proceso no podrá reabrirse.</p>
+                }
+              </div>
+            }
+          } @else {
+            <p class="catalog-caption">Este proceso no tiene cambios de estado disponibles.</p>
+          }
+        }
+      }
+      @if (mode() === 'responsible' && canResponsible()) {
+        <p class="catalog-caption" id="progress-responsible-help">
+          Elige una persona activa de la misma sede para acompañar este proceso.
+        </p>
+        <label for="progress-responsible">Nuevo responsable</label>
+        <p-select
+          inputId="progress-responsible"
+          ariaLabel="Nuevo responsable"
+          ariaDescribedBy="progress-responsible-help"
+          [formControl]="responsible"
+          [options]="store.responsible()?.items ?? []"
+          optionLabel="name"
+          optionValue="id"
+          placeholder="Busca y selecciona una persona"
+          [filter]="true"
+          [resetFilterOnHide]="false"
+          (onShow)="focusResponsibleSearch()"
+          [showClear]="!!responsible.value"
+          [fluid]="true"
+          appendTo="body"
+          [readonly]="store.busy() || confirming()"
+          emptyMessage="No hay personas disponibles."
+          emptyFilterMessage="No hay personas que coincidan con la búsqueda."
+        >
+          <ng-template #filter>
+            <div class="responsible-search">
+              <svg lucideSearch [size]="18" aria-hidden="true"></svg>
+              <input
+                #responsibleSearch
+                pInputText
+                type="text"
+                [formControl]="search"
+                aria-label="Buscar responsable"
+                maxlength="150"
+                placeholder="Nombre, apellidos o documento"
+                [readonly]="store.busy() || confirming()"
+                (keydown.space)="$event.stopPropagation()"
+              />
+              @if (search.value) {
+                <button
+                  pButton
+                  type="button"
+                  [text]="true"
+                  aria-label="Limpiar búsqueda de responsable"
+                  [disabled]="store.busy() || confirming()"
+                  (click)="search.setValue(''); focusResponsibleSearch()"
+                >
+                  <svg lucideX [size]="16" aria-hidden="true"></svg>
+                </button>
+              }
+            </div>
+          </ng-template>
+          <ng-template #item let-person>
+            <div>
+              {{ person.name }}<br /><small
+                >{{ person.documentType }} {{ person.documentNumber }} ·
+                {{ person.branchName }}</small
+              >
+            </div>
+          </ng-template>
+        </p-select>
+        @if (store.errors().responsible; as error) {
+          <app-toast-feedback severity="error" [message]="error" />
+        }
+        @if (store.responsible(); as people) {
+          @if (people.totalCount > people.pageSize) {
+            <app-table-pagination
+              noun="personas"
+              ariaLabel="Paginación de responsables"
+              [first]="(people.pageNumber - 1) * people.pageSize"
+              [rows]="people.pageSize"
+              [totalRecords]="people.totalCount"
+              [disabled]="!!store.loading().responsible || store.busy()"
+              (onPageChange)="responsiblePage($event)"
+            />
+          }
+        }
+        @if (selectedResponsible(); as target) {
+          <div class="progress-preview" role="status" aria-live="polite">
+            <span>Responsable al guardar</span>
+            <strong>{{ assignment.responsibleName ?? 'No visible' }} → {{ target.name }}</strong>
+          </div>
+        }
+      }
+    </section>
+  }
+</div>
+<div class="process-footer progress-editor-footer">
+  <button
+    pButton
+    type="button"
+    [outlined]="true"
+    [disabled]="store.busy() || confirming()"
+    (click)="close()"
+  >
+    Volver a procesos
+  </button>
+  <button pButton type="button" [loading]="store.busy()" [disabled]="!canSave()" (click)="save()">
+    {{ mode() === 'state' ? 'Guardar estado' : 'Guardar responsable' }}
+  </button>
+</div>

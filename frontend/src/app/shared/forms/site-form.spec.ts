@@ -29,7 +29,7 @@ describe('003 AC-003: formulario tipado de vista previa', () => {
     expect(values).toHaveLength(1);
   });
 
-  it('limita el tamaño y asocia errores a controles Material al enviar', async () => {
+  it('limita el tamaño y asocia errores a controles PrimeNG al enviar', async () => {
     const fixture = TestBed.createComponent(SiteForm);
     fixture.detectChanges();
     fixture.componentInstance.form.setValue({ name: 'x'.repeat(81), city: 'Bello' });

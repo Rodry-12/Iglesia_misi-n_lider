@@ -22,6 +22,7 @@ export interface SiteDraft {
           autocomplete="off"
           maxlength="80"
           [invalid]="form.controls.name.touched && form.controls.name.invalid"
+          [attr.aria-invalid]="form.controls.name.touched && form.controls.name.invalid"
           aria-describedby="site-name-error"
         />
         @if (form.controls.name.touched && form.controls.name.invalid) {
@@ -37,6 +38,7 @@ export interface SiteDraft {
           autocomplete="address-level2"
           maxlength="80"
           [invalid]="form.controls.city.touched && form.controls.city.invalid"
+          [attr.aria-invalid]="form.controls.city.touched && form.controls.city.invalid"
           aria-describedby="site-city-error"
         />
         @if (form.controls.city.touched && form.controls.city.invalid) {

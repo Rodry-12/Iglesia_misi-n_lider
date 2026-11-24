@@ -5,17 +5,32 @@ import {
   provideBrowserGlobalErrorListeners,
 } from '@angular/core';
 import { DOCUMENT, ViewportScroller } from '@angular/common';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors, withNoXsrfProtection } from '@angular/common/http';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 
 import { routes } from './app.routes';
 import { providePrimeNG } from 'primeng/config';
 import { MisionLiderPreset } from './core/theme/primeng-preset';
+import { AuthStore } from './core/auth/auth.store';
+import { AUTH_PRINCIPAL } from './core/auth/access-context';
+import { authInterceptor } from './core/auth/auth.interceptor';
+import { httpActivityInterceptor } from './core/loading/http-activity.interceptor';
+import { MessageService } from 'primeng/api';
+import { Notifications } from './core/notifications/notifications';
+import { apiBaseUrlInterceptor } from './core/config/api-base-url.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    { provide: MessageService, useExisting: Notifications },
     provideBrowserGlobalErrorListeners(),
-    provideHttpClient(),
+    provideHttpClient(
+      withInterceptors([httpActivityInterceptor, authInterceptor, apiBaseUrlInterceptor]),
+      withNoXsrfProtection(),
+    ),
+    { provide: AUTH_PRINCIPAL, useFactory: () => inject(AuthStore).principal },
+    provideAppInitializer(() => {
+      void inject(AuthStore).ensureSession();
+    }),
     provideAppInitializer(() => {
       const document = inject(DOCUMENT);
       inject(ViewportScroller).setOffset(() => {
@@ -89,6 +104,15 @@ export const appConfig: ApplicationConfig = {
         ],
         today: 'Hoy',
         dateFormat: 'dd/mm/yy',
+        chooseDate: 'Elegir fecha',
+        chooseMonth: 'Elegir mes',
+        chooseYear: 'Elegir año',
+        prevMonth: 'Mes anterior',
+        nextMonth: 'Mes siguiente',
+        prevYear: 'Año anterior',
+        nextYear: 'Año siguiente',
+        prevDecade: 'Década anterior',
+        nextDecade: 'Década siguiente',
         aria: {
           previous: 'Anterior',
           next: 'Siguiente',

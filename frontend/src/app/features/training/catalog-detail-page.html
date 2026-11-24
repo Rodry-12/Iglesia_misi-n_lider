@@ -1,0 +1,50 @@
+<app-catalog-error [error]="store.detailError()" />
+@if (store.detailError()) {
+  <button pButton type="button" (click)="close()">Volver al listado</button>
+}
+<p-dialog
+  [header]="kind === 'category' ? 'Detalle de categoría' : 'Detalle de proceso'"
+  [visible]="!!store.item() && !store.detailLoading()"
+  [modal]="true"
+  [closable]="false"
+  [closeOnEscape]="false"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{ width: '38rem', maxWidth: 'calc(100vw - 2rem)' }"
+  (keydown.escape)="close()"
+>
+  @if (store.item(); as item) {
+    <div class="catalog-detail-heading">
+      <h2>{{ item.name }}</h2>
+      <span class="catalog-status" [class.is-active]="item.isActive">{{
+        item.isActive
+          ? kind === 'category'
+            ? 'Activa'
+            : 'Activo'
+          : kind === 'category'
+            ? 'Inactiva'
+            : 'Inactivo'
+      }}</span>
+    </div>
+    <dl class="catalog-detail-grid">
+      <div class="catalog-description">
+        <dt>Descripción</dt>
+        <dd class="description">{{ item.description || 'Sin descripción' }}</dd>
+      </div>
+      <div>
+        <dt>Orden</dt>
+        <dd>{{ item.sortOrder }}</dd>
+      </div>
+      @if (kind === 'process') {
+        <div>
+          <dt>Categoría</dt>
+          <dd>{{ asProcess()?.categoryName ?? 'No disponible' }}</dd>
+        </div>
+        @if (!item.isActive || !asProcess()?.categoryIsActive) {
+          <p>Este proceso no está disponible para nuevas asignaciones.</p>
+        }
+      }
+    </dl>
+  }
+  <ng-template #footer><button pButton type="button" (click)="close()">Cerrar</button></ng-template>
+</p-dialog>

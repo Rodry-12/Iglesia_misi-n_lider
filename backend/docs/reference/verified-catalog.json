@@ -1,0 +1,125 @@
+{
+    "source":  "Live Supabase READ ONLY inspection; non-personal codes only; IDs regenerated in tests",
+    "permissions":  [
+                        {
+                            "code":  "BRANCH_CREATE",
+                            "module":  "BRANCH",
+                            "branchAdmin":  false
+                        },
+                        {
+                            "code":  "BRANCH_UPDATE",
+                            "module":  "BRANCH",
+                            "branchAdmin":  false
+                        },
+                        {
+                            "code":  "BRANCH_VIEW",
+                            "module":  "BRANCH",
+                            "branchAdmin":  true
+                        },
+                        {
+                            "code":  "CATEGORY_CREATE",
+                            "module":  "CATEGORY",
+                            "branchAdmin":  false
+                        },
+                        {
+                            "code":  "CATEGORY_UPDATE",
+                            "module":  "CATEGORY",
+                            "branchAdmin":  false
+                        },
+                        {
+                            "code":  "CATEGORY_VIEW",
+                            "module":  "CATEGORY",
+                            "branchAdmin":  true
+                        },
+                        {
+                            "code":  "PERSON_CREATE",
+                            "module":  "PERSON",
+                            "branchAdmin":  true
+                        },
+                        {
+                            "code":  "PERSON_DEACTIVATE",
+                            "module":  "PERSON",
+                            "branchAdmin":  true
+                        },
+                        {
+                            "code":  "PERSON_TRANSFER",
+                            "module":  "PERSON",
+                            "branchAdmin":  false
+                        },
+                        {
+                            "code":  "PERSON_UPDATE",
+                            "module":  "PERSON",
+                            "branchAdmin":  true
+                        },
+                        {
+                            "code":  "PERSON_VIEW",
+                            "module":  "PERSON",
+                            "branchAdmin":  true
+                        },
+                        {
+                            "code":  "PROCESS_ASSIGN",
+                            "module":  "PROCESS",
+                            "branchAdmin":  true
+                        },
+                        {
+                            "code":  "PROCESS_CHANGE_RESPONSIBLE",
+                            "module":  "PROCESS",
+                            "branchAdmin":  true
+                        },
+                        {
+                            "code":  "PROCESS_CHANGE_STATUS",
+                            "module":  "PROCESS",
+                            "branchAdmin":  true
+                        },
+                        {
+                            "code":  "PROCESS_CREATE",
+                            "module":  "PROCESS",
+                            "branchAdmin":  false
+                        },
+                        {
+                            "code":  "PROCESS_UPDATE",
+                            "module":  "PROCESS",
+                            "branchAdmin":  false
+                        },
+                        {
+                            "code":  "PROCESS_VIEW",
+                            "module":  "PROCESS",
+                            "branchAdmin":  true
+                        },
+                        {
+                            "code":  "REPORT_EXPORT",
+                            "module":  "REPORT",
+                            "branchAdmin":  true
+                        },
+                        {
+                            "code":  "REPORT_VIEW",
+                            "module":  "REPORT",
+                            "branchAdmin":  true
+                        },
+                        {
+                            "code":  "USER_ASSIGN_ROLE",
+                            "module":  "USER",
+                            "branchAdmin":  false
+                        },
+                        {
+                            "code":  "USER_CHANGE_STATUS",
+                            "module":  "USER",
+                            "branchAdmin":  true
+                        },
+                        {
+                            "code":  "USER_CREATE",
+                            "module":  "USER",
+                            "branchAdmin":  true
+                        },
+                        {
+                            "code":  "USER_UPDATE",
+                            "module":  "USER",
+                            "branchAdmin":  true
+                        },
+                        {
+                            "code":  "USER_VIEW",
+                            "module":  "USER",
+                            "branchAdmin":  true
+                        }
+                    ]
+}

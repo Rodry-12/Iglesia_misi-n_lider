@@ -1,0 +1,214 @@
+@if (access.can('PERSON_VIEW')) {
+  <app-page-heading
+    title="Gestión de Personas"
+    description="Consulta las personas de tus sedes autorizadas y abre su ficha de información."
+  />
+  <app-person-state-feedback />
+  <section class="people-panel people-filter-panel" aria-label="Búsqueda de personas">
+    @if (access.can('PERSON_CREATE')) {
+      <div class="people-toolbar">
+        <a
+          pButton
+          class="people-create"
+          [attr.href]="registrationHref()"
+          (click)="openRegistration($event)"
+          ><svg lucidePlus [size]="20" aria-hidden="true"></svg><span>Registrar persona</span></a
+        >
+      </div>
+    }
+    <form
+      class="people-filters"
+      [formGroup]="form"
+      (ngSubmit)="filtersChanged()"
+      aria-label="Filtros de personas"
+    >
+      <div class="search-field">
+        <label for="people-search">Buscar persona</label>
+        <div class="search-controls">
+          <input
+            pInputText
+            id="people-search"
+            formControlName="search"
+            maxlength="150"
+            type="search"
+            placeholder="Nombres, apellidos o documento"
+            autocomplete="off"
+          />
+          @if (form.controls.search.value) {
+            <button
+              pButton
+              type="button"
+              [text]="true"
+              class="people-clear"
+              aria-label="Limpiar búsqueda"
+              title="Limpiar búsqueda"
+              (click)="clearSearch()"
+            >
+              <svg lucideX [size]="18" aria-hidden="true"></svg>
+            </button>
+          }
+        </div>
+      </div>
+      <div>
+        <label id="people-branch-label" for="people-branch">Sede</label
+        ><p-select
+          inputId="people-branch"
+          ariaLabelledBy="people-branch-label"
+          formControlName="branchId"
+          [options]="store.branches()"
+          optionLabel="name"
+          optionValue="id"
+          [showClear]="!!form.controls.branchId.value"
+          placeholder="Todas las sedes autorizadas"
+        />
+      </div>
+      <div>
+        <label id="people-active-label" for="people-active">Estado</label
+        ><p-select
+          inputId="people-active"
+          ariaLabelledBy="people-active-label"
+          formControlName="active"
+          [options]="states"
+          [showClear]="!!form.controls.active.value"
+          optionLabel="label"
+          optionValue="value"
+        />
+      </div>
+    </form>
+  </section>
+  <section aria-label="Resultados de personas" [attr.aria-busy]="store.loading()">
+    @if (store.error(); as error) {
+      <div>
+        <app-toast-feedback
+          severity="error"
+          [message]="
+            error === 'forbidden'
+              ? 'No tienes permiso para consultar esta sede.'
+              : 'No fue posible consultar las personas. Inténtalo de nuevo.'
+          "
+        />
+        @if (error === 'unavailable') {
+          <button pButton type="button" (click)="store.load()">Reintentar</button>
+        }
+      </div>
+    } @else {
+      <div class="people-table" role="region" aria-label="Listado de personas" tabindex="0">
+        <p-table
+          [scrollable]="true"
+          scrollHeight="min(55vh, 32rem)"
+          [value]="store.page()?.items ?? []"
+          dataKey="id"
+          [tableStyle]="{ 'min-width': '42rem' }"
+        >
+          <ng-template #header
+            ><tr>
+              <th scope="col">Documento</th>
+              <th scope="col">Persona</th>
+              <th scope="col">Sede</th>
+              <th scope="col">Estado</th>
+              <th scope="col">Acciones</th>
+            </tr></ng-template
+          >
+          <ng-template #body let-person>
+            <tr>
+              <td>{{ identification(person) }}</td>
+              <td>
+                <strong>{{ person.firstNames }} {{ person.lastNames }}</strong>
+              </td>
+              <td>{{ person.branchName ?? 'Sin sede vigente' }}</td>
+              <td>
+                <span class="person-status">{{ person.isActive ? 'Activo' : 'Inactivo' }}</span>
+              </td>
+              <td>
+                <a
+                  pButton
+                  [text]="true"
+                  [attr.href]="detailHref(person.id)"
+                  (click)="openDetail($event, person.id)"
+                  class="people-icon-action"
+                  [title]="'Ver detalle'"
+                  [attr.aria-label]="'Ver detalle de ' + person.firstNames + ' ' + person.lastNames"
+                  ><svg lucideEye [size]="20" aria-hidden="true"></svg
+                ></a>
+                @if (
+                  access.can('PERSON_UPDATE', person.branchId) &&
+                  access.can('PERSON_VIEW', person.branchId)
+                ) {
+                  <a
+                    pButton
+                    [text]="true"
+                    [attr.href]="editHref(person.id)"
+                    (click)="openEdit($event, person.id)"
+                    [attr.aria-label]="
+                      'Editar persona: ' + person.firstNames + ' ' + person.lastNames
+                    "
+                    class="people-icon-action"
+                    title="Editar persona"
+                    ><svg lucidePencil [size]="20" aria-hidden="true"></svg
+                  ></a>
+                }
+                @if (person.branchId && access.can('PROCESS_ASSIGN', person.branchId)) {
+                  <button
+                    pButton
+                    type="button"
+                    [text]="true"
+                    class="people-icon-action"
+                    title="Asignar proceso"
+                    [attr.aria-label]="
+                      'Asignar proceso a ' + person.firstNames + ' ' + person.lastNames
+                    "
+                    [disabled]="!canAssign(person)"
+                    (click)="openAssignment($event, person)"
+                  >
+                    <svg lucideClipboardPlus [size]="20" aria-hidden="true"></svg>
+                  </button>
+                }
+                <app-person-state-action [person]="person" [iconOnly]="true" />
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template #emptymessage
+            ><tr>
+              <td colspan="5">
+                @if (!store.loading()) {
+                  {{
+                    store.query().search || store.query().branchId || store.query().active
+                      ? 'No se encontraron personas con estos filtros.'
+                      : 'No hay personas visibles para tu cuenta.'
+                  }}
+                }
+              </td>
+            </tr></ng-template
+          >
+        </p-table>
+      </div>
+      <app-table-pagination
+        [first]="(store.query().page - 1) * store.query().pageSize"
+        [rows]="store.query().pageSize"
+        [totalRecords]="store.page()?.totalCount ?? 0"
+        noun="personas"
+        [disabled]="store.loading()"
+        (onPageChange)="pageChanged($event)"
+      />
+    }
+  </section>
+  @if (detailId(); as id) {
+    <app-person-detail-dialog [personId]="id" (closed)="closeDetail()" />
+  }
+  @if (editId(); as id) {
+    <app-person-edit-page [personId]="id" (closed)="closeEdit()" (savedChange)="closeEdit(true)" />
+  }
+  @if (assignmentMember(); as person) {
+    <app-assignment-page
+      [member]="person"
+      (closed)="closeAssignment()"
+      (savedChange)="closeAssignment()"
+    />
+  }
+}
+@if (registrationOpened()) {
+  <app-person-registration-page
+    (closed)="closeRegistration()"
+    (savedChange)="closeRegistration(true)"
+  />
+}
