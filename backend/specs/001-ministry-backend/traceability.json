@@ -228,12 +228,17 @@
                          "id":  "AC-016",
                          "implementation":  [
                                                 "src/MisionLiderParis.Api/Program.cs",
-                                                "sql/review/018-live-security-metadata.sql",
-                                                "artifacts/step18-live-security-metadata.json"
+                                                "sql/review/018-live-security-metadata.sql"
                                             ],
                          "verification":  [
                                               "docs/activation-review.md",
-                                              "specs/001-ministry-backend/validation.md"
+                                              "specs/001-ministry-backend/validation.md",
+                                              {
+                                                  "kind": "private-local-evidence",
+                                                  "path": "artifacts/step18-live-security-metadata.json",
+                                                  "state": "captured",
+                                                  "sha256": "27b294da7b386f56effdfa576df8c66b4dbbe7cf6c7ea2d11cda60cfe4cc0be4"
+                                              }
                                           ],
                          "verified":  true,
                          "evidence":  "Comparador live ejecutado por el usuario con mlp_inspector/VerifyFull: 37 findings review y cero blocking. Script 018 ejecutado por Npgsql en transacción REPEATABLE READ READ ONLY; terminó con ROLLBACK y código 0, sin DDL. Reporte schema-security-metadata.json SHA-256 3FA07647A2850D6649FE7F33954795C1D2832D9830DD0353C548E021B6E413B0. Roles/membresías/ACL/owners visibles inspeccionados. mlp_runtime y mlp_api_runtime no existen aún, auth_app no existe; son estados predespliegue, no configuraciones riesgosas existentes. RLS activo en once tablas, cero políticas; despliegue condicionado a operador DDL de mínimo privilegio, aprovisionamiento seguro runtime y revisión post-005. mlp_inspector tiene USAGE de iglesia no solicitado, sin privilegios de tablas, pendiente revocación autorizada. Sin cambios en Supabase."

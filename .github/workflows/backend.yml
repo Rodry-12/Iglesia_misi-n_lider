@@ -2,9 +2,21 @@ name: Backend verification
 
 on:
   push:
-    paths: ["backend/**", "scripts/check-specs.mjs", ".github/workflows/backend.yml"]
+    paths:
+      [
+        "backend/**",
+        "scripts/check-specs.mjs",
+        "scripts/spec-workflow.test.mjs",
+        ".github/workflows/backend.yml",
+      ]
   pull_request:
-    paths: ["backend/**", "scripts/check-specs.mjs", ".github/workflows/backend.yml"]
+    paths:
+      [
+        "backend/**",
+        "scripts/check-specs.mjs",
+        "scripts/spec-workflow.test.mjs",
+        ".github/workflows/backend.yml",
+      ]
   workflow_dispatch:
 
 permissions:
@@ -39,6 +51,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
+      - run: node --test ../scripts/spec-workflow.test.mjs
       - run: node ../scripts/check-specs.mjs
       - run: dotnet restore MisionLiderParis.slnx --locked-mode
       - run: dotnet build MisionLiderParis.slnx --no-restore -c Release

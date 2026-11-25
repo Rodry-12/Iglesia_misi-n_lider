@@ -1,4 +1,11 @@
-import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
+import {
+  existsSync,
+  readFileSync,
+  readdirSync,
+  realpathSync,
+  statSync,
+} from "node:fs";
+import { createHash } from "node:crypto";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -57,20 +64,70 @@ export function checkSpecs(root = repository) {
           if (!Array.isArray(criterion[field]))
             throw new Error(`${criterion.id}: ${field} debe ser una lista`);
           for (const file of criterion[field]) {
-            if (typeof file !== "string")
+            const privateEvidence =
+              field === "verification" &&
+              file !== null &&
+              typeof file === "object" &&
+              !Array.isArray(file);
+            if (
+              privateEvidence &&
+              (file.kind !== "private-local-evidence" ||
+                file.state !== "captured" ||
+                typeof file.path !== "string" ||
+                typeof file.sha256 !== "string" ||
+                !/^[a-fA-F0-9]{64}$/.test(file.sha256 ?? ""))
+            )
+              throw new Error(
+                `${criterion.id}: registro de evidencia privada inválido`,
+              );
+            const filePath = privateEvidence ? file.path : file;
+            if (typeof filePath !== "string")
               throw new Error("ruta de archivo inválida");
-            const destination = path.resolve(root, file);
+            const destination = path.resolve(root, filePath);
             const relative = path.relative(root, destination);
             if (relative.startsWith("..") || path.isAbsolute(relative))
               throw new Error("ruta fuera del repositorio");
+            if (privateEvidence) {
+              if (
+                !["artifacts", ".local"].includes(relative.split(path.sep)[0])
+              )
+                throw new Error(
+                  "evidencia privada fuera de artifacts o .local",
+                );
+              // CI checks the public historical record, never requires private captures.
+              // When available locally, verify bytes without printing metadata.
+              if (!existsSync(destination)) continue;
+              const actualRelative = path.relative(
+                realpathSync(root),
+                realpathSync(destination),
+              );
+              if (
+                actualRelative.startsWith("..") ||
+                path.isAbsolute(actualRelative)
+              )
+                throw new Error("ruta fuera del repositorio");
+              if (!statSync(destination).isFile())
+                throw new Error(
+                  `no es un archivo de evidencia privada ${filePath}`,
+                );
+              const digest = createHash("sha256")
+                .update(readFileSync(destination))
+                .digest("hex");
+              if (digest !== file.sha256.toLowerCase())
+                throw new Error(
+                  `SHA-256 de evidencia privada no coincide: ${filePath}`,
+                );
+              continue;
+            }
             if (!existsSync(destination) || !statSync(destination).isFile())
-              throw new Error(`no existe el archivo ${file}`);
+              throw new Error(`no existe el archivo ${filePath}`);
           }
         }
         if (
           criterion.verified &&
           (!criterion.implementation.length ||
             !criterion.verification.length ||
+            !criterion.verification.some((file) => typeof file === "string") ||
             !criterion.evidence?.trim())
         ) {
           throw new Error(

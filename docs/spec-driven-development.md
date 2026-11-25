@@ -35,6 +35,20 @@ La comprobación estructural no prueba que la funcionalidad funcione ni sustituy
 
 ## Finalización
 
+### Evidencia privada histórica
+
+Las capturas locales ignoradas no son archivos de implementación ni entradas
+obligatorias del checkout de CI. En `verification` se puede registrar un objeto
+`kind: "private-local-evidence"`, `path` relativa a `artifacts/` o `.local/`,
+`state: "captured"` y `sha256` de64 dígitos hexadecimales, calculado sobre el archivo
+real sin versionar sus metadatos. CI valida el registro; si el archivo existe,
+el validador comprueba su hash. No se permiten registros privados en
+`implementation`, escapar del ámbito ni marcar verified sin archivo público de
+verificación y evidencia escrita. Las rutas string siguen siendo obligatorias.
+Un digest/registro histórico no acredita una nueva auditoría ni sustituye las
+pruebas y requisitos de seguridad de despliegue. No obtener capturas nuevas desde
+CI ni enviar credenciales de Supabase para pasar esta comprobación.
+
 Una funcionalidad está terminada cuando sus criterios están cubiertos, las tareas correspondientes están completadas, pasan los checks aplicables y quedan documentadas las limitaciones. Una prueba que solo compara la implementación consigo misma no demuestra un criterio de producto.
 
 Para trabajar con el asistente, usar `$iglesia-sdd` en definición y planificación y `$iglesia-angular` en implementación. Ambas skills remiten al contexto compartido para evitar mantener copias divergentes de la información.

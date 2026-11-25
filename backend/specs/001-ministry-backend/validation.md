@@ -321,3 +321,33 @@ Se detectó en Usuarios administration-options2258–2354ms/27sentencias/4transa
 
 Release de la solución correcto, cero advertencias/errores. Angular production build correcto con advertencia existente de presupuesto inicial583,76kB frente a500kB.26 unitarias Angular focalizadas correctas y design:check correcto. Comparación reproducible local de servicios reales con actor existente:35 muestras antes y35 con pooling Identity, cinco por operación; tabla y límites en docs/performance-and-local-development.md. Medianas de cuatro muestras posteriores mejoran51,7–65,8%; sin caché de permisos, mismas consultas y cero DDL/escrituras. No mide HTTP autenticado, arranque frío total ni P95; iniciales están separadas en los artefactos locales.
 
+# Corrección CI de evidencia privada — 2026-11-24
+
+AC-016 referenciaba artifacts/step18-live-security-metadata.json como implementación.
+Ese archivo es una captura histórica local (carpeta artifacts ignorada), no un input
+de CI ni código. Se conserva la evidencia histórica y sus condiciones, sin cambiar
+el criterio, las comprobaciones SQL ni las pruebas de seguridad.
+
+La referencia se mueve a verification como registro private-local-evidence/captured
+con SHA-256 real27b294da7b386f56effdfa576df8c66b4dbbe7cf6c7ea2d11cda60cfe4cc0be4,
+calculado localmente sin leer ni publicar su contenido. Es el digest de este archivo
+step18, distinto del digest histórico del reporte schema-security-metadata.json;
+no se sustituyen ni se igualan ambas capturas. No se modifica ningún artefacto privado.
+CI comprueba el registro sin necesitar la captura; localmente, cuando existe,
+se exige coincidencia de hash. Esto no acredita el estado actual de Supabase.
+
+Se mantienen obligatorias las rutas públicas, evidencia escrita y controles de
+seguridad. El workflow añade regresiones del validador antes del spec:check; no se
+retiran restore/build/tests .NET ni se alteran pasos de PostgreSQL. No hubo acceso
+ni cambios a PostgreSQL/Supabase, RLS, roles o permisos.
+
+Verificación de la corrección: `node scripts/check-specs.mjs` correcto, incluida
+la coincidencia de hash de la captura local existente. `node --test
+scripts/spec-workflow.test.mjs`:14/14 correctas, cero omitidas; conserva las tres
+pruebas anteriores y añade once regresiones sobre CI sin captura, hash alterado,
+referencias públicas obligatorias, aislamiento de implementación, formato/estado
+y confinamiento de rutas. El primer intento del runner Node fue bloqueado por
+spawn EPERM del sandbox; repetición autorizada fuera del sandbox correcta.
+Prettier dirigido a scripts y workflow correcto. No se ejecutó GitHub Actions
+remotamente ni se repitieron pruebas .NET, cuyo código y pasos no se modifican.
+
